@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_whut_HnrMgmtModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="T_Award">
+          <Key>
+            <PropertyRef Name="AwdID" />
+          </Key>
+          <Property Name="AwdID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="OrderID" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Grade" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="T_Awardee">
+          <Key>
+            <PropertyRef Name="AwdeeID" />
+          </Key>
+          <Property Name="AwdeeID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="OrgID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Branch" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="T_AwdRecord">
+          <Key>
+            <PropertyRef Name="AwdRecID" />
+          </Key>
+          <Property Name="AwdRecID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="AwdID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Year" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Term" Type="varchar" MaxLength="64" />
+          <Property Name="IsTeam" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ProName" Type="varchar" MaxLength="64" />
+          <Property Name="AwdeeID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Teacher" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="PicUrl" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Client">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="OrgID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Tel" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="RoleID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="State" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_ExmRecord">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="ApplyID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="ApplyTime" Type="datetime" Nullable="false" />
+          <Property Name="ExmID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="ExmTime" Type="datetime" Nullable="false" />
+          <Property Name="State" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_HnrRecord">
+          <Key>
+            <PropertyRef Name="HnrRecID" />
+          </Key>
+          <Property Name="HnrRecID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="HonorID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="AwdeeID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Branch" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="PicUrl" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Honor">
+          <Key>
+            <PropertyRef Name="HonorID" />
+          </Key>
+          <Property Name="HonorID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="OrderID" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Organization">
+          <Key>
+            <PropertyRef Name="OrgID" />
+          </Key>
+          <Property Name="OrgID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Right">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Page" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Url" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Team">
+          <Key>
+            <PropertyRef Name="OrderNum" />
+          </Key>
+          <Property Name="OrderNum" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="TeamID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="AwdeeID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Rank" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="DB_whut_HnrMgmtModelStoreContainer">
+          <EntitySet Name="T_Award" EntityType="Self.T_Award" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Awardee" EntityType="Self.T_Awardee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_AwdRecord" EntityType="Self.T_AwdRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Client" EntityType="Self.T_Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_ExmRecord" EntityType="Self.T_ExmRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_HnrRecord" EntityType="Self.T_HnrRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Honor" EntityType="Self.T_Honor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Organization" EntityType="Self.T_Organization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Right" EntityType="Self.T_Right" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Role" EntityType="Self.T_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Team" EntityType="Self.T_Team" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_whut_HnrMgmtModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="T_Award">
+          <Key>
+            <PropertyRef Name="AwdID" />
+          </Key>
+          <Property Name="AwdID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrderID" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Grade" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="T_Awardee">
+          <Key>
+            <PropertyRef Name="AwdeeID" />
+          </Key>
+          <Property Name="AwdeeID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Branch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="T_AwdRecord">
+          <Key>
+            <PropertyRef Name="AwdRecID" />
+          </Key>
+          <Property Name="AwdRecID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AwdID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Year" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Term" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="IsTeam" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ProName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="AwdeeID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Teacher" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PicUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Client">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_ExmRecord">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApplyID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApplyTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExmID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ExmTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="State" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_HnrRecord">
+          <Key>
+            <PropertyRef Name="HnrRecID" />
+          </Key>
+          <Property Name="HnrRecID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HonorID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AwdeeID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Branch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PicUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Honor">
+          <Key>
+            <PropertyRef Name="HonorID" />
+          </Key>
+          <Property Name="HonorID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrderID" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Organization">
+          <Key>
+            <PropertyRef Name="OrgID" />
+          </Key>
+          <Property Name="OrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Right">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Page" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Url" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Team">
+          <Key>
+            <PropertyRef Name="OrderNum" />
+          </Key>
+          <Property Name="OrderNum" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TeamID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AwdeeID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Rank" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="DB_whut_HnrMgmtEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="T_Award" EntityType="Self.T_Award" />
+          <EntitySet Name="T_Awardee" EntityType="Self.T_Awardee" />
+          <EntitySet Name="T_AwdRecord" EntityType="Self.T_AwdRecord" />
+          <EntitySet Name="T_Client" EntityType="Self.T_Client" />
+          <EntitySet Name="T_ExmRecord" EntityType="Self.T_ExmRecord" />
+          <EntitySet Name="T_HnrRecord" EntityType="Self.T_HnrRecord" />
+          <EntitySet Name="T_Honor" EntityType="Self.T_Honor" />
+          <EntitySet Name="T_Organization" EntityType="Self.T_Organization" />
+          <EntitySet Name="T_Right" EntityType="Self.T_Right" />
+          <EntitySet Name="T_Role" EntityType="Self.T_Role" />
+          <EntitySet Name="T_Team" EntityType="Self.T_Team" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_whut_HnrMgmtModelStoreContainer" CdmEntityContainer="DB_whut_HnrMgmtEntities">
+          <EntitySetMapping Name="T_Award">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_Award">
+              <MappingFragment StoreEntitySet="T_Award">
+                <ScalarProperty Name="AwdID" ColumnName="AwdID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Awardee">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_Awardee">
+              <MappingFragment StoreEntitySet="T_Awardee">
+                <ScalarProperty Name="AwdeeID" ColumnName="AwdeeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+                <ScalarProperty Name="Branch" ColumnName="Branch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_AwdRecord">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_AwdRecord">
+              <MappingFragment StoreEntitySet="T_AwdRecord">
+                <ScalarProperty Name="AwdRecID" ColumnName="AwdRecID" />
+                <ScalarProperty Name="AwdID" ColumnName="AwdID" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Term" ColumnName="Term" />
+                <ScalarProperty Name="IsTeam" ColumnName="IsTeam" />
+                <ScalarProperty Name="ProName" ColumnName="ProName" />
+                <ScalarProperty Name="AwdeeID" ColumnName="AwdeeID" />
+                <ScalarProperty Name="Teacher" ColumnName="Teacher" />
+                <ScalarProperty Name="PicUrl" ColumnName="PicUrl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Client">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_Client">
+              <MappingFragment StoreEntitySet="T_Client">
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_ExmRecord">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_ExmRecord">
+              <MappingFragment StoreEntitySet="T_ExmRecord">
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="ApplyID" ColumnName="ApplyID" />
+                <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
+                <ScalarProperty Name="ExmID" ColumnName="ExmID" />
+                <ScalarProperty Name="ExmTime" ColumnName="ExmTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_HnrRecord">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_HnrRecord">
+              <MappingFragment StoreEntitySet="T_HnrRecord">
+                <ScalarProperty Name="HnrRecID" ColumnName="HnrRecID" />
+                <ScalarProperty Name="HonorID" ColumnName="HonorID" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="AwdeeID" ColumnName="AwdeeID" />
+                <ScalarProperty Name="Branch" ColumnName="Branch" />
+                <ScalarProperty Name="PicUrl" ColumnName="PicUrl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Honor">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_Honor">
+              <MappingFragment StoreEntitySet="T_Honor">
+                <ScalarProperty Name="HonorID" ColumnName="HonorID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Organization">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_Organization">
+              <MappingFragment StoreEntitySet="T_Organization">
+                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Right">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_Right">
+              <MappingFragment StoreEntitySet="T_Right">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Page" ColumnName="Page" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Role">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_Role">
+              <MappingFragment StoreEntitySet="T_Role">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Team">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_Team">
+              <MappingFragment StoreEntitySet="T_Team">
+                <ScalarProperty Name="OrderNum" ColumnName="OrderNum" />
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="AwdeeID" ColumnName="AwdeeID" />
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

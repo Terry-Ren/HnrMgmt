@@ -1,0 +1,124 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <title>API接口测试</title>
+    <script>
+        const serverPath = 'http://localhost:62047/';
+        const access_token = '';
+
+        $(document).ready(function () {
+            //btn绑定事件
+
+            $('#btnGetCache').click(function (e) {
+
+                AjaxRequestGet('api/honor');
+            });
+
+            $('#btnSetCache').click(function (e) {
+
+                AjaxRequestGet('api/honor/set?value=123456');
+            });
+        });
+
+        //模拟Get请求
+        function AjaxRequestGet(uri) {
+            var server = serverPath;
+            var url = server + uri;
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                dataType: 'json',
+                url: url,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function () {
+                    console.log('Ajax请求失败！');
+                }
+            });
+        }
+
+        //模拟Post请求
+        function AjaxRequestPost(uri, data) {
+            var server = serverPath;
+            var url = server + uri;
+            $.ajax({
+                type: 'POST',
+                //contentType: 'application/json',//此句话需要配合 json序列化方法使用
+                dataType: 'json',
+                data: data,
+                url: url,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (response) {
+                    console.log('Ajax请求失败！');
+                    console.log(response);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <h1>API 接口测试：</h1>
+        <br />
+        <div style="margin-left:200px;">
+            <h3>模拟接口测试：</h3>
+            <input type="button" value="读取Cache测试" id="btnGetCache" />
+            <br />
+            <br />
+            <input type="button" value="写入Cache测试" id="btnSetCache" />
+            <br />
+            <br />
+            <h3>权限接口测试：</h3>
+            <input type="button" value="Authorize" id="btnOauthAuthorize" />
+            <br />
+            <br />
+            <input type="button" value="Access_Token" id="btnOauthAccess_Token" />
+            <br />
+            <br />
+            <input type="button" value="Access_Token_WeChat" id="btnOauthAccess_Token_WeChat" />
+            <br />
+            <br />
+            <h3>学生信息接口测试：</h3>
+            <input type="button" value="Me" id="btnStudentMe" />
+            <br />
+            <br />
+            <input type="button" value="Night" id="btnstudentNight" />
+            <br />
+            <br />
+            <input type="button" value="Holiday" id="btnstudentHoliday" />
+            <br />
+            <br />
+            <input type="button" value="PassWord" id="btnstudentPassWord" />
+            <br />
+            <br />
+            <h3>请假接口测试：</h3>
+            <input type="button" value="GetList" id="btnLeavelistGetList" />
+            <br />
+            <br />
+            <input type="button" value="Revoke" id="btnLeavelistRevoke" />
+            <br />
+            <br />
+            <input type="button" value="leaveschool" id="btnLeavelistLeaveschool" />
+            <br />
+            <br />
+            <input type="button" value="leavespecial" id="btnLeavelistLeavespecial" />
+            <br />
+            <br />
+            <input type="button" value="leavelesson" id="btnLeavelistLeavelesson" />
+            <br />
+            <br />
+        </div>
+    </div>
+</body>
+</html>
