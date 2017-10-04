@@ -18,6 +18,7 @@ namespace HnrMgmtAPI.Models
         public string HonorID { get; set; }
         public System.DateTime Time { get; set; }
         public string AwdeeID { get; set; }
+        public string OrgID { get; set; }
         public string Branch { get; set; }
         public string PicUrl { get; set; }
     }

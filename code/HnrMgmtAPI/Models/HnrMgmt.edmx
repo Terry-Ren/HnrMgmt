@@ -34,6 +34,7 @@
           <Property Name="IsTeam" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="ProName" Type="varchar" MaxLength="64" />
           <Property Name="AwdeeID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="OrgID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="Teacher" Type="varchar" MaxLength="128" Nullable="false" />
           <Property Name="PicUrl" Type="varchar" MaxLength="64" Nullable="false" />
         </EntityType>
@@ -68,6 +69,7 @@
           <Property Name="HonorID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="Time" Type="datetime" Nullable="false" />
           <Property Name="AwdeeID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="OrgID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="Branch" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="PicUrl" Type="varchar" MaxLength="64" Nullable="false" />
         </EntityType>
@@ -463,6 +465,7 @@
           <Property Name="IsTeam" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="ProName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="AwdeeID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Teacher" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PicUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
@@ -497,6 +500,7 @@
           <Property Name="HonorID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="AwdeeID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Branch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PicUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
@@ -775,6 +779,7 @@
                 <ScalarProperty Name="IsTeam" ColumnName="IsTeam" />
                 <ScalarProperty Name="ProName" ColumnName="ProName" />
                 <ScalarProperty Name="AwdeeID" ColumnName="AwdeeID" />
+                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
                 <ScalarProperty Name="Teacher" ColumnName="Teacher" />
                 <ScalarProperty Name="PicUrl" ColumnName="PicUrl" />
               </MappingFragment>
@@ -812,6 +817,7 @@
                 <ScalarProperty Name="HonorID" ColumnName="HonorID" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="AwdeeID" ColumnName="AwdeeID" />
+                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
                 <ScalarProperty Name="Branch" ColumnName="Branch" />
                 <ScalarProperty Name="PicUrl" ColumnName="PicUrl" />
               </MappingFragment>
@@ -1001,7 +1007,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
