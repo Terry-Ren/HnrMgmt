@@ -13,10 +13,10 @@ namespace HnrMgmtAPI.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DB_whut_HnrMgmtEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public DB_whut_HnrMgmtEntities()
-            : base("name=DB_whut_HnrMgmtEntities")
+        public Entities()
+            : base("name=Entities")
         {
         }
     
@@ -36,5 +36,12 @@ namespace HnrMgmtAPI.Models
         public virtual DbSet<T_Right> T_Right { get; set; }
         public virtual DbSet<T_Role> T_Role { get; set; }
         public virtual DbSet<T_Team> T_Team { get; set; }
+        public virtual DbSet<Vw_Client> Vw_Client { get; set; }
+        public virtual DbSet<Vw_HnrExamine> Vw_HnrExamine { get; set; }
+        public virtual DbSet<Vw_HnrRecord> Vw_HnrRecord { get; set; }
+        public virtual DbSet<Vw_SinAwdExamine> Vw_SinAwdExamine { get; set; }
+        public virtual DbSet<Vw_SinAwdRecord> Vw_SinAwdRecord { get; set; }
+        public virtual DbSet<Vw_TeamAwdExamine> Vw_TeamAwdExamine { get; set; }
+        public virtual DbSet<Vw_TeamAwdRecord> Vw_TeamAwdRecord { get; set; }
     }
 }

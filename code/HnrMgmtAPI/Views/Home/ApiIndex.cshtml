@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = null;
+    //Layout = null;
 }
 
 <!DOCTYPE html>
@@ -11,22 +11,8 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <title>API接口测试</title>
     <script>
-        const serverPath = 'http://localhost:62047/';
+        const serverPath = 'http://localhost:59996/';
         const access_token = '';
-
-        $(document).ready(function () {
-            //btn绑定事件
-
-            $('#btnGetCache').click(function (e) {
-
-                AjaxRequestGet('api/honor');
-            });
-
-            $('#btnSetCache').click(function (e) {
-
-                AjaxRequestGet('api/honor/set?value=123456');
-            });
-        });
 
         //模拟Get请求
         function AjaxRequestGet(uri) {
@@ -65,6 +51,35 @@
                 }
             });
         }
+
+        $(document).ready(function () {
+            $('#btnGetCache').click(function (e) {
+                AjaxRequestGet('api/honor/testget?access_token=11');
+            });
+
+            $('#btnSetCache').click(function (e) {
+                AjaxRequestGet('api/honor/testset?value=123456');
+            });
+
+            $('#btnHonorGet').click(function (e) {
+                AjaxRequestGet('api/honor/get?access_token=11');
+            });
+
+            $('#btnHonorAdd').click(function (e) {
+                AjaxRequestGet('api/honor/add?access_token=11&Name=校三好学生&GradeName=1');
+            });
+
+            $('#btnHonorDelete').click(function (e) {
+                AjaxRequestGet('api/honor/delete?access_token=11&honorID=0ea10c66-a6d9-4df5-a8ca-e51380da4e8a');
+            });
+
+            $('#btnHonorModify').click(function (e) {
+                var data = { 'access_token': '11', 'honorID': '0ea10c66-a6d9-4df5-a8ca-e51380da4e8a', 'Name': '修改后的校三好学生称号', 'GradeName': '2' }
+                AjaxRequestPost('api/honor/modify',data);
+            });
+        });
+
+        
     </script>
 </head>
 <body>
@@ -79,7 +94,20 @@
             <input type="button" value="写入Cache测试" id="btnSetCache" />
             <br />
             <br />
-            <h3>权限接口测试：</h3>
+            <h3>荣誉管理接口测试：</h3>
+            <input type="button" value="api/honor/get" id="btnHonorGet" />
+            <br />
+            <br />
+            <input type="button" value="api/honor/add" id="btnHonorAdd" />
+            <br />
+            <br />
+            <input type="button" value="api/honor/delete" id="btnHonorDelete" />
+            <br />
+            <br />
+            <input type="button" value="api/honor/modify" id="btnHonorModify" />
+            <br />
+            <br />
+            @*<h3>权限接口测试：</h3>
             <input type="button" value="Authorize" id="btnOauthAuthorize" />
             <br />
             <br />
@@ -117,7 +145,7 @@
             <br />
             <input type="button" value="leavelesson" id="btnLeavelistLeavelesson" />
             <br />
-            <br />
+            <br />*@
         </div>
     </div>
 </body>

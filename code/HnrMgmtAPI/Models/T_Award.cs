@@ -16,7 +16,7 @@ namespace HnrMgmtAPI.Models
     {
         public string AwdID { get; set; }
         public string Name { get; set; }
-        public string OrderID { get; set; }
+        public string GradeName { get; set; }
         public string Grade { get; set; }
     }
 }
