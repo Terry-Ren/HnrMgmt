@@ -217,7 +217,9 @@
     <Compile Include="Common\AccessToken.cs" />
     <Compile Include="Common\Public.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\JC\AwardController.cs" />
     <Compile Include="Controllers\API\JC\HonorController.cs" />
+    <Compile Include="Controllers\API\JC\OrganizationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -227,8 +229,13 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\API\ApiResult.cs" />
     <Compile Include="Controllers\API\BaseApiController.cs" />
+    <Compile Include="Models\API\JC\AwardAdd.cs" />
+    <Compile Include="Models\API\JC\AwardModify.cs" />
+    <Compile Include="Models\API\JC\HonorAdd.cs" />
     <Compile Include="Models\API\JC\HonorModify.cs" />
-    <Compile Include="Models\API\JC\Return_GetHonor.cs" />
+    <Compile Include="Models\API\JC\OrganizationAdd.cs" />
+    <Compile Include="Models\API\JC\OrganizationModify.cs" />
+    <Compile Include="Models\API\JC\Return_GetList.cs" />
     <Compile Include="Models\API\ParameterCheck.cs" />
     <Compile Include="Models\API\UserInfo.cs" />
     <Compile Include="Models\HnrMgmt.Context.cs">
