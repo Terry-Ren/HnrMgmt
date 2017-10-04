@@ -21,6 +21,7 @@ namespace HnrMgmtAPI.Models
         public string IsTeam { get; set; }
         public string ProName { get; set; }
         public string AwdeeID { get; set; }
+        public string OrgID { get; set; }
         public string Teacher { get; set; }
         public string PicUrl { get; set; }
     }

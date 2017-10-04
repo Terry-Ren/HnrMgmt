@@ -10,10 +10,14 @@ using System;
 
 namespace HnrMgmtAPI.Controllers.API.JC
 {
-
     [RoutePrefix("api/honor")]
     public class HonorController : BaseApiController
     {
+        /// <summary>
+        ///  测试接口
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <returns></returns>
         [HttpGet, Route("testget")]
         public ApiResult TestGet(string access_token)
         {
@@ -69,6 +73,11 @@ namespace HnrMgmtAPI.Controllers.API.JC
             //return result;
         }
 
+        /// <summary>
+        ///  测试接口
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         [HttpGet, Route("testset")]
         public ApiResult Set(string value)
         {
@@ -82,16 +91,21 @@ namespace HnrMgmtAPI.Controllers.API.JC
             return result;
         }
 
+        /// <summary>
+        /// 获取全部记录 T_Honor
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <returns></returns>
         [HttpGet, Route("get")]
         public ApiResult Get(string access_token)
         {
-            result = AccessToken.Check(access_token, "");
+            result = AccessToken.Check(access_token, "api/honor/get");
             if (result == null)
             {
                 result = new ApiResult();
 
                 #region
-                Return_GetHonor returnData = new Return_GetHonor();
+                Return_GetList<T_Honor> returnData = new Return_GetList<T_Honor>();
 
                 result.status = "success";
                 result.messages = "获取数据成功";
@@ -116,10 +130,17 @@ namespace HnrMgmtAPI.Controllers.API.JC
             return result;
         }
 
+        /// <summary>
+        /// 根据页码和每页条数 获取记录 T_Honor
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="page">页码</param>
+        /// <param name="limit">每页显示条数</param>
+        /// <returns></returns>
         [HttpGet, Route("get")]
         public ApiResult Get(string access_token, int page, int limit)
         {
-            result = AccessToken.Check(access_token, "");
+            result = AccessToken.Check(access_token, "api/honor/get");
             if (result == null)
             {
 
@@ -134,7 +155,7 @@ namespace HnrMgmtAPI.Controllers.API.JC
                 }
                 #endregion
 
-                Return_GetHonor returnData = new Return_GetHonor();
+                Return_GetList<T_Honor> returnData = new Return_GetList<T_Honor>();
 
                 result.status = "success";
                 result.messages = "获取数据成功";
@@ -157,10 +178,17 @@ namespace HnrMgmtAPI.Controllers.API.JC
             return result;
         }
 
+        /// <summary>
+        /// 添加一条记录 T_Honor
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="Name">荣誉项目名称</param>
+        /// <param name="GradeName">荣誉项目级别</param>
+        /// <returns></returns>
         [HttpGet, Route("add")]
         public ApiResult Add(string access_token, string Name, string GradeName)
         {
-            result = AccessToken.Check(access_token, "");
+            result = AccessToken.Check(access_token, "api/honor/add");
             if (result == null)
             {
 
@@ -202,7 +230,7 @@ namespace HnrMgmtAPI.Controllers.API.JC
                     }
                     catch
                     {
-                        return Error("添加失败");
+                        return Error("添加失败，请检查参数是否正确");
                     }
                 }
                 #endregion
@@ -211,10 +239,16 @@ namespace HnrMgmtAPI.Controllers.API.JC
             return result;
         }
 
+        /// <summary>
+        /// 删除一条记录 T_Honor
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="honorID">荣誉项目ID</param>
+        /// <returns></returns>
         [HttpGet, Route("delete")]
         public ApiResult Delete(string access_token, string honorID)
         {
-            result = AccessToken.Check(access_token, "");
+            result = AccessToken.Check(access_token, "api/honor/delete");
             if (result == null)
             {
 
@@ -234,7 +268,7 @@ namespace HnrMgmtAPI.Controllers.API.JC
                     var honorList = from T_HnrRecord in db.T_HnrRecord where (T_HnrRecord.HonorID == honorID) select T_HnrRecord;
                     if (honorList.Any())
                     {
-                        return Error("包含此奖项获奖记录，不能删除");
+                        return Error("数据库中包含此奖项获奖记录，不能删除");
                     }
                     else
                     {
@@ -262,10 +296,15 @@ namespace HnrMgmtAPI.Controllers.API.JC
             return result;
         }
 
+        /// <summary>
+        /// 修改一条记录 T_Honor
+        /// </summary>
+        /// <param name="model">参数参考HonorModify模型</param>
+        /// <returns></returns>
         [HttpPost, Route("modify")]
         public ApiResult Modify([FromBody]HonorModify model)
         {
-            result = AccessToken.Check(model.access_token, "");
+            result = AccessToken.Check(model.access_token, "api/honor/modify");
             if (result == null)
             {
                 result = ParameterCheck.CheckParameters(model);
