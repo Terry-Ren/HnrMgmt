@@ -72,11 +72,13 @@
         </el-col>
       </div>     
     </section>
+      <!-- 底部栏 -->
+      <!-- <el-col :span="24" class="bottom-containers">
+        <span>Copyright © 1999-2017, RWS, All Rights Reserved </span>
+        </el-col> -->
   </el-col>
-  <!-- 底部栏 -->
-  <el-col :span="24" class="bottom-containers">
-    <span>Copyright © 1999-2017, RWS, All Rights Reserved </span>
-  </el-col>
+
+
 </el-row>
  </div>
 </template>
@@ -170,7 +172,12 @@
           height: calc(100% - 80px);
           border-radius: 0px;
           background-color: #333744;
-          width: 180px;
+      }
+      .el-menu {
+        width: 180px;
+      }
+      .el-menu--collapse {
+        width: 60px;
       }
 
       }
@@ -186,30 +193,21 @@
            background-color: #000000 red;
            box-sizing: border-box;
         }
+              //底部样式
+      // .bottom-containers{
+      //   position: absolute;
+      //   height: 50px;
+      //   background: #333744;
+      //   bottom:0px;
+      //   border: 1px solid #fff;
+      //   padding: 12px;
+
+      //   SPAN{
+      //     text-align: center;
+      //     color: white;
+      //     font-size: 14px;
+      //   }
+      // }
         }
-
-      //底部样式
-      .bottom-containers{
-        position: absolute;
-        height: 50px;
-        background: #333744;
-        bottom:0px;
-        border: 1px solid #fff;
-        padding: 12px;
-
-        SPAN{
-          text-align: center;
-          color: white;
-          font-size: 14px;
-        }
-      }
-
-
-      
-
-
-
-
-
   }
 </style>

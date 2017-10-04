@@ -9,10 +9,12 @@
       </el-breadcrumb>
   </el-col>
   <!-- 下方主内容 -->
-  <el-col :span="24">
+  <el-col :span="24" class="warp-main">
     <!-- 工具栏 -->
-    <el-col :span="1">
-      <el-button type="primary" icon="edit"></el-button>
+    <el-col :span="24" class="toolBar" >    
+      <el-form :inline="true">
+        <el-button type="primary" @click="getUser">新增荣誉</el-button>
+      </el-form>
     </el-col>
     <!-- 表格区 -->
     <el-col :span="24">
