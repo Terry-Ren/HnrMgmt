@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HnrMgmtAPI.Models
+namespace HnrMgmtAPI.Models.API
 {
     public class ApiResult
     {

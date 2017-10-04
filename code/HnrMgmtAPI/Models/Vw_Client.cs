@@ -12,10 +12,13 @@ namespace HnrMgmtAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class T_Honor
+    public partial class Vw_Client
     {
-        public string HonorID { get; set; }
         public string Name { get; set; }
-        public string GradeName { get; set; }
+        public string Expr1 { get; set; }
+        public string Password { get; set; }
+        public string Tel { get; set; }
+        public string Expr2 { get; set; }
+        public string State { get; set; }
     }
 }

@@ -12,10 +12,19 @@ namespace HnrMgmtAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class T_Honor
+    public partial class Vw_HnrExamine
     {
-        public string HonorID { get; set; }
         public string Name { get; set; }
         public string GradeName { get; set; }
+        public System.DateTime Time { get; set; }
+        public string Expr1 { get; set; }
+        public string Expr2 { get; set; }
+        public string Branch { get; set; }
+        public string PicUrl { get; set; }
+        public string Expr3 { get; set; }
+        public System.DateTime ApplyTime { get; set; }
+        public string Expr4 { get; set; }
+        public System.DateTime ExmTime { get; set; }
+        public string State { get; set; }
     }
 }
