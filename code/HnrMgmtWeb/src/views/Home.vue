@@ -21,9 +21,9 @@
         <i class="el-icon-caret-left" v-show="!isCollapse"></i>
       </el-button>
       <!-- 主菜单 -->
-      <el-menu class="el-menu-vertical-demo" :collapse="isCollapse">
+      <el-menu  :collapse="isCollapse" :default-active="$route.path" router>
         <!-- 首页 -->
-        <el-menu-item index="index">
+        <el-menu-item index="/hnrlist" > 
           <i class="el-icon-menu "></i>
           <span slot="title">首页</span>
         </el-menu-item>
@@ -33,7 +33,7 @@
             <i class="el-icon-edit "></i>
             <span slot="title">系统管理</span>
           </template>
-          <el-menu-item index="User">
+          <el-menu-item index="/index">
             账户管理
           </el-menu-item>
           <el-menu-item index="Role">
@@ -49,10 +49,10 @@
             <i class="el-icon-setting"></i>
             <span slot="title">基础数据</span>
           </template>
-          <el-menu-item index="HonorManag">
+          <el-menu-item index="/hnrlist" >
             荣誉项目管理
           </el-menu-item>
-          <el-menu-item index="AwardManag">
+          <el-menu-item index="/AwardManag">
             竞选项目管理
           </el-menu-item>
           <el-menu-item index="OrganiManag">
@@ -73,7 +73,10 @@
       </div>     
     </section>
   </el-col>
-
+  <!-- 底部栏 -->
+  <el-col :span="24" class="bottom-containers">
+    <span>Copyright © 1999-2017, RWS, All Rights Reserved </span>
+  </el-col>
 </el-row>
  </div>
 </template>
@@ -82,7 +85,7 @@
  export default {
    data() {
 	 return {
-      isCollapse: true
+      isCollapse: false
 	 }
 
    },
@@ -99,6 +102,7 @@
 </script>
 
 <style scoped lang="scss">
+//scoped范围样式，用于隔离组件的style
   .all-containers{
     position: absolute;
     top: 0px;
@@ -143,11 +147,6 @@
         top: 50px;
         bottom: 0px;
         overflow: hidden;
-        
-        &.showSidebar {
-          overflow-x: hidden;
-          overflow-y: auto;}
-
       }
 
       //左侧内容样式
@@ -156,7 +155,23 @@
         background: #333744;
         &::-webkit-scrollbar {
           display: none;
+        }
+        
+        &.showSidebar {
+          overflow-x: hidden;
+          overflow-y: auto;
           }
+
+
+        .el-menu {
+          height: 100%; /*写给不支持calc()的浏览器*/
+          height: -moz-calc(100% - 80px);
+          height: -webkit-calc(100% - 80px);
+          height: calc(100% - 80px);
+          border-radius: 0px;
+          background-color: #333744;
+          width: 180px;
+      }
 
       }
       //中间主内容样式
@@ -173,18 +188,28 @@
         }
         }
 
+      //底部样式
+      .bottom-containers{
+        position: absolute;
+        height: 50px;
+        background: #333744;
+        bottom:0px;
+        border: 1px solid #fff;
+        padding: 12px;
+
+        SPAN{
+          text-align: center;
+          color: white;
+          font-size: 14px;
+        }
+      }
+
+
       
 
 
 
 
 
-  }
-</style>
-
-<style>
-  .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
-    min-height: 400px;
   }
 </style>
