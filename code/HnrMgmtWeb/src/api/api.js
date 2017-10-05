@@ -1,8 +1,15 @@
 import axios from 'axios'
 
-let baseUrl = 'http://localhost:59996/'
-
-export const reqGetBookListPage = params => { return axios.get(`${baseUrl}api/customers`) }
+let base = 'http://localhost:59996/'
 
 // get请求参数格式写法
-export const reqGetAwdListPage = params => { return axios.get(`${baseUrl}api/award/get`, {params: params}) }
+export const reqGetAwdListPage = params => { return axios.get(`${base}api/award/get`, {params: params}) }
+
+// 请求荣誉列表
+export const reqGetHonorList = params => { return axios.get(`${base}api/honor/get?access_token=11`) }
+// 添加荣誉项
+export const reqAddHonor = params => { return axios.get(`${base}api/honor/add?access_token=11`, { params: params }) }
+// 修改荣誉项
+export const posModifyHoenr = params => { return axios.post(`${base}api/honor/modify`, params) }
+// 删除一项荣誉
+export const reqDeleteHonor = params => { return axios.get(`${base}api/honor/delete`, { params: params }) }
