@@ -99,6 +99,7 @@ namespace HnrMgmtAPI.Controllers.API.JC
         [HttpGet, Route("get")]
         public ApiResult Get(string access_token)
         {
+            System.Threading.Thread.Sleep(2000);
             result = AccessToken.Check(access_token, "api/honor/get");
             if (result == null)
             {
