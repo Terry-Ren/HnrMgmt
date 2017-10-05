@@ -16,10 +16,12 @@
     <!-- 左侧导航区 -->
     <aside :class="{showSidebar:!isCollapse}">
       <!-- 展开关闭按钮 -->
+      <div class="asid-button">
       <el-button  type="primary" @click.prevent="collapse">
         <i class="el-icon-caret-right" v-show="isCollapse"></i>
         <i class="el-icon-caret-left" v-show="!isCollapse"></i>
       </el-button>
+      </div>
       <!-- 主菜单 -->
       <el-menu  :collapse="isCollapse" :default-active="$route.path" router>
         <!-- 首页 -->
@@ -157,6 +159,10 @@
         background: #333744;
         &::-webkit-scrollbar {
           display: none;
+        }
+
+        .asid-button{
+          text-align: center;
         }
         
         &.showSidebar {
