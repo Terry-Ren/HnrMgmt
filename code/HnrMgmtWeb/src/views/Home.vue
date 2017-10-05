@@ -55,7 +55,7 @@
             荣誉项目管理
           </el-menu-item>
           <el-menu-item index="/awdlist">
-            竞选项目管理
+            竞赛项目管理
           </el-menu-item>
           <el-menu-item index="OrganiManag">
             单位学院管理
