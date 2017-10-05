@@ -12,13 +12,14 @@ namespace HnrMgmtAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Vw_Client
+    public partial class T_Account
     {
+        public string AccountID { get; set; }
         public string Name { get; set; }
-        public string Expr1 { get; set; }
+        public string OrgID { get; set; }
         public string Password { get; set; }
         public string Tel { get; set; }
-        public string Expr2 { get; set; }
+        public string RoleID { get; set; }
         public string State { get; set; }
     }
 }

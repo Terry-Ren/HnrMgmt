@@ -2,6 +2,9 @@ import axios from 'axios'
 
 let base = 'http://localhost:59996/'
 
+// get请求参数格式写法
+export const reqGetAwdListPage = params => { return axios.get(`${base}api/award/get`, {params: params}) }
+
 // 请求荣誉列表
 export const reqGetHonorList = params => { return axios.get(`${base}api/honor/get?access_token=11`) }
 // 添加荣誉项

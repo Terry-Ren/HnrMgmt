@@ -33,8 +33,7 @@
     </el-col>
     <!-- 下方工具条 -->
     <el-col :span="24">
-      <el-pagination   small layout="prev, pager, next" :total="20">
-  </el-pagination>
+      <el-pagination layout="prev, pager, next" :page-size="5" :total="20"></el-pagination>
     </el-col>
 
     <!-- 新增表单 -->
@@ -221,6 +220,4 @@ import {reqGetHonorList,reqAddHonor,posModifyHonor,reqDeleteHonor} from '../../a
 </script>
 
 <style scoped lang="scss">
-
- 
 </style>

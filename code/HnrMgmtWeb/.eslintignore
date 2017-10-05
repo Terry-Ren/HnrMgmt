@@ -2,3 +2,4 @@ build/*.js
 config/*.js
 src/views/*.vue
 src/components/BasicData/*.vue
+src/common/*.js
