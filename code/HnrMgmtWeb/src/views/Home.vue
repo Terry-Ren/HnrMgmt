@@ -52,7 +52,7 @@
           <el-menu-item index="/hnrlist" >
             荣誉项目管理
           </el-menu-item>
-          <el-menu-item index="/AwardManag">
+          <el-menu-item index="/awdlist">
             竞选项目管理
           </el-menu-item>
           <el-menu-item index="OrganiManag">

@@ -25,10 +25,10 @@ namespace HnrMgmtAPI.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<T_Account> T_Account { get; set; }
         public virtual DbSet<T_Award> T_Award { get; set; }
         public virtual DbSet<T_Awardee> T_Awardee { get; set; }
         public virtual DbSet<T_AwdRecord> T_AwdRecord { get; set; }
-        public virtual DbSet<T_Client> T_Client { get; set; }
         public virtual DbSet<T_ExmRecord> T_ExmRecord { get; set; }
         public virtual DbSet<T_HnrRecord> T_HnrRecord { get; set; }
         public virtual DbSet<T_Honor> T_Honor { get; set; }
@@ -36,12 +36,6 @@ namespace HnrMgmtAPI.Models
         public virtual DbSet<T_Right> T_Right { get; set; }
         public virtual DbSet<T_Role> T_Role { get; set; }
         public virtual DbSet<T_Team> T_Team { get; set; }
-        public virtual DbSet<Vw_Client> Vw_Client { get; set; }
-        public virtual DbSet<Vw_HnrExamine> Vw_HnrExamine { get; set; }
-        public virtual DbSet<Vw_HnrRecord> Vw_HnrRecord { get; set; }
-        public virtual DbSet<Vw_SinAwdExamine> Vw_SinAwdExamine { get; set; }
-        public virtual DbSet<Vw_SinAwdRecord> Vw_SinAwdRecord { get; set; }
-        public virtual DbSet<Vw_TeamAwdExamine> Vw_TeamAwdExamine { get; set; }
-        public virtual DbSet<Vw_TeamAwdRecord> Vw_TeamAwdRecord { get; set; }
+        public virtual DbSet<vw_Account> vw_Account { get; set; }
     }
 }

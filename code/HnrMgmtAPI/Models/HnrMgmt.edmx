@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="DB_whut_HnrMgmtModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="T_Account">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="OrgID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Tel" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="RoleID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="State" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
         <EntityType Name="T_Award">
           <Key>
             <PropertyRef Name="AwdID" />
@@ -37,18 +49,6 @@
           <Property Name="OrgID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="Teacher" Type="varchar" MaxLength="128" Nullable="false" />
           <Property Name="PicUrl" Type="varchar" MaxLength="64" Nullable="false" />
-        </EntityType>
-        <EntityType Name="T_Client">
-          <Key>
-            <PropertyRef Name="ClientID" />
-          </Key>
-          <Property Name="ClientID" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="OrgID" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Tel" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="RoleID" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="State" Type="varchar" MaxLength="64" Nullable="false" />
         </EntityType>
         <EntityType Name="T_ExmRecord">
           <Key>
@@ -113,204 +113,32 @@
           <Property Name="Rank" Type="varchar" MaxLength="64" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.Vw_Client”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
-        <EntityType Name="Vw_Client">
+警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.vw_Account”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="vw_Account">
           <Key>
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="Expr1" />
-            <PropertyRef Name="Password" />
+            <PropertyRef Name="AccountID" />
+            <PropertyRef Name="AccountName" />
+            <PropertyRef Name="OrgID" />
+            <PropertyRef Name="OrgName" />
+            <PropertyRef Name="RoleID" />
+            <PropertyRef Name="RoleName" />
             <PropertyRef Name="Tel" />
-            <PropertyRef Name="Expr2" />
             <PropertyRef Name="State" />
           </Key>
-          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Expr1" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="AccountID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="AccountName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="OrgID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="OrgName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="RoleID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="Tel" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Expr2" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="State" Type="varchar" MaxLength="64" Nullable="false" />
         </EntityType>
-        <!--生成过程中发现错误:
-警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.Vw_HnrExamine”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
-        <EntityType Name="Vw_HnrExamine">
-          <Key>
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="GradeName" />
-            <PropertyRef Name="Time" />
-            <PropertyRef Name="Expr1" />
-            <PropertyRef Name="Expr2" />
-            <PropertyRef Name="Branch" />
-            <PropertyRef Name="PicUrl" />
-            <PropertyRef Name="Expr3" />
-            <PropertyRef Name="ApplyTime" />
-            <PropertyRef Name="Expr4" />
-            <PropertyRef Name="ExmTime" />
-            <PropertyRef Name="State" />
-          </Key>
-          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="GradeName" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="Time" Type="datetime" Nullable="false" />
-          <Property Name="Expr1" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Expr2" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Branch" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="PicUrl" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Expr3" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="ApplyTime" Type="datetime" Nullable="false" />
-          <Property Name="Expr4" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="ExmTime" Type="datetime" Nullable="false" />
-          <Property Name="State" Type="char" MaxLength="1" Nullable="false" />
-        </EntityType>
-        <!--生成过程中发现错误:
-警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.Vw_HnrRecord”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
-        <EntityType Name="Vw_HnrRecord">
-          <Key>
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="GradeName" />
-            <PropertyRef Name="Time" />
-            <PropertyRef Name="Expr1" />
-            <PropertyRef Name="Expr2" />
-            <PropertyRef Name="Branch" />
-            <PropertyRef Name="PicUrl" />
-          </Key>
-          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="GradeName" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="Time" Type="datetime" Nullable="false" />
-          <Property Name="Expr1" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Expr2" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Branch" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="PicUrl" Type="varchar" MaxLength="64" Nullable="false" />
-        </EntityType>
-        <!--生成过程中发现错误:
-警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.Vw_SinAwdExamine”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
-        <EntityType Name="Vw_SinAwdExamine">
-          <Key>
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="GradeName" />
-            <PropertyRef Name="Year" />
-            <PropertyRef Name="IsTeam" />
-            <PropertyRef Name="Expr1" />
-            <PropertyRef Name="Expr2" />
-            <PropertyRef Name="Teacher" />
-            <PropertyRef Name="PicUrl" />
-            <PropertyRef Name="Expr3" />
-            <PropertyRef Name="ApplyTime" />
-            <PropertyRef Name="Expr4" />
-            <PropertyRef Name="ExmTime" />
-            <PropertyRef Name="State" />
-          </Key>
-          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="GradeName" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="Grade" Type="char" MaxLength="1" />
-          <Property Name="Year" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Term" Type="varchar" MaxLength="64" />
-          <Property Name="IsTeam" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="ProName" Type="varchar" MaxLength="64" />
-          <Property Name="Expr1" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Expr2" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Branch" Type="varchar" MaxLength="64" />
-          <Property Name="Teacher" Type="varchar" MaxLength="128" Nullable="false" />
-          <Property Name="PicUrl" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Expr3" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="ApplyTime" Type="datetime" Nullable="false" />
-          <Property Name="Expr4" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="ExmTime" Type="datetime" Nullable="false" />
-          <Property Name="State" Type="char" MaxLength="1" Nullable="false" />
-        </EntityType>
-        <!--生成过程中发现错误:
-警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.Vw_SinAwdRecord”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
-        <EntityType Name="Vw_SinAwdRecord">
-          <Key>
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="GradeName" />
-            <PropertyRef Name="Year" />
-            <PropertyRef Name="IsTeam" />
-            <PropertyRef Name="Expr1" />
-            <PropertyRef Name="Expr2" />
-            <PropertyRef Name="Teacher" />
-            <PropertyRef Name="PicUrl" />
-          </Key>
-          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="GradeName" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="Grade" Type="char" MaxLength="1" />
-          <Property Name="Year" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Term" Type="varchar" MaxLength="64" />
-          <Property Name="ProName" Type="varchar" MaxLength="64" />
-          <Property Name="IsTeam" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="Expr1" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Expr2" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Teacher" Type="varchar" MaxLength="128" Nullable="false" />
-          <Property Name="PicUrl" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Branch" Type="varchar" MaxLength="64" />
-        </EntityType>
-        <!--生成过程中发现错误:
-警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.Vw_TeamAwdExamine”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
-        <EntityType Name="Vw_TeamAwdExamine">
-          <Key>
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="GradeName" />
-            <PropertyRef Name="Year" />
-            <PropertyRef Name="IsTeam" />
-            <PropertyRef Name="Expr1" />
-            <PropertyRef Name="Expr2" />
-            <PropertyRef Name="Rank" />
-            <PropertyRef Name="Teacher" />
-            <PropertyRef Name="PicUrl" />
-            <PropertyRef Name="Expr3" />
-            <PropertyRef Name="ApplyTime" />
-            <PropertyRef Name="Expr4" />
-            <PropertyRef Name="ExmTime" />
-          </Key>
-          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="GradeName" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="Grade" Type="char" MaxLength="1" />
-          <Property Name="Year" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Term" Type="varchar" MaxLength="64" />
-          <Property Name="IsTeam" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="ProName" Type="varchar" MaxLength="64" />
-          <Property Name="Expr1" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Expr2" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Branch" Type="varchar" MaxLength="64" />
-          <Property Name="Rank" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Teacher" Type="varchar" MaxLength="128" Nullable="false" />
-          <Property Name="PicUrl" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Expr3" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="ApplyTime" Type="datetime" Nullable="false" />
-          <Property Name="Expr4" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="ExmTime" Type="datetime" Nullable="false" />
-        </EntityType>
-        <!--生成过程中发现错误:
-警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.Vw_TeamAwdRecord”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
-        <EntityType Name="Vw_TeamAwdRecord">
-          <Key>
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="GradeName" />
-            <PropertyRef Name="Year" />
-            <PropertyRef Name="IsTeam" />
-            <PropertyRef Name="Expr1" />
-            <PropertyRef Name="Expr2" />
-            <PropertyRef Name="Rank" />
-            <PropertyRef Name="Teacher" />
-            <PropertyRef Name="PicUrl" />
-          </Key>
-          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="GradeName" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="Grade" Type="char" MaxLength="1" />
-          <Property Name="Year" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Term" Type="varchar" MaxLength="64" />
-          <Property Name="IsTeam" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="ProName" Type="varchar" MaxLength="64" />
-          <Property Name="Expr1" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Expr2" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Rank" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Branch" Type="varchar" MaxLength="64" />
-          <Property Name="Teacher" Type="varchar" MaxLength="128" Nullable="false" />
-          <Property Name="PicUrl" Type="varchar" MaxLength="64" Nullable="false" />
-        </EntityType>
         <EntityContainer Name="DB_whut_HnrMgmtModelStoreContainer">
+          <EntitySet Name="T_Account" EntityType="Self.T_Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Award" EntityType="Self.T_Award" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Awardee" EntityType="Self.T_Awardee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_AwdRecord" EntityType="Self.T_AwdRecord" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="T_Client" EntityType="Self.T_Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_ExmRecord" EntityType="Self.T_ExmRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_HnrRecord" EntityType="Self.T_HnrRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Honor" EntityType="Self.T_Honor" Schema="dbo" store:Type="Tables" />
@@ -318,117 +146,17 @@
           <EntitySet Name="T_Right" EntityType="Self.T_Right" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Role" EntityType="Self.T_Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Team" EntityType="Self.T_Team" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Vw_Client" EntityType="Self.Vw_Client" store:Type="Views" store:Schema="dbo">
+          <EntitySet Name="vw_Account" EntityType="Self.vw_Account" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [Vw_Client].[Name] AS [Name], 
-    [Vw_Client].[Expr1] AS [Expr1], 
-    [Vw_Client].[Password] AS [Password], 
-    [Vw_Client].[Tel] AS [Tel], 
-    [Vw_Client].[Expr2] AS [Expr2], 
-    [Vw_Client].[State] AS [State]
-    FROM [dbo].[Vw_Client] AS [Vw_Client]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Vw_HnrExamine" EntityType="Self.Vw_HnrExamine" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Vw_HnrExamine].[Name] AS [Name], 
-    [Vw_HnrExamine].[GradeName] AS [GradeName], 
-    [Vw_HnrExamine].[Time] AS [Time], 
-    [Vw_HnrExamine].[Expr1] AS [Expr1], 
-    [Vw_HnrExamine].[Expr2] AS [Expr2], 
-    [Vw_HnrExamine].[Branch] AS [Branch], 
-    [Vw_HnrExamine].[PicUrl] AS [PicUrl], 
-    [Vw_HnrExamine].[Expr3] AS [Expr3], 
-    [Vw_HnrExamine].[ApplyTime] AS [ApplyTime], 
-    [Vw_HnrExamine].[Expr4] AS [Expr4], 
-    [Vw_HnrExamine].[ExmTime] AS [ExmTime], 
-    [Vw_HnrExamine].[State] AS [State]
-    FROM [dbo].[Vw_HnrExamine] AS [Vw_HnrExamine]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Vw_HnrRecord" EntityType="Self.Vw_HnrRecord" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Vw_HnrRecord].[Name] AS [Name], 
-    [Vw_HnrRecord].[GradeName] AS [GradeName], 
-    [Vw_HnrRecord].[Time] AS [Time], 
-    [Vw_HnrRecord].[Expr1] AS [Expr1], 
-    [Vw_HnrRecord].[Expr2] AS [Expr2], 
-    [Vw_HnrRecord].[Branch] AS [Branch], 
-    [Vw_HnrRecord].[PicUrl] AS [PicUrl]
-    FROM [dbo].[Vw_HnrRecord] AS [Vw_HnrRecord]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Vw_SinAwdExamine" EntityType="Self.Vw_SinAwdExamine" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Vw_SinAwdExamine].[Name] AS [Name], 
-    [Vw_SinAwdExamine].[GradeName] AS [GradeName], 
-    [Vw_SinAwdExamine].[Grade] AS [Grade], 
-    [Vw_SinAwdExamine].[Year] AS [Year], 
-    [Vw_SinAwdExamine].[Term] AS [Term], 
-    [Vw_SinAwdExamine].[IsTeam] AS [IsTeam], 
-    [Vw_SinAwdExamine].[ProName] AS [ProName], 
-    [Vw_SinAwdExamine].[Expr1] AS [Expr1], 
-    [Vw_SinAwdExamine].[Expr2] AS [Expr2], 
-    [Vw_SinAwdExamine].[Branch] AS [Branch], 
-    [Vw_SinAwdExamine].[Teacher] AS [Teacher], 
-    [Vw_SinAwdExamine].[PicUrl] AS [PicUrl], 
-    [Vw_SinAwdExamine].[Expr3] AS [Expr3], 
-    [Vw_SinAwdExamine].[ApplyTime] AS [ApplyTime], 
-    [Vw_SinAwdExamine].[Expr4] AS [Expr4], 
-    [Vw_SinAwdExamine].[ExmTime] AS [ExmTime], 
-    [Vw_SinAwdExamine].[State] AS [State]
-    FROM [dbo].[Vw_SinAwdExamine] AS [Vw_SinAwdExamine]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Vw_SinAwdRecord" EntityType="Self.Vw_SinAwdRecord" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Vw_SinAwdRecord].[Name] AS [Name], 
-    [Vw_SinAwdRecord].[GradeName] AS [GradeName], 
-    [Vw_SinAwdRecord].[Grade] AS [Grade], 
-    [Vw_SinAwdRecord].[Year] AS [Year], 
-    [Vw_SinAwdRecord].[Term] AS [Term], 
-    [Vw_SinAwdRecord].[ProName] AS [ProName], 
-    [Vw_SinAwdRecord].[IsTeam] AS [IsTeam], 
-    [Vw_SinAwdRecord].[Expr1] AS [Expr1], 
-    [Vw_SinAwdRecord].[Expr2] AS [Expr2], 
-    [Vw_SinAwdRecord].[Teacher] AS [Teacher], 
-    [Vw_SinAwdRecord].[PicUrl] AS [PicUrl], 
-    [Vw_SinAwdRecord].[Branch] AS [Branch]
-    FROM [dbo].[Vw_SinAwdRecord] AS [Vw_SinAwdRecord]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Vw_TeamAwdExamine" EntityType="Self.Vw_TeamAwdExamine" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Vw_TeamAwdExamine].[Name] AS [Name], 
-    [Vw_TeamAwdExamine].[GradeName] AS [GradeName], 
-    [Vw_TeamAwdExamine].[Grade] AS [Grade], 
-    [Vw_TeamAwdExamine].[Year] AS [Year], 
-    [Vw_TeamAwdExamine].[Term] AS [Term], 
-    [Vw_TeamAwdExamine].[IsTeam] AS [IsTeam], 
-    [Vw_TeamAwdExamine].[ProName] AS [ProName], 
-    [Vw_TeamAwdExamine].[Expr1] AS [Expr1], 
-    [Vw_TeamAwdExamine].[Expr2] AS [Expr2], 
-    [Vw_TeamAwdExamine].[Branch] AS [Branch], 
-    [Vw_TeamAwdExamine].[Rank] AS [Rank], 
-    [Vw_TeamAwdExamine].[Teacher] AS [Teacher], 
-    [Vw_TeamAwdExamine].[PicUrl] AS [PicUrl], 
-    [Vw_TeamAwdExamine].[Expr3] AS [Expr3], 
-    [Vw_TeamAwdExamine].[ApplyTime] AS [ApplyTime], 
-    [Vw_TeamAwdExamine].[Expr4] AS [Expr4], 
-    [Vw_TeamAwdExamine].[ExmTime] AS [ExmTime]
-    FROM [dbo].[Vw_TeamAwdExamine] AS [Vw_TeamAwdExamine]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Vw_TeamAwdRecord" EntityType="Self.Vw_TeamAwdRecord" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Vw_TeamAwdRecord].[Name] AS [Name], 
-    [Vw_TeamAwdRecord].[GradeName] AS [GradeName], 
-    [Vw_TeamAwdRecord].[Grade] AS [Grade], 
-    [Vw_TeamAwdRecord].[Year] AS [Year], 
-    [Vw_TeamAwdRecord].[Term] AS [Term], 
-    [Vw_TeamAwdRecord].[IsTeam] AS [IsTeam], 
-    [Vw_TeamAwdRecord].[ProName] AS [ProName], 
-    [Vw_TeamAwdRecord].[Expr1] AS [Expr1], 
-    [Vw_TeamAwdRecord].[Expr2] AS [Expr2], 
-    [Vw_TeamAwdRecord].[Rank] AS [Rank], 
-    [Vw_TeamAwdRecord].[Branch] AS [Branch], 
-    [Vw_TeamAwdRecord].[Teacher] AS [Teacher], 
-    [Vw_TeamAwdRecord].[PicUrl] AS [PicUrl]
-    FROM [dbo].[Vw_TeamAwdRecord] AS [Vw_TeamAwdRecord]</DefiningQuery>
+    [vw_Account].[AccountID] AS [AccountID], 
+    [vw_Account].[AccountName] AS [AccountName], 
+    [vw_Account].[OrgID] AS [OrgID], 
+    [vw_Account].[OrgName] AS [OrgName], 
+    [vw_Account].[RoleID] AS [RoleID], 
+    [vw_Account].[RoleName] AS [RoleName], 
+    [vw_Account].[Tel] AS [Tel], 
+    [vw_Account].[State] AS [State]
+    FROM [dbo].[vw_Account] AS [vw_Account]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema>
@@ -436,6 +164,18 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DB_whut_HnrMgmtModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="T_Account">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
         <EntityType Name="T_Award">
           <Key>
             <PropertyRef Name="AwdID" />
@@ -468,18 +208,6 @@
           <Property Name="OrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Teacher" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PicUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
-        <EntityType Name="T_Client">
-          <Key>
-            <PropertyRef Name="ClientID" />
-          </Key>
-          <Property Name="ClientID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="OrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="T_ExmRecord">
           <Key>
@@ -543,191 +271,31 @@
           <Property Name="AwdeeID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Rank" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <EntityType Name="Vw_Client">
+        <EntityType Name="vw_Account">
           <Key>
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="Expr1" />
-            <PropertyRef Name="Password" />
+            <PropertyRef Name="AccountID" />
+            <PropertyRef Name="AccountName" />
+            <PropertyRef Name="OrgID" />
+            <PropertyRef Name="OrgName" />
+            <PropertyRef Name="RoleID" />
+            <PropertyRef Name="RoleName" />
             <PropertyRef Name="Tel" />
-            <PropertyRef Name="Expr2" />
             <PropertyRef Name="State" />
           </Key>
-          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Expr1" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AccountID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AccountName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrgName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Expr2" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <EntityType Name="Vw_HnrExamine">
-          <Key>
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="GradeName" />
-            <PropertyRef Name="Time" />
-            <PropertyRef Name="Expr1" />
-            <PropertyRef Name="Expr2" />
-            <PropertyRef Name="Branch" />
-            <PropertyRef Name="PicUrl" />
-            <PropertyRef Name="Expr3" />
-            <PropertyRef Name="ApplyTime" />
-            <PropertyRef Name="Expr4" />
-            <PropertyRef Name="ExmTime" />
-            <PropertyRef Name="State" />
-          </Key>
-          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="GradeName" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Expr1" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Expr2" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Branch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PicUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Expr3" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ApplyTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Expr4" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ExmTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="State" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Vw_HnrRecord">
-          <Key>
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="GradeName" />
-            <PropertyRef Name="Time" />
-            <PropertyRef Name="Expr1" />
-            <PropertyRef Name="Expr2" />
-            <PropertyRef Name="Branch" />
-            <PropertyRef Name="PicUrl" />
-          </Key>
-          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="GradeName" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Expr1" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Expr2" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Branch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PicUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Vw_SinAwdExamine">
-          <Key>
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="GradeName" />
-            <PropertyRef Name="Year" />
-            <PropertyRef Name="IsTeam" />
-            <PropertyRef Name="Expr1" />
-            <PropertyRef Name="Expr2" />
-            <PropertyRef Name="Teacher" />
-            <PropertyRef Name="PicUrl" />
-            <PropertyRef Name="Expr3" />
-            <PropertyRef Name="ApplyTime" />
-            <PropertyRef Name="Expr4" />
-            <PropertyRef Name="ExmTime" />
-            <PropertyRef Name="State" />
-          </Key>
-          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="GradeName" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Grade" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Year" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Term" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="IsTeam" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="ProName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Expr1" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Expr2" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Branch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Teacher" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PicUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Expr3" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ApplyTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Expr4" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ExmTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="State" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Vw_SinAwdRecord">
-          <Key>
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="GradeName" />
-            <PropertyRef Name="Year" />
-            <PropertyRef Name="IsTeam" />
-            <PropertyRef Name="Expr1" />
-            <PropertyRef Name="Expr2" />
-            <PropertyRef Name="Teacher" />
-            <PropertyRef Name="PicUrl" />
-          </Key>
-          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="GradeName" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Grade" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Year" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Term" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="ProName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="IsTeam" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Expr1" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Expr2" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Teacher" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PicUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Branch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Vw_TeamAwdExamine">
-          <Key>
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="GradeName" />
-            <PropertyRef Name="Year" />
-            <PropertyRef Name="IsTeam" />
-            <PropertyRef Name="Expr1" />
-            <PropertyRef Name="Expr2" />
-            <PropertyRef Name="Rank" />
-            <PropertyRef Name="Teacher" />
-            <PropertyRef Name="PicUrl" />
-            <PropertyRef Name="Expr3" />
-            <PropertyRef Name="ApplyTime" />
-            <PropertyRef Name="Expr4" />
-            <PropertyRef Name="ExmTime" />
-          </Key>
-          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="GradeName" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Grade" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Year" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Term" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="IsTeam" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="ProName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Expr1" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Expr2" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Branch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Rank" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Teacher" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PicUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Expr3" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ApplyTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Expr4" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ExmTime" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="Vw_TeamAwdRecord">
-          <Key>
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="GradeName" />
-            <PropertyRef Name="Year" />
-            <PropertyRef Name="IsTeam" />
-            <PropertyRef Name="Expr1" />
-            <PropertyRef Name="Expr2" />
-            <PropertyRef Name="Rank" />
-            <PropertyRef Name="Teacher" />
-            <PropertyRef Name="PicUrl" />
-          </Key>
-          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="GradeName" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Grade" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Year" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Term" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="IsTeam" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="ProName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Expr1" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Expr2" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Rank" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Branch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Teacher" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PicUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="T_Account" EntityType="Self.T_Account" />
           <EntitySet Name="T_Award" EntityType="Self.T_Award" />
           <EntitySet Name="T_Awardee" EntityType="Self.T_Awardee" />
           <EntitySet Name="T_AwdRecord" EntityType="Self.T_AwdRecord" />
-          <EntitySet Name="T_Client" EntityType="Self.T_Client" />
           <EntitySet Name="T_ExmRecord" EntityType="Self.T_ExmRecord" />
           <EntitySet Name="T_HnrRecord" EntityType="Self.T_HnrRecord" />
           <EntitySet Name="T_Honor" EntityType="Self.T_Honor" />
@@ -735,13 +303,7 @@
           <EntitySet Name="T_Right" EntityType="Self.T_Right" />
           <EntitySet Name="T_Role" EntityType="Self.T_Role" />
           <EntitySet Name="T_Team" EntityType="Self.T_Team" />
-          <EntitySet Name="Vw_Client" EntityType="Self.Vw_Client" />
-          <EntitySet Name="Vw_HnrExamine" EntityType="Self.Vw_HnrExamine" />
-          <EntitySet Name="Vw_HnrRecord" EntityType="Self.Vw_HnrRecord" />
-          <EntitySet Name="Vw_SinAwdExamine" EntityType="Self.Vw_SinAwdExamine" />
-          <EntitySet Name="Vw_SinAwdRecord" EntityType="Self.Vw_SinAwdRecord" />
-          <EntitySet Name="Vw_TeamAwdExamine" EntityType="Self.Vw_TeamAwdExamine" />
-          <EntitySet Name="Vw_TeamAwdRecord" EntityType="Self.Vw_TeamAwdRecord" />
+          <EntitySet Name="vw_Account" EntityType="Self.vw_Account" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -749,6 +311,19 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DB_whut_HnrMgmtModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="T_Account">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_Account">
+              <MappingFragment StoreEntitySet="T_Account">
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="T_Award">
             <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_Award">
               <MappingFragment StoreEntitySet="T_Award">
@@ -782,19 +357,6 @@
                 <ScalarProperty Name="OrgID" ColumnName="OrgID" />
                 <ScalarProperty Name="Teacher" ColumnName="Teacher" />
                 <ScalarProperty Name="PicUrl" ColumnName="PicUrl" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="T_Client">
-            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_Client">
-              <MappingFragment StoreEntitySet="T_Client">
-                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Tel" ColumnName="Tel" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="State" ColumnName="State" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -867,129 +429,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Vw_Client">
-            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.Vw_Client">
-              <MappingFragment StoreEntitySet="Vw_Client">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
+          <EntitySetMapping Name="vw_Account">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.vw_Account">
+              <MappingFragment StoreEntitySet="vw_Account">
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+                <ScalarProperty Name="OrgName" ColumnName="OrgName" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="Tel" ColumnName="Tel" />
-                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
                 <ScalarProperty Name="State" ColumnName="State" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Vw_HnrExamine">
-            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.Vw_HnrExamine">
-              <MappingFragment StoreEntitySet="Vw_HnrExamine">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="GradeName" ColumnName="GradeName" />
-                <ScalarProperty Name="Time" ColumnName="Time" />
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
-                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
-                <ScalarProperty Name="Branch" ColumnName="Branch" />
-                <ScalarProperty Name="PicUrl" ColumnName="PicUrl" />
-                <ScalarProperty Name="Expr3" ColumnName="Expr3" />
-                <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
-                <ScalarProperty Name="Expr4" ColumnName="Expr4" />
-                <ScalarProperty Name="ExmTime" ColumnName="ExmTime" />
-                <ScalarProperty Name="State" ColumnName="State" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Vw_HnrRecord">
-            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.Vw_HnrRecord">
-              <MappingFragment StoreEntitySet="Vw_HnrRecord">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="GradeName" ColumnName="GradeName" />
-                <ScalarProperty Name="Time" ColumnName="Time" />
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
-                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
-                <ScalarProperty Name="Branch" ColumnName="Branch" />
-                <ScalarProperty Name="PicUrl" ColumnName="PicUrl" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Vw_SinAwdExamine">
-            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.Vw_SinAwdExamine">
-              <MappingFragment StoreEntitySet="Vw_SinAwdExamine">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="GradeName" ColumnName="GradeName" />
-                <ScalarProperty Name="Grade" ColumnName="Grade" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Term" ColumnName="Term" />
-                <ScalarProperty Name="IsTeam" ColumnName="IsTeam" />
-                <ScalarProperty Name="ProName" ColumnName="ProName" />
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
-                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
-                <ScalarProperty Name="Branch" ColumnName="Branch" />
-                <ScalarProperty Name="Teacher" ColumnName="Teacher" />
-                <ScalarProperty Name="PicUrl" ColumnName="PicUrl" />
-                <ScalarProperty Name="Expr3" ColumnName="Expr3" />
-                <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
-                <ScalarProperty Name="Expr4" ColumnName="Expr4" />
-                <ScalarProperty Name="ExmTime" ColumnName="ExmTime" />
-                <ScalarProperty Name="State" ColumnName="State" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Vw_SinAwdRecord">
-            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.Vw_SinAwdRecord">
-              <MappingFragment StoreEntitySet="Vw_SinAwdRecord">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="GradeName" ColumnName="GradeName" />
-                <ScalarProperty Name="Grade" ColumnName="Grade" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Term" ColumnName="Term" />
-                <ScalarProperty Name="ProName" ColumnName="ProName" />
-                <ScalarProperty Name="IsTeam" ColumnName="IsTeam" />
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
-                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
-                <ScalarProperty Name="Teacher" ColumnName="Teacher" />
-                <ScalarProperty Name="PicUrl" ColumnName="PicUrl" />
-                <ScalarProperty Name="Branch" ColumnName="Branch" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Vw_TeamAwdExamine">
-            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.Vw_TeamAwdExamine">
-              <MappingFragment StoreEntitySet="Vw_TeamAwdExamine">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="GradeName" ColumnName="GradeName" />
-                <ScalarProperty Name="Grade" ColumnName="Grade" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Term" ColumnName="Term" />
-                <ScalarProperty Name="IsTeam" ColumnName="IsTeam" />
-                <ScalarProperty Name="ProName" ColumnName="ProName" />
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
-                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
-                <ScalarProperty Name="Branch" ColumnName="Branch" />
-                <ScalarProperty Name="Rank" ColumnName="Rank" />
-                <ScalarProperty Name="Teacher" ColumnName="Teacher" />
-                <ScalarProperty Name="PicUrl" ColumnName="PicUrl" />
-                <ScalarProperty Name="Expr3" ColumnName="Expr3" />
-                <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
-                <ScalarProperty Name="Expr4" ColumnName="Expr4" />
-                <ScalarProperty Name="ExmTime" ColumnName="ExmTime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Vw_TeamAwdRecord">
-            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.Vw_TeamAwdRecord">
-              <MappingFragment StoreEntitySet="Vw_TeamAwdRecord">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="GradeName" ColumnName="GradeName" />
-                <ScalarProperty Name="Grade" ColumnName="Grade" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Term" ColumnName="Term" />
-                <ScalarProperty Name="IsTeam" ColumnName="IsTeam" />
-                <ScalarProperty Name="ProName" ColumnName="ProName" />
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
-                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
-                <ScalarProperty Name="Rank" ColumnName="Rank" />
-                <ScalarProperty Name="Branch" ColumnName="Branch" />
-                <ScalarProperty Name="Teacher" ColumnName="Teacher" />
-                <ScalarProperty Name="PicUrl" ColumnName="PicUrl" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1007,7 +457,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="无" />

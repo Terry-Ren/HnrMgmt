@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import NotFoundComponent from '../views/404'
 import Hello from '@/components/Hello123'
 import Hnrlist from '../components/BasicData/Hnrlist.vue'
+import Awdlist from '../components/BasicData/Awdlist.vue'
 
 Vue.use(Router)
 
@@ -28,7 +29,8 @@ const routes = [
     redirect: '/index',
     children: [
       {path: '/index', component: Hello, name: 'index', menuShow: true},
-      {path: '/hnrlist', component: Hnrlist, name: 'Hnrlist', menuShow: true}
+      {path: '/hnrlist', component: Hnrlist, name: 'Hnrlist', menuShow: true},
+      {path: '/awdlist', component: Awdlist, name: 'Awdlist', menuShow: true}
     ]
   }
 ]

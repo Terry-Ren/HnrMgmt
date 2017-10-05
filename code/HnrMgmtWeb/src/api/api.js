@@ -1,3 +1,8 @@
 import axios from 'axios'
 
-export const reqGetBookListPage = params => { return axios.get(`http://211.149.193.19:8080/api/customers`) }
+let baseUrl = 'http://localhost:59996/'
+
+export const reqGetBookListPage = params => { return axios.get(`${baseUrl}api/customers`) }
+
+// get请求参数格式写法
+export const reqGetAwdListPage = params => { return axios.get(`${baseUrl}api/award/get`, {params: params}) }

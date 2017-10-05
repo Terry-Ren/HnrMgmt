@@ -11,6 +11,19 @@ namespace HnrMgmtAPI.Controllers.API
     public class BaseApiController : ApiController
     {
         /// <summary>
+        /// 构造方法
+        /// </summary>
+        public BaseApiController()
+        {
+            //测试状态 沉睡一秒
+            if (System.Configuration.ConfigurationManager.AppSettings["IsTest"].ToString() == "1")
+            {
+                //线程 暂停一秒
+                System.Threading.Thread.Sleep(1000);
+            }
+        }
+
+        /// <summary>
         ///  API 返回结果
         /// </summary>
         public ApiResult result;
