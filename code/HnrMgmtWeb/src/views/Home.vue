@@ -25,7 +25,7 @@
       <!-- 主菜单 -->
       <el-menu  :collapse="isCollapse" :default-active="$route.path" router>
         <!-- 首页 -->
-        <el-menu-item index="/hnrlist" > 
+        <el-menu-item index="/" > 
           <i class="el-icon-menu "></i>
           <span slot="title">首页</span>
         </el-menu-item>
@@ -57,7 +57,7 @@
           <el-menu-item index="/awdlist">
             竞赛项目管理
           </el-menu-item>
-          <el-menu-item index="OrganiManag">
+          <el-menu-item index="/orglist">
             单位学院管理
           </el-menu-item>
         </el-submenu>

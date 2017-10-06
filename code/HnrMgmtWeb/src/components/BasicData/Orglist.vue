@@ -5,24 +5,23 @@
     <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
         <el-breadcrumb-item>基础数据</el-breadcrumb-item>
-        <el-breadcrumb-item>荣誉项目管理</el-breadcrumb-item>
+        <el-breadcrumb-item>单位学院管理</el-breadcrumb-item>
       </el-breadcrumb>
   </el-col>
-  <!-- 下方主内容 -->
+ <!-- 下方主内容 -->
   <el-col :span="24" class="warp-main">
     <!-- 工具栏 -->
     <el-col :span="24" class="toolBar" >    
       <el-form :inline="true" style="margin-bottom:15px">
-        <el-button type="primary" @click="addFormVisible = true" >新增荣誉</el-button>
+        <el-button type="primary" @click="addFormVisible = true" >新增单位</el-button>
       </el-form>
     </el-col>
     <!-- 表格区 -->
     <el-col :span="24">
-      <el-table  :data="HnrData" border style="width:100%" v-loading="listLoading"> 
+      <el-table  :data="OrgData" border style="width:100%" v-loading="listLoading" > 
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column type="index" width="65" label="序号" align="center"></el-table-column>
-        <el-table-column prop="Name" label="荣誉名称" sortable align="center"></el-table-column>
-        <el-table-column prop="GradeName" label="荣誉级别" align="center" :formatter="transfGrandeName" sortable></el-table-column>
+        <el-table-column type="index" width="65" label="序号" style="text-aligin:center" align="center"></el-table-column>
+        <el-table-column prop="Name" label="单位名称" sortable align="center" ></el-table-column>
         <el-table-column label="操作" width="150">
           <template scope="scope">
             <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >编辑</el-button>
@@ -38,16 +37,11 @@
     </el-col>
 
     <!-- 新增表单 -->
-    <el-dialog title="新增荣誉项" :visible.sync="addFormVisible" v-loading="submitLoading" >
+    <el-dialog title="新增单位信息" :visible.sync="addFormVisible" v-loading="submitLoading" >
       <el-form :model="addFormBody" label-width="80px" ref="addForm" :rules="rules" auto>
-        <el-form-item label="荣誉名称" prop="Name">
-          <el-input v-model="addFormBody.Name" placeholder="名称不含年份"  ></el-input>
-        </el-form-item>
-        <el-form-item label="荣誉级别" prop="GradeName">
-          <el-select v-model="addFormBody.GradeName" placeholder="请选择级别">
-            <el-option v-for="Grade in GradeNames" :key="Grade.value" :label="Grade.label" :value="Grade.value"></el-option>
-          </el-select>
-        </el-form-item>        
+        <el-form-item label="单位名称" prop="Name">
+          <el-input v-model="addFormBody.Name" placeholder="请输入单位名称"  ></el-input>
+        </el-form-item>       
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click.native=" addFormVisible = false">取消</el-button>
@@ -56,16 +50,11 @@
     </el-dialog>
 
     <!-- 编辑表单 -->
-    <el-dialog title="编辑荣誉项" :visible.sync="modifyFormVisible" v-loading="modifyLoading">
+    <el-dialog title="编辑单位信息" :visible.sync="modifyFormVisible" v-loading="modifyLoading">
       <el-form :model="modifyFromBody" label-width="80px" ref="modifyFrom" :rules="rules" >
-        <el-form-item label="荣誉名称" prop="Name"  >
-          <el-input v-model="modifyFromBody.Name" placeholder="名称不含年份"  ></el-input>
-        </el-form-item>
-        <el-form-item label="荣誉级别" prop="GradeName">
-          <el-select v-model="modifyFromBody.GradeName" placeholder="请选择级别">
-            <el-option v-for="Grade in GradeNames" :key="Grade.value" :label="Grade.label" :value="Grade.value"></el-option>
-          </el-select>
-        </el-form-item>     
+        <el-form-item label="单位名称" prop="Name"  >
+          <el-input v-model="modifyFromBody.Name" placeholder="请输入单位名称"  ></el-input>
+        </el-form-item>    
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click.native=" modifyFormVisible = false">取消</el-button>
@@ -77,7 +66,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {reqGetHonorList,reqAddHonor,posModifyHonor,reqDeleteHonor} from '../../api/api'
+import {reqGetOrgList,posAddOrg,posModifyOrg,reqDeleteOrg} from '../../api/api'
 import PubMethod from '../../common/public'
  export default {
    data() {
@@ -85,7 +74,7 @@ import PubMethod from '../../common/public'
        // 用户令牌
        access_token:'',
        // 表格数据
-       HnrData: [],
+       OrgData: [],
        listLoading:false,
 
        selectRowIndex:'',
@@ -96,12 +85,8 @@ import PubMethod from '../../common/public'
        // 表单规则验证
        rules:{
          Name:{
-           required: true, message: '请输入荣誉名称' , trigger: 'blur' 
+           required: true, message: '请输入单位名称' , trigger: 'blur' 
          },
-         GradeName:{
-           required: true, message: '请选择级别' , trigger: 'change'
-         }
-
        },
 
       // 新增表单相关数据
@@ -109,28 +94,12 @@ import PubMethod from '../../common/public'
        addFormVisible: false,
        addFormBody:{
          Name:'',
-         GradeName:''
        },
-       GradeNames:[{
-         value:'0',
-         label:'院级'
-       },{
-         value:'1',
-         label:'校级'
-       },{
-         value:'2',
-         label:'省级'
-       },{
-         value:'3',
-         label:'国级'
-       }],
-
        //编辑表单相关数据
        modifyFormVisible:false,
        modifyLoading:false,
        modifyFromBody:{
          Name:'',
-         GradeName:''
        }
 
 
@@ -144,27 +113,24 @@ import PubMethod from '../../common/public'
 
    //方法集合
    methods:{
-     //荣誉级别转换
-     transfGrandeName(row){
-       return PubMethod.transfGrandeName(row)
-       },
      //获取荣誉列表
      getList(){
        this.listLoading=true
        let param={
-         page : this.page,
-         limit : this.size
-       }
-       reqGetHonorList(param).then((res)=>{
-          this.HnrData = res.data.data.list
-          this.totalNum = res.data.data.count;
-          //console.log(this.HnrData)
-          this.listLoading=false
-       }).catch((res)=>{
-         console.log(res)
-       })
-     },
-     //新增荣誉项
+           access_token : "11",
+           page : this.page,
+           limit : this.size
+           }
+           reqGetOrgList(param).then((res)=>{
+               this.OrgData = res.data.data.list
+               this.totalNum = res.data.data.count;
+               //console.log(this.OrgData)
+               this.listLoading=false
+               }).catch((res)=>{
+                   console.log(res)
+                   })
+            },
+     //新增单位
      addSubmit(){
        let param
        this.$refs['addForm'].validate((valid)=>{
@@ -172,7 +138,8 @@ import PubMethod from '../../common/public'
            this.submitLoading=true
            //复制字符串
            let para = Object.assign({}, this.addFormBody);
-           reqAddHonor(para).then((res)=>{
+           para.access_token='terry'
+           posAddOrg(para).then((res)=>{
               this.submitLoading=false
             //公共提示方法，传入当前的vue以及res.data
             PubMethod.statusinfo(this,res.data)
@@ -198,7 +165,7 @@ import PubMethod from '../../common/public'
           let para = Object.assign({},this.modifyFromBody)
           para.access_token='terry'
 
-          posModifyHonor(para).then((res)=>{
+          posModifyOrg(para).then((res)=>{
             //公共提示方法，传入当前的vue以及res.data
             PubMethod.statusinfo(this,res.data)
               this.$refs['modifyFrom'].resetFields()
@@ -209,17 +176,17 @@ import PubMethod from '../../common/public'
         }
       })
     },
-    //删除功能
+    //删除单位
     delectHornor(index,row){
-      this.$confirm('此操作将永久删除该荣誉项, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该单位项, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
         }).then(() => {
-          let para={HonorID:row.HonorID}
+          let para={orgID:row.OrgID}
           para.access_token='terry'
          
-          reqDeleteHonor(para).then((res)=>{
+          reqDeleteOrg(para).then((res)=>{
             //公共提示方法，传入当前的vue以及res.data
             PubMethod.statusinfo(this,res.data)
             this.getList()

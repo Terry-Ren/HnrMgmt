@@ -19,3 +19,12 @@ export const posAddAwd = params => { return axios.post(`${base}api/award/add`, p
 export const posModifyAwd = params => { return axios.post(`${base}api/award/modify`, params) }
 // 删除奖项
 export const reqDeleteAwd = params => { return axios.get(`${base}api/award/delete`, {params: params}) }
+
+// 请求单位列表
+export const reqGetOrgList = params => { return axios.get(`${base}api/org/get`, {params: params}) }
+// 添加单位
+export const posAddOrg = params => { return axios.post(`${base}api/org/add`, params) }
+// 修改单位
+export const posModifyOrg = params => { return axios.post(`${base}api/org/modify`, params) }
+// 删除单位
+export const reqDeleteOrg = params => { return axios.get(`${base}api/org/delete`, {params: params}) }

@@ -5,6 +5,7 @@ import NotFoundComponent from '../views/404'
 import Hello from '@/components/Hello123'
 import Hnrlist from '../components/BasicData/Hnrlist.vue'
 import Awdlist from '../components/BasicData/Awdlist.vue'
+import Orglist from '../components/BasicData/Orglist.vue'
 
 Vue.use(Router)
 
@@ -30,7 +31,8 @@ const routes = [
     children: [
       {path: '/index', component: Hello, name: 'index', menuShow: true},
       {path: '/hnrlist', component: Hnrlist, name: 'Hnrlist', menuShow: true},
-      {path: '/awdlist', component: Awdlist, name: 'Awdlist', menuShow: true}
+      {path: '/awdlist', component: Awdlist, name: 'Awdlist', menuShow: true},
+      {path: '/orglist', component: Orglist, name: 'Orglist', menuShow: true}
     ]
   }
 ]

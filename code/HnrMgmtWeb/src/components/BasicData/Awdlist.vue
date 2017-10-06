@@ -18,12 +18,12 @@
     </el-col>
     <!-- 表格区 -->
     <el-col :span="24">
-      <el-table :data="AwdData" border style="width:100%" v-loading="listLoading" > 
+      <el-table :data="AwdData" border style="width:100%" v-loading="listLoading" :default-sort = "{prop: 'GradeName', order: 'descending'}" @selection-change="selRowChange" > 
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column type="index" width="60"></el-table-column>
-        <el-table-column prop="Name" label="奖项名称" sortable></el-table-column>
-        <el-table-column prop="GradeName" label="奖项级别" :formatter="transfGrandeName" sortable></el-table-column>
-        <el-table-column prop="Grade" label="获奖等次" :formatter="transfGrande" sortable></el-table-column>
+        <el-table-column type="index" width="65" label="序号" align="center"></el-table-column>
+        <el-table-column prop="Name" label="奖项名称" align="center" sortable></el-table-column>
+        <el-table-column prop="GradeName" label="奖项级别"  align="center" :formatter="transfGrandeName" sortable></el-table-column>
+        <el-table-column prop="Grade" label="获奖等次" align="center" :formatter="transfGrande" sortable></el-table-column>
         <el-table-column label="操作" width="150">
           <template scope="scope">
             <el-button  size="small" @click="showModifyDialog(scope.$index, scope.row)">编辑</el-button>
@@ -34,6 +34,7 @@
     </el-col>
     <!-- 下方工具条 -->
     <el-col :span="24" >
+        <el-button type="danger" @click="delectSelAwd" :disabled="this.selection.length===0">批量删除</el-button>
         <el-pagination layout="total, prev, pager, next, sizes, jumper" @size-change="SizeChangeEvent" @current-change="CurrentChangeEvent" :page-size="size" :page-sizes="[10,15,20,25,30]":total="totalNum" >
         </el-pagination>
     </el-col>
@@ -41,16 +42,16 @@
 
       <!-- 新增表单 -->
     <el-dialog title="新增奖项" :visible.sync="addFormVisible" v-loading="submitLoading">
-      <el-form :model="addFormBody" label-width="80px" ref="addForm" auto>
-        <el-form-item label="奖项名称" >
+      <el-form :model="addFormBody" label-width="80px" ref="addForm" :rules="rules" auto>
+        <el-form-item label="奖项名称" prop="Name">
           <el-input v-model="addFormBody.Name" placeholder="名称不含年份"  ></el-input>
         </el-form-item>
-        <el-form-item label="奖项级别" >
+        <el-form-item label="奖项级别" prop="GradeName">
           <el-select v-model="addFormBody.GradeName" placeholder="请选择级别">
             <el-option v-for="GradeName in GradeNames" :key="GradeName.value" :label="GradeName.label" :value="GradeName.value"></el-option>
           </el-select>
         </el-form-item> 
-        <el-form-item label="获奖等次">
+        <el-form-item label="获奖等次" prop="Grade">
           <el-select v-model="addFormBody.Grade" placeholder="请选择等次">
             <el-option v-for="Grade in Grades" :key="Grade.value" :label="Grade.label" :value="Grade.value"></el-option>
           </el-select>
@@ -64,16 +65,16 @@
 
     <!-- 编辑表单 -->
     <el-dialog title="编辑奖项" :visible.sync="modifyFormVisible" v-loading="modifyLoading">
-      <el-form :model="modifyFromBody" label-width="80px" ref="modifyFrom" >
-        <el-form-item label="奖项名称" >
+      <el-form :model="modifyFromBody" label-width="80px" ref="modifyFrom" :rules="rules" >
+        <el-form-item label="奖项名称" prop="Name" >
           <el-input v-model="modifyFromBody.Name" placeholder="名称不含年份"  ></el-input>
         </el-form-item>
-        <el-form-item label="奖项名称" >
+        <el-form-item label="奖项名称" prop="GradeName">
           <el-select v-model="modifyFromBody.GradeName" placeholder="请选择级别">
             <el-option v-for="Grade in GradeNames" :key="Grade.value" :label="Grade.label" :value="Grade.value"></el-option>
           </el-select>
         </el-form-item>  
-        <el-form-item label="获奖等次">
+        <el-form-item label="获奖等次" prop="Grade">
           <el-select v-model="modifyFromBody.Grade" placeholder="请选择等次">
             <el-option v-for="Grade in Grades" :key="Grade.value" :label="Grade.label" :value="Grade.value"></el-option>
           </el-select>
@@ -102,6 +103,20 @@ import PubMethod from '../../common/public'
        page:1,
        size:10,
        listLoading : true,
+       selection:[],
+
+       //表单验证规则
+       rules:{
+          Name:{
+           required: true, message: '请输入奖项名称' , trigger: 'blur' 
+           },
+           GradeName:{
+             required: true, message: '请选择级别' , trigger: 'change'
+           },
+           Grade:{
+             required: true, message: '请选择等次' , trigger: 'change'
+           },
+       },
 
        //新增表单相关数据
        addFormVisible: false,
@@ -166,7 +181,11 @@ import PubMethod from '../../common/public'
      transfGrande(row){
        //console.log(row)
        return PubMethod.transfGrande(row)
-       },   
+       },
+     // 当选择行时候
+     selRowChange(selection){
+       this.selection=selection
+     },   
      //获取荣誉列表
      getList(){
        this.listLoading=true
@@ -183,20 +202,6 @@ import PubMethod from '../../common/public'
             PubMethod.logMessage(res)
         })
     },
-    // reGetList(){
-    //    let param = {
-    //         access_token : "11",
-    //         page : this.page,
-    //         limit : this.size
-    //     }
-    //     reqGetAwdList(param).then((res)=>{
-    //         this.AwdData = res.data.data.list;
-    //         this.listLoading = false;
-    //         //this.totalNum = res.data.data.count;
-    //     }).catch*((res)=>{
-    //         PubMethod.logMessage(res)
-    //     })
-    // },
      //新增荣誉项
      addSubmit(){
        let param
@@ -208,10 +213,8 @@ import PubMethod from '../../common/public'
            para.access_token='terry'
            posAddAwd(para).then((res)=>{
               this.submitLoading=false
-              this.$message({
-                  message: '提交成功',
-                  type: 'success'
-               });
+              //公共提示方法，传入当前的vue以及res.data
+              PubMethod.statusinfo(this,res.data)
               this.$refs['addForm'].resetFields();
               this.addFormVisible = false;
               this.getList();
@@ -269,6 +272,34 @@ import PubMethod from '../../common/public'
                 });          
               });
     },
+    // 删除选中项目
+    delectSelAwd(){
+      let awardIDs = this.selection.map(singleSel => singleSel.AwdID);
+      this.$confirm('此操作将永久删除该奖项, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+        }).then(()=>{
+          awardIDs.map((awardID)=>{
+            let para={awardID}
+            para.access_token='terry'
+            reqDeleteAwd(para).then((res)=>{
+              //公共提示方法，传入当前的vue以及res.data
+              PubMethod.statusinfo(this,res.data)
+            })
+            this.getList()
+          })
+          }).catch(()=>{
+              this.$message({
+                type: 'info',
+                message: '已取消删除'
+                });   
+          })
+      // this.$message({
+      //   type:'error',
+      //   message:'暂不支持批量删除'
+      // })
+    },
     //更换每页数量
     SizeChangeEvent(val){
         this.size = val;
@@ -285,3 +316,8 @@ import PubMethod from '../../common/public'
  }
 </script>
 
+<style scoped lang="scss">
+    .el-pagination{
+        text-align: right;
+    }
+</style>
