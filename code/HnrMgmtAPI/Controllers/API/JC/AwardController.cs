@@ -233,7 +233,7 @@ namespace HnrMgmtAPI.Controllers.API.JC
                         }
                         catch
                         {
-                            return Success("修改失败，请检查参数是否正确");
+                            return Error("修改失败，请检查参数是否正确");
                         }
                     }
                     else

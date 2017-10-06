@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="12ed90f62e6c4d7ab13640ad0c3c44a2" Name="Diagram1">
+      <Diagram DiagramId="3fafeb3b85bb4ec088db406b4515399d" Name="Diagram1">
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.T_Account" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.T_Award" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.T_Awardee" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
