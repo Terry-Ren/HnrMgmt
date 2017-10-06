@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HnrMgmtAPI.Models.API.JC
+namespace HnrMgmtAPI.Models.API
 {
     public class Return_GetList<T>
     {

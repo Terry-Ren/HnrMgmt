@@ -5,7 +5,7 @@ using System.Web;
 
 namespace HnrMgmtAPI.Models.API.Sys
 {
-    public class TeacherModify
+    public class AdminModify
     {
         public string access_token { get; set; }
 
@@ -16,5 +16,7 @@ namespace HnrMgmtAPI.Models.API.Sys
         public string OrgID { get; set; }
 
         public string Tel { get; set; }
+
+        public string State { get; set; }
     }
 }
