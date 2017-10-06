@@ -5,7 +5,7 @@ using System.Web;
 
 namespace HnrMgmtAPI.Models.API.Sys
 {
-    public class TeacherModify
+    public class AdminAdd
     {
         public string access_token { get; set; }
 
@@ -16,5 +16,8 @@ namespace HnrMgmtAPI.Models.API.Sys
         public string OrgID { get; set; }
 
         public string Tel { get; set; }
+
+        //值 只能为2或者3
+        public string RoleID { get; set; }
     }
 }
