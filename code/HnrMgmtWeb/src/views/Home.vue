@@ -3,11 +3,32 @@
 <el-row class="all-containers">
   <!-- 头部 -->
   <el-col :span="24" class="top-bar-warp">
+    <!-- logo -->
     <div class="top-bar-logo">
       <a href="/"><img src="../assets/logo.png" alt="logo"></a>
     </div>
+    <!-- 标题 -->
     <div class="top-bar-title">
-      <span style="font-size: 18px;color: #fff;">学生荣誉管理系统</span>
+      <span >学生荣誉管理系统</span>
+    </div>
+    <!-- 账户 -->
+    <div class="top-bar-account">
+      <el-dropdown trigger="click" > 
+        <span class="el-dropdown-main">
+          <i class="iconfont el-ico-ali-index"></i>用户<i class="el-icon-caret-bottom"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>
+             <router-link to="/hnrlist"><span style=" color: #000; font-size: 14px;">个人信息</span></router-link>
+          </el-dropdown-item>
+          <el-dropdown-item>
+             <router-link to="/hnrlist"><span style=" color: #000; font-size: 14px;">修改密码</span></router-link>
+          </el-dropdown-item>
+          <el-dropdown-item divided>
+             <span style="font-size: 14px;">退出登录</span>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
   </el-col>
 
@@ -120,6 +141,7 @@
       line-height: 50px;
       background: #373d41;
       padding: 0px;
+      color: #fff;
       
       .top-bar-logo{
         float: left;
@@ -139,7 +161,21 @@
         width: 200px;
         padding-left: 10px;
         border-left: 1px solid #000;
+        span{
+         font-size: 20px;
         }
+        }
+
+        .top-bar-account{
+          float: right;
+          padding-right: 15px;
+          .el-dropdown-main{
+          color: #fff;
+          cursor: pointer;
+          padding-left: 12px;
+          }
+        }
+        
       } //top-bar-warp包裹
 
       .body-containers{
