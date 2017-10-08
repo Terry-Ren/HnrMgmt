@@ -4,16 +4,15 @@ import Vue from 'vue'
 // 引用elementUI
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
-// 引入axios
-import axios from 'axios'
+
 import App from './App'
 import router from './router'
 
 import './styles/main.scss'
+// 引入图标库
+import './assets/fonts/iconfont.css'
 
 Vue.use(ElementUI)
-// 通过$http调用axios
-Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
 

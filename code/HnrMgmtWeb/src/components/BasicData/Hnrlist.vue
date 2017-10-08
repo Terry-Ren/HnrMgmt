@@ -20,9 +20,9 @@
     <el-col :span="24">
       <el-table  :data="HnrData" border style="width:100%" v-loading="listLoading"> 
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column type="index" width="60"></el-table-column>
-        <el-table-column prop="Name" label="荣誉名称" sortable></el-table-column>
-        <el-table-column prop="GradeName" label="荣誉级别" :formatter="transfGrande" sortable></el-table-column>
+        <el-table-column type="index" width="65" label="序号" align="center"></el-table-column>
+        <el-table-column prop="Name" label="荣誉名称" sortable align="center"></el-table-column>
+        <el-table-column prop="GradeName" label="荣誉级别" align="center" :formatter="transfGrandeName" sortable></el-table-column>
         <el-table-column label="操作" width="150">
           <template scope="scope">
             <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >编辑</el-button>
@@ -33,16 +33,17 @@
     </el-col>
     <!-- 下方工具条 -->
     <el-col :span="24">
-      <el-pagination layout="prev, pager, next" :page-size="5" :total="20"></el-pagination>
+      <el-pagination layout="total, prev, pager, next, sizes, jumper" @size-change="SizeChangeEvent" @current-change="CurrentChangeEvent" :page-size="size" :page-sizes="[10,15,20,25,30]":total="totalNum">
+      </el-pagination>
     </el-col>
 
     <!-- 新增表单 -->
-    <el-dialog title="新增荣誉项" :visible.sync="addFormVisible" v-loading="submitLoading">
-      <el-form :model="addFormBody" label-width="80px" ref="addForm" auto>
-        <el-form-item label="荣誉名称" >
+    <el-dialog title="新增荣誉项" :visible.sync="addFormVisible" v-loading="submitLoading" >
+      <el-form :model="addFormBody" label-width="80px" ref="addForm" :rules="rules" auto>
+        <el-form-item label="荣誉名称" prop="Name">
           <el-input v-model="addFormBody.Name" placeholder="名称不含年份"  ></el-input>
         </el-form-item>
-        <el-form-item label="荣誉级别">
+        <el-form-item label="荣誉级别" prop="GradeName">
           <el-select v-model="addFormBody.GradeName" placeholder="请选择级别">
             <el-option v-for="Grade in GradeNames" :key="Grade.value" :label="Grade.label" :value="Grade.value"></el-option>
           </el-select>
@@ -55,12 +56,12 @@
     </el-dialog>
 
     <!-- 编辑表单 -->
-    <el-dialog title="编辑荣誉项" :visible.sync="modifyFormVisible">
-      <el-form :model="modifyFromBody" label-width="80px" ref="modifyFrom" >
-        <el-form-item label="荣誉名称" >
+    <el-dialog title="编辑荣誉项" :visible.sync="modifyFormVisible" v-loading="modifyLoading">
+      <el-form :model="modifyFromBody" label-width="80px" ref="modifyFrom" :rules="rules" >
+        <el-form-item label="荣誉名称" prop="Name"  >
           <el-input v-model="modifyFromBody.Name" placeholder="名称不含年份"  ></el-input>
         </el-form-item>
-        <el-form-item label="荣誉级别" >
+        <el-form-item label="荣誉级别" prop="GradeName">
           <el-select v-model="modifyFromBody.GradeName" placeholder="请选择级别">
             <el-option v-for="Grade in GradeNames" :key="Grade.value" :label="Grade.label" :value="Grade.value"></el-option>
           </el-select>
@@ -77,18 +78,34 @@
 
 <script type="text/ecmascript-6">
 import {reqGetHonorList,reqAddHonor,posModifyHonor,reqDeleteHonor} from '../../api/api'
+import PubMethod from '../../common/public'
  export default {
    data() {
      return {
-       //用户令牌
+       // 用户令牌
        access_token:'',
-       //表格数据
+       // 表格数据
        HnrData: [],
        listLoading:false,
-       submitLoading:false,
-       selectRowIndex:'',
 
-      //新增表单相关数据
+       selectRowIndex:'',
+       totalNum:0,
+       page:1,
+       size:10,
+
+       // 表单规则验证
+       rules:{
+         Name:{
+           required: true, message: '请输入荣誉名称' , trigger: 'blur' 
+         },
+         GradeName:{
+           required: true, message: '请选择级别' , trigger: 'change'
+         }
+
+       },
+
+      // 新增表单相关数据
+       submitLoading:false,       
        addFormVisible: false,
        addFormBody:{
          Name:'',
@@ -110,6 +127,7 @@ import {reqGetHonorList,reqAddHonor,posModifyHonor,reqDeleteHonor} from '../../a
 
        //编辑表单相关数据
        modifyFormVisible:false,
+       modifyLoading:false,
        modifyFromBody:{
          Name:'',
          GradeName:''
@@ -127,15 +145,19 @@ import {reqGetHonorList,reqAddHonor,posModifyHonor,reqDeleteHonor} from '../../a
    //方法集合
    methods:{
      //荣誉级别转换
-     transfGrande(row){
-       return row.GradeName == '0' ? '院级' : row.GradeName == '1' ? '校级' : row.GradeName == '2' ? '省级': '国级';
-     },
+     transfGrandeName(row){
+       return PubMethod.transfGrandeName(row)
+       },
      //获取荣誉列表
      getList(){
        this.listLoading=true
-       let param
+       let param={
+         page : this.page,
+         limit : this.size
+       }
        reqGetHonorList(param).then((res)=>{
           this.HnrData = res.data.data.list
+          this.totalNum = res.data.data.count;
           //console.log(this.HnrData)
           this.listLoading=false
        }).catch((res)=>{
@@ -152,10 +174,8 @@ import {reqGetHonorList,reqAddHonor,posModifyHonor,reqDeleteHonor} from '../../a
            let para = Object.assign({}, this.addFormBody);
            reqAddHonor(para).then((res)=>{
               this.submitLoading=false
-              this.$message({
-                  message: '提交成功',
-                  type: 'success'
-               });
+            //公共提示方法，传入当前的vue以及res.data
+            PubMethod.statusinfo(this,res.data)
               this.$refs['addForm'].resetFields();
               this.addFormVisible = false;
               this.getList();
@@ -174,17 +194,16 @@ import {reqGetHonorList,reqAddHonor,posModifyHonor,reqDeleteHonor} from '../../a
     modifySubmit(){
       this.$refs['modifyFrom'].validate((valid)=>{
         if(valid){
-          this.modifyFormVisible=true;
+          this.modifyLoading=true;
           let para = Object.assign({},this.modifyFromBody)
           para.access_token='terry'
 
-          posModifyProfile(para).then((res)=>{
-            this.$message({
-              message: '提交成功',
-              type: 'success'
-              });
+          posModifyHonor(para).then((res)=>{
+            //公共提示方法，传入当前的vue以及res.data
+            PubMethod.statusinfo(this,res.data)
               this.$refs['modifyFrom'].resetFields()
               this.modifyFormVisible=false
+              this.modifyLoading=false
               this.getList()
           })
         }
@@ -192,7 +211,7 @@ import {reqGetHonorList,reqAddHonor,posModifyHonor,reqDeleteHonor} from '../../a
     },
     //删除功能
     delectHornor(index,row){
-      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该荣誉项, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -201,10 +220,8 @@ import {reqGetHonorList,reqAddHonor,posModifyHonor,reqDeleteHonor} from '../../a
           para.access_token='terry'
          
           reqDeleteHonor(para).then((res)=>{
-            this.$message({
-              type: 'success',
-              message: '删除成功!'
-            })
+            //公共提示方法，传入当前的vue以及res.data
+            PubMethod.statusinfo(this,res.data)
             this.getList()
           })
 
@@ -214,10 +231,27 @@ import {reqGetHonorList,reqAddHonor,posModifyHonor,reqDeleteHonor} from '../../a
                 message: '已取消删除'
                 });          
               });
+    },
+    //更换每页数量
+    SizeChangeEvent(val){
+        this.loading=true;
+        this.size = val;
+        this.getList();
+        PubMethod.logMessage(this.page + "   " + this.size);
+    },
+    //页码切换时
+    CurrentChangeEvent(val){
+        this.loading=true;
+        this.page = val;
+        this.getList();
+        PubMethod.logMessage(this.page + "   " + this.size);
     }
   }
  }
 </script>
 
 <style scoped lang="scss">
+    .el-pagination{
+        text-align: right;
+    }
 </style>
