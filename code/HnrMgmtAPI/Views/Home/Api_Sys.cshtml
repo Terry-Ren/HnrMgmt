@@ -53,7 +53,7 @@
         }
 
         $(document).ready(function () {
-            //荣誉接口测试
+            //校团委老师账号管理：
             $('#btnAccountTeacher').click(function (e) {
                 AjaxRequestGet('api/account/teacher?access_token=11&page=1&size=10');
             });
@@ -71,6 +71,33 @@
                 var data = { 'access_token': '11', 'AccountID': '1214001', 'Name': '修改过后的数据-王健铭', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Tel': '15307179930' }
                 AjaxRequestPost('api/account/modteacher', data);
             });
+
+            $('#btnTeacherResetPwd').click(function (e) {
+                AjaxRequestGet('api/account/resetteacher?access_token=11&accountID=1214001');
+            });
+
+            //学院账号、助理账号管理
+            $('#btnAccountAdmin').click(function (e) {
+                AjaxRequestGet('api/account/admin?access_token=11&page=1&size=10');
+            });
+
+            $('#btnAdminAdd').click(function (e) {
+                var data = { 'access_token': '11', 'AccountID': '0121403490106', 'Name': '王健铭', 'RoleID':'2','OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Tel': '15307179930' }
+                AjaxRequestPost('api/account/addadmin', data);
+            });
+
+            $('#btnAdminDelete').click(function (e) {
+                AjaxRequestGet('api/account/deladmin?access_token=11&accountID=0121403490106');
+            });
+
+            $('#btnAdminModify').click(function (e) {
+                var data = { 'access_token': '11', 'AccountID': '0121403490106', 'Name': '修改过后的数据-王健铭', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Tel': '15307179930' }
+                AjaxRequestPost('api/account/modteacher', data);
+            });
+
+            $('#btnAdminResetPwd').click(function (e) {
+                AjaxRequestGet('api/account/resetadmin?access_token=11&accountID=0121403490106');
+            });
         });
 
     </script>
@@ -81,6 +108,7 @@
         <br />
         <div style="margin-left:200px;">
             <h3>帐户管理接口测试：</h3>
+            <h4>校团委账号管理接口</h4>
             <input type="button" value="api/account/teacher" id="btnAccountTeacher" />
             <br />
             <br />
@@ -93,32 +121,25 @@
             <input type="button" value="api/account/modteacher" id="btnTeacherModify" />
             <br />
             <br />
-            @*<h3>奖项管理接口测试：</h3>
-            <input type="button" value="api/award/get" id="btnAwardGet" />
+            <input type="button" value="api/account/resetteacher" id="btnTeacherResetPwd" />
             <br />
             <br />
-            <input type="button" value="api/award/add" id="btnAwardAdd" />
+            <h4>助理账号、学院账号管理</h4>
+            <input type="button" value="api/account/admin" id="btnAccountAdmin" />
             <br />
             <br />
-            <input type="button" value="api/award/delete" id="btnAwardDelete" />
+            <input type="button" value="api/account/addadmin" id="btnAdminAdd" />
             <br />
             <br />
-            <input type="button" value="api/award/modify" id="btnAwardModify" />
+            <input type="button" value="api/account/deladmin" id="btnAdminDelete" />
             <br />
             <br />
-            <h3>单位信息管理接口测试：</h3>
-            <input type="button" value="api/org/get" id="btnOrgGet" />
+            <input type="button" value="api/account/modadmin" id="btnAdminModify" />
             <br />
             <br />
-            <input type="button" value="api/org/add" id="btnOrgAdd" />
+            <input type="button" value="api/account/resetadmin" id="btnAdminResetPwd" />
             <br />
             <br />
-            <input type="button" value="api/org/delete" id="btnOrgDelete" />
-            <br />
-            <br />
-            <input type="button" value="api/org/modify" id="btnOrgModify" />
-            <br />
-            <br />*@
         </div>
     </div>
 </body>

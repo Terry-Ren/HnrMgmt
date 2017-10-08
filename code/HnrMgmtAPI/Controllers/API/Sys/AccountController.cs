@@ -20,8 +20,9 @@ namespace HnrMgmtAPI.Controllers.API.Sys
         /// <param name="size">每页条数</param>
         /// <returns></returns>
         [HttpGet, Route("teacher")]
-        public ApiResult GetTeacherList(string access_token, int page, int size)//若第一次请求第十页 每页20条数据 如何处理？是否报错？
+        public ApiResult GetTeacherList(string access_token, int page, int size)
         {
+            //若第一次请求第十页 每页20条数据 如何处理？是否报错？   此处不会报错，返回的count是总的数据条数、list中为空
             result = AccessToken.Check(access_token, "api/account/teacher");
             if (result == null)
             {
@@ -71,6 +72,7 @@ namespace HnrMgmtAPI.Controllers.API.Sys
         {
             //此处的参数中，OrgID 和 RoleID  不能为空，且必须是数据库中包含的数据
             //需要对OrgID  和  RoleID 对验证处理 验证处理部分代码尚未实现
+            //此处在数据库中添加了 触发器 做数据验证，输入的ID不存在时 rollback
             result = AccessToken.Check(model.access_token, "api/account/addteacher");
             if (result == null)
             {
@@ -80,6 +82,7 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                 {
                     return result;
                 }
+
                 #endregion
 
                 #region 逻辑操作
@@ -219,6 +222,49 @@ namespace HnrMgmtAPI.Controllers.API.Sys
             }
             return result;
         }
+
+        /// <summary>
+        /// 系统管理员 -> 校团委老师账号 重置账户密码 操作T_Account表
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="accountID">账户ID</param>
+        /// <returns></returns>
+        [HttpGet, Route("resetteacher")]
+        public ApiResult ResetTeacherPwd(string access_token, string accountID)
+        {
+            result = AccessToken.Check(access_token, "api/account/resetteacher");
+            if (result == null)
+            {
+                #region 参数验证
+                if (accountID == null || accountID == "")
+                {
+                    return Error("accuntID参数错误");
+                }
+                #endregion
+
+                #region 逻辑操作
+                T_Account accountModel = db.T_Account.Find(accountID);
+                if (accountModel != null)
+                {
+                    try
+                    {
+                        accountModel.Password = accountModel.AccountID.Substring(accountModel.AccountID.Length - 6, 6);
+                        db.SaveChanges();
+                        return Success("重置密码成功，初始密码为账号后六位");
+                    }
+                    catch
+                    {
+                        return Error("修改失败，请检查参数是否正确");
+                    }
+                }
+                else
+                {
+                    return Error("数据错误，无法查找到此条记录");
+                }
+                #endregion
+            }
+            return result;
+        }
         #endregion
 
         #region 校团委管理员可访问接口 用于管理 校团委助理账号、各二级单位 等具有审核权限的账号
@@ -229,7 +275,7 @@ namespace HnrMgmtAPI.Controllers.API.Sys
         /// <param name="page">页码</param>
         /// <param name="size">页面数量</param>
         /// <returns></returns>
-        [HttpPost, Route("admin")]
+        [HttpGet, Route("admin")]
         public ApiResult GetAdminList(string access_token, int page, int size)
         {
             result = AccessToken.Check(access_token, "api/account/admin");
@@ -307,7 +353,7 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                             account.OrgID = model.OrgID.Trim();
                             account.Tel = model.Tel.Trim();
                             account.RoleID = model.RoleID;
-                            account.Password = model.AccountID.Substring(model.AccountID.Length - 6, model.AccountID.Length);
+                            account.Password = model.AccountID.Substring(model.AccountID.Length - 6, 6);
                             account.State = "1";//1代表可使用
 
                             db.T_Account.Add(account);
@@ -337,7 +383,7 @@ namespace HnrMgmtAPI.Controllers.API.Sys
         /// <param name="access_token">授权令牌</param>
         /// <param name="accountID">账户ID</param>
         /// <returns></returns>
-        [HttpPost, Route("deladmin")]
+        [HttpGet, Route("deladmin")]
         public ApiResult DeleteAdmin(string access_token, string accountID)
         {
             result = AccessToken.Check(access_token, "api/account/deladmin");
@@ -437,6 +483,49 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                     #endregion
                 }
                 return result;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 校团委老师 -> 校团委助理账号/学院账号 重置账户密码 操作T_Account表
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="accuntID">账户ID</param>
+        /// <returns></returns>
+        [HttpGet, Route("resetadmin")]
+        public ApiResult ResetAdminPwd(string access_token, string accountID)
+        {
+            result = AccessToken.Check(access_token, "api/account/resetadmin");
+            if (result == null)
+            {
+                #region 参数验证
+                if (accountID == null || accountID == "")
+                {
+                    return Error("accuntID参数错误");
+                }
+                #endregion
+
+                #region 逻辑操作
+                T_Account accountModel = db.T_Account.Find(accountID);
+                if (accountModel != null)
+                {
+                    try
+                    {
+                        accountModel.Password = accountModel.AccountID.Substring(accountModel.AccountID.Length - 6, 6);
+                        db.SaveChanges();
+                        return Success("重置密码成功，初始密码为账号后六位");
+                    }
+                    catch
+                    {
+                        return Error("修改失败，请检查参数是否正确");
+                    }
+                }
+                else
+                {
+                    return Error("数据错误，无法查找到此条记录");
+                }
+                #endregion
             }
             return result;
         }
