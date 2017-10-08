@@ -10,7 +10,7 @@ import router from './router'
 
 import './styles/main.scss'
 // 引入图标库
-import './assets/fonts/iconfont.css'
+import './assets/icons/iconfont'
 
 Vue.use(ElementUI)
 
@@ -23,3 +23,4 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+

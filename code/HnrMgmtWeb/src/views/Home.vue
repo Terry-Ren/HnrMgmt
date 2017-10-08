@@ -15,7 +15,13 @@
     <div class="top-bar-account">
       <el-dropdown trigger="click" > 
         <span class="el-dropdown-main">
-          <i class="iconfont el-ico-ali-index"></i>用户<i class="el-icon-caret-bottom"></i>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#honor-account"></use>
+            </svg>
+            <span>超级管理员</span>
+            <svg class="icon" aria-hidden="true">
+            <use xlink:href="#honor-moreunfold"></use>
+            </svg>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>
@@ -37,11 +43,13 @@
     <!-- 左侧导航区 -->
     <aside :class="{showSidebar:!isCollapse}">
       <!-- 展开关闭按钮 -->
-      <div class="asid-button">
-      <el-button  type="primary" @click.prevent="collapse">
-        <i class="el-icon-caret-right" v-show="isCollapse"></i>
-        <i class="el-icon-caret-left" v-show="!isCollapse"></i>
-      </el-button>
+      <div class="asid-button" @click.prevent="collapse">
+          <svg class="icon" aria-hidden="true" v-show="isCollapse">
+            <use xlink:href="#honor-more"></use>
+          </svg>
+          <svg class="icon" aria-hidden="true" v-show="!isCollapse">
+            <use xlink:href="#honor-back"></use>
+          </svg>
       </div>
       <!-- 主菜单 -->
       <el-menu  :collapse="isCollapse" :default-active="$route.path" router>
@@ -198,7 +206,12 @@
         }
 
         .asid-button{
+          background: #4A5064;
           text-align: center;
+          color: white;
+          height: 30px;
+          line-height: 30px;
+          cursor: pointer;
         }
         
         &.showSidebar {
