@@ -78,7 +78,7 @@
 
 <script type="text/ecmascript-6">
 import {reqGetHonorList,reqAddHonor,posModifyHonor,reqDeleteHonor} from '../../api/api'
-import PubMethod from '../../common/public'
+import PubMethod from '../../common/util'
  export default {
    data() {
      return {

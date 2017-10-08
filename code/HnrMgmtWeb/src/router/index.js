@@ -6,10 +6,11 @@ import Hello from '@/components/Hello123'
 import Hnrlist from '../components/BasicData/Hnrlist.vue'
 import Awdlist from '../components/BasicData/Awdlist.vue'
 import Orglist from '../components/BasicData/Orglist.vue'
+import Acclist from '../components/SystemData/Acclist.vue'
 
 Vue.use(Router)
 
-// 定义路由
+// 定义路由数据
 const routes = [
 //   {
 
@@ -30,7 +31,7 @@ const routes = [
     component: Home,
     redirect: '/index',
     children: [
-      {path: '/index', component: Hello, name: 'index', menuShow: true},
+      {path: '/index', component: Hello, name: 'index', menuShow: true}
     ]
   },
   // 基础数据
@@ -53,17 +54,29 @@ const routes = [
     name: 'SystemData',
     menuShow: true,
     children: [
-      {path: '/system/acclist', component: Hnrlist, name: 'Hnrlist', menuShow: true},
+      {path: '/system/acclist', component: Acclist, name: 'Acclist', menuShow: true}
     ]
 
   }
 ]
 
-// 暴露路由
-export default new Router({
+// 声明路由
+const router = new Router({
   mode: 'history',
   routes: routes
 })
+
+// 导航守卫
+router.beforeEach((to, from, next) => {
+  if (true) {
+    console.log('git')
+    next()
+  } else {
+    next()
+  }
+})
+// 暴露路由
+export default router
 
 // export default new Router({
 //   routes: [

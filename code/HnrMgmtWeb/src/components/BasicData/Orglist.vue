@@ -67,7 +67,7 @@
 
 <script type="text/ecmascript-6">
 import {reqGetOrgList,posAddOrg,posModifyOrg,reqDeleteOrg} from '../../api/api'
-import PubMethod from '../../common/public'
+import PubMethod from '../../common/util'
  export default {
    data() {
      return {

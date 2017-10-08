@@ -90,7 +90,7 @@
 
 <script type="text/ecmascript-6">
 import {reqGetAwdList,posAddAwd,posModifyAwd,reqDeleteAwd} from '../../api/api'
-import PubMethod from '../../common/public'
+import PubMethod from '../../common/util'
 
  export default {
    data() {

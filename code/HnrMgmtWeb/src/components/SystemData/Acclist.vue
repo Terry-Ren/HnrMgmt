@@ -4,8 +4,8 @@
     <!-- 面包屑导航 -->
     <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
-        <el-breadcrumb-item>基础数据</el-breadcrumb-item>
-        <el-breadcrumb-item>单位学院管理</el-breadcrumb-item>
+        <el-breadcrumb-item>系统管理</el-breadcrumb-item>
+        <el-breadcrumb-item>账户管理</el-breadcrumb-item>
       </el-breadcrumb>
   </el-col>
  <!-- 下方主内容 -->
@@ -67,7 +67,7 @@
 
 <script type="text/ecmascript-6">
 import {reqGetOrgList,posAddOrg,posModifyOrg,reqDeleteOrg} from '../../api/api'
-import PubMethod from '../../common/public'
+import PubMethod from '../../common/util'
  export default {
    data() {
      return {
