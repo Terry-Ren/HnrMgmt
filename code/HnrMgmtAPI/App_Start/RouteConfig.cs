@@ -17,7 +17,7 @@ namespace HnrMgmtAPI
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 //defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-                defaults: new { controller = "Home", action = "ApiIndex", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

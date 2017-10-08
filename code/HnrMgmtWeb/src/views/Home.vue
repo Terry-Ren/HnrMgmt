@@ -64,7 +64,7 @@
             <i class="el-icon-edit "></i>
             <span slot="title">系统管理</span>
           </template>
-          <el-menu-item index="/index">
+          <el-menu-item index="/system/acclist">
             账户管理
           </el-menu-item>
           <el-menu-item index="Role">
@@ -80,13 +80,13 @@
             <i class="el-icon-setting"></i>
             <span slot="title">基础数据</span>
           </template>
-          <el-menu-item index="/hnrlist" >
+          <el-menu-item index="/basic/awdlist" >
             荣誉项目管理
           </el-menu-item>
-          <el-menu-item index="/awdlist">
+          <el-menu-item index="/basic/awdlist">
             竞赛项目管理
           </el-menu-item>
-          <el-menu-item index="/orglist">
+          <el-menu-item index="/basic/orglist">
             单位学院管理
           </el-menu-item>
         </el-submenu>

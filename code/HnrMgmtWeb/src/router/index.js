@@ -23,6 +23,7 @@ const routes = [
     path: '*',
     component: NotFoundComponent
   },
+  // 首页
   {
     path: '/',
     name: 'Home',
@@ -30,10 +31,31 @@ const routes = [
     redirect: '/index',
     children: [
       {path: '/index', component: Hello, name: 'index', menuShow: true},
-      {path: '/hnrlist', component: Hnrlist, name: 'Hnrlist', menuShow: true},
-      {path: '/awdlist', component: Awdlist, name: 'Awdlist', menuShow: true},
-      {path: '/orglist', component: Orglist, name: 'Orglist', menuShow: true}
     ]
+  },
+  // 基础数据
+  {
+    path: '/',
+    component: Home,
+    name: 'BasicData',
+    menuShow: true,
+    // iconCls: 'iconfont icon-users', // 图标样式class
+    children: [
+      {path: '/basic/hnrlist', component: Hnrlist, name: 'Hnrlist', menuShow: true},
+      {path: '/basic/awdlist', component: Awdlist, name: 'Awdlist', menuShow: true},
+      {path: '/basic/orglist', component: Orglist, name: 'Orglist', menuShow: true}
+    ]
+  },
+  // 系统管理
+  {
+    path: '/',
+    component: Home,
+    name: 'SystemData',
+    menuShow: true,
+    children: [
+      {path: '/system/acclist', component: Hnrlist, name: 'Hnrlist', menuShow: true},
+    ]
+
   }
 ]
 

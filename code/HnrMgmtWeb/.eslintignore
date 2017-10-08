@@ -2,4 +2,5 @@ build/*.js
 config/*.js
 src/views/*.vue
 src/components/BasicData/*.vue
+src/components/SystemData/*.vue
 src/common/*.js
