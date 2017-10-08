@@ -1,0 +1,178 @@
+﻿@{
+    //Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <title>API接口测试</title>
+    <script>
+        const serverPath = 'http://localhost:59996/';
+        const access_token = '';
+
+        //模拟Get请求
+        function AjaxRequestGet(uri) {
+            var server = serverPath;
+            var url = server + uri;
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                dataType: 'json',
+                url: url,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function () {
+                    console.log('Ajax请求失败！');
+                }
+            });
+        }
+
+        //模拟Post请求
+        function AjaxRequestPost(uri, data) {
+            var server = serverPath;
+            var url = server + uri;
+            $.ajax({
+                type: 'POST',
+                //contentType: 'application/json',//此句话需要配合 json序列化方法使用
+                dataType: 'json',
+                data: data,
+                url: url,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (response) {
+                    console.log('Ajax请求失败！');
+                    console.log(response);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('#btnGetCache').click(function (e) {
+                AjaxRequestGet('api/honor/testget?access_token=11');
+            });
+
+            $('#btnSetCache').click(function (e) {
+                AjaxRequestGet('api/honor/testset?value=123456');
+            });
+
+            //荣誉接口测试
+            $('#btnHonorGet').click(function (e) {
+                AjaxRequestGet('api/honor/get?access_token=11');
+            });
+
+            $('#btnHonorAdd').click(function (e) {
+                AjaxRequestGet('api/honor/add?access_token=11&Name=校三好学生&GradeName=1');
+            });
+
+            $('#btnHonorDelete').click(function (e) {
+                AjaxRequestGet('api/honor/delete?access_token=11&honorID=0ea10c66-a6d9-4df5-a8ca-e51380da4e8a');
+            });
+
+            $('#btnHonorModify').click(function (e) {
+                var data = { 'access_token': '11', 'honorID': '0ea10c66-a6d9-4df5-a8ca-e51380da4e8a', 'Name': '修改后的校三好学生称号', 'GradeName': '2' }
+                AjaxRequestPost('api/honor/modify', data);
+            });
+
+            //奖项接口测试
+            $('#btnAwardGet').click(function (e) {
+                AjaxRequestGet('api/award/get?access_token=11');
+            });
+
+            $('#btnAwardAdd').click(function (e) {
+                var data = { 'access_token': '11', 'Name': '"互联网+"创新创业大赛', 'GradeName': '1', 'Grade': '1' }
+                AjaxRequestPost('api/award/add', data);
+            });
+
+            $('#btnAwardDelete').click(function (e) {
+                AjaxRequestGet('api/award/delete?access_token=11&awardID=078c9f37-c14b-4e79-86f4-7adf82246439');
+            });
+
+            $('#btnAwardModify').click(function (e) {
+                var data = { 'access_token': '11', 'AwdID': '078c9f37-c14b-4e79-86f4-7adf82246439', 'Name': '修改后的"互联网+"创新创业大赛', 'GradeName': '2', 'Grade': '2' }
+                AjaxRequestPost('api/award/modify', data);
+            });
+
+            //单位信息接口测试
+            $('#btnOrgGet').click(function (e) {
+                AjaxRequestGet('api/org/get?access_token=11');
+            });
+
+            $('#btnOrgAdd').click(function (e) {
+                var data = { 'access_token': '11', 'Name': '管理学院' }
+                AjaxRequestPost('api/org/add', data);
+            });
+
+            $('#btnOrgDelete').click(function (e) {
+                AjaxRequestGet('api/org/delete?access_token=11&orgID=70b42e5b-33a3-4d32-8873-33a5b373dc96');
+            });
+
+            $('#btnOrgModify').click(function (e) {
+                var data = { 'access_token': '11', 'OrgID': '70b42e5b-33a3-4d32-8873-33a5b373dc96', 'Name': '修改后的管理学院' }
+                AjaxRequestPost('api/org/modify', data);
+            });
+        });
+
+        
+    </script>
+</head>
+<body>
+    <div>
+        <h1>API 接口测试：</h1>
+        <br />
+        <div style="margin-left:200px;">
+            <h3>模拟接口测试：</h3>
+            <input type="button" value="读取Cache测试" id="btnGetCache" />
+            <br />
+            <br />
+            <input type="button" value="写入Cache测试" id="btnSetCache" />
+            <br />
+            <br />
+            <h3>荣誉管理接口测试：</h3>
+            <input type="button" value="api/honor/get" id="btnHonorGet" />
+            <br />
+            <br />
+            <input type="button" value="api/honor/add" id="btnHonorAdd" />
+            <br />
+            <br />
+            <input type="button" value="api/honor/delete" id="btnHonorDelete" />
+            <br />
+            <br />
+            <input type="button" value="api/honor/modify" id="btnHonorModify" />
+            <br />
+            <br />
+            <h3>奖项管理接口测试：</h3>
+            <input type="button" value="api/award/get" id="btnAwardGet" />
+            <br />
+            <br />
+            <input type="button" value="api/award/add" id="btnAwardAdd" />
+            <br />
+            <br />
+            <input type="button" value="api/award/delete" id="btnAwardDelete" />
+            <br />
+            <br />
+            <input type="button" value="api/award/modify" id="btnAwardModify" />
+            <br />
+            <br />
+            <h3>单位信息管理接口测试：</h3>
+            <input type="button" value="api/org/get" id="btnOrgGet" />
+            <br />
+            <br />
+            <input type="button" value="api/org/add" id="btnOrgAdd" />
+            <br />
+            <br />
+            <input type="button" value="api/org/delete" id="btnOrgDelete" />
+            <br />
+            <br />
+            <input type="button" value="api/org/modify" id="btnOrgModify" />
+            <br />
+            <br />
+        </div>
+    </div>
+</body>
+</html>

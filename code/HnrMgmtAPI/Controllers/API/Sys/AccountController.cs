@@ -12,8 +12,15 @@ namespace HnrMgmtAPI.Controllers.API.Sys
     public class AccountController : BaseApiController
     {
         #region 系统管理员可访问接口 用于管理 校团委管理员账号
+        /// <summary>
+        /// 获取校团委老师信息
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="page">页码</param>
+        /// <param name="size">每页条数</param>
+        /// <returns></returns>
         [HttpGet, Route("teacher")]
-        public ApiResult GetTeacherList(string access_token, int page, int size)
+        public ApiResult GetTeacherList(string access_token, int page, int size)//若第一次请求第十页 每页20条数据 如何处理？是否报错？
         {
             result = AccessToken.Check(access_token, "api/account/teacher");
             if (result == null)
@@ -35,6 +42,7 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                 result.messages = "获取数据成功";
 
                 //vw_Account.RoleID == "1"  1 代表校团委老师
+                //此处需验证  若其他字段为null时的 返回结果，在前面测试中，若包含字段结果类型为null，则不能返回值
                 var accountList = from vw_Account in db.vw_Account where (vw_Account.RoleID == "1") orderby vw_Account.AccountName select vw_Account;
                 if (accountList.Any())
                 {
@@ -53,9 +61,16 @@ namespace HnrMgmtAPI.Controllers.API.Sys
             return result;
         }
 
+        /// <summary>
+        /// 添加老师信息
+        /// </summary>
+        /// <param name="model">参数参考TeacherAdd</param>
+        /// <returns></returns>
         [HttpPost, Route("addteacher")]
         public ApiResult AddTeacher([FromBody]TeacherAdd model)
         {
+            //此处的参数中，OrgID 和 RoleID  不能为空，且必须是数据库中包含的数据
+            //需要对OrgID  和  RoleID 对验证处理 验证处理部分代码尚未实现
             result = AccessToken.Check(model.access_token, "api/account/addteacher");
             if (result == null)
             {
@@ -83,7 +98,7 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                         account.OrgID = model.OrgID.Trim();
                         account.Tel = model.Tel.Trim();
                         account.RoleID = "1";
-                        account.Password = model.AccountID.Substring(model.AccountID.Length - 6, model.AccountID.Length);
+                        account.Password = model.AccountID.Substring(model.AccountID.Length - 6, 6);
                         account.State = "1";//1代表可使用
 
                         db.T_Account.Add(account);
@@ -102,6 +117,12 @@ namespace HnrMgmtAPI.Controllers.API.Sys
             return result;
         }
 
+        /// <summary>
+        /// 删除老师信息
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="accountID">账号ID</param>
+        /// <returns></returns>
         [HttpGet, Route("delteacher")]
         public ApiResult DeleteTeacher(string access_token, string accountID)
         {
@@ -154,6 +175,11 @@ namespace HnrMgmtAPI.Controllers.API.Sys
             return result;
         }
 
+        /// <summary>
+        /// 修改老师信息
+        /// </summary>
+        /// <param name="model">参数参考TeacherAdd</param>
+        /// <returns></returns>
         [HttpPost, Route("modteacher")]
         public ApiResult ModifyTeacher([FromBody]TeacherModify model)
         {
@@ -196,6 +222,13 @@ namespace HnrMgmtAPI.Controllers.API.Sys
         #endregion
 
         #region 校团委管理员可访问接口 用于管理 校团委助理账号、各二级单位 等具有审核权限的账号
+        /// <summary>
+        /// 获取 角色类型为2 或 3 的账户信息
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="page">页码</param>
+        /// <param name="size">页面数量</param>
+        /// <returns></returns>
         [HttpPost, Route("admin")]
         public ApiResult GetAdminList(string access_token, int page, int size)
         {
@@ -237,6 +270,11 @@ namespace HnrMgmtAPI.Controllers.API.Sys
             return result;
         }
 
+        /// <summary>
+        /// 添加 角色类型为2 或 3 的账户信息
+        /// </summary>
+        /// <param name="model">参数参考AdminAdd</param>
+        /// <returns></returns>
         [HttpPost, Route("addadmin")]
         public ApiResult AddAdmin([FromBody]AdminAdd model)
         {
@@ -293,6 +331,12 @@ namespace HnrMgmtAPI.Controllers.API.Sys
             return result;
         }
 
+        /// <summary>
+        /// 删除 角色类型为2 或 3 的账户信息
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="accountID">账户ID</param>
+        /// <returns></returns>
         [HttpPost, Route("deladmin")]
         public ApiResult DeleteAdmin(string access_token, string accountID)
         {
@@ -344,6 +388,11 @@ namespace HnrMgmtAPI.Controllers.API.Sys
             return result;
         }
 
+        /// <summary>
+        /// 修改 角色类型为2 或 3 的账户信息
+        /// </summary>
+        /// <param name="model">参数参考AdminModify</param>
+        /// <returns></returns>
         [HttpPost, Route("modadmin")]
         public ApiResult ModifyAdmin([FromBody]AdminModify model)
         {
