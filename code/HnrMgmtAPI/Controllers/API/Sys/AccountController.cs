@@ -12,6 +12,13 @@ namespace HnrMgmtAPI.Controllers.API.Sys
     public class AccountController : BaseApiController
     {
         #region 系统管理员可访问接口 用于管理 校团委管理员账号
+        /// <summary>
+        /// 获取校团委老师信息
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="page">页码</param>
+        /// <param name="size">每页条数</param>
+        /// <returns></returns>
         [HttpGet, Route("teacher")]
         public ApiResult GetTeacherList(string access_token, int page, int size)
         {
@@ -53,6 +60,11 @@ namespace HnrMgmtAPI.Controllers.API.Sys
             return result;
         }
 
+        /// <summary>
+        /// 添加老师信息
+        /// </summary>
+        /// <param name="model">参数参考TeacherAdd</param>
+        /// <returns></returns>
         [HttpPost, Route("addteacher")]
         public ApiResult AddTeacher([FromBody]TeacherAdd model)
         {
@@ -102,6 +114,12 @@ namespace HnrMgmtAPI.Controllers.API.Sys
             return result;
         }
 
+        /// <summary>
+        /// 删除老师信息
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="accountID">账号ID</param>
+        /// <returns></returns>
         [HttpGet, Route("delteacher")]
         public ApiResult DeleteTeacher(string access_token, string accountID)
         {
@@ -154,6 +172,11 @@ namespace HnrMgmtAPI.Controllers.API.Sys
             return result;
         }
 
+        /// <summary>
+        /// 修改老师信息
+        /// </summary>
+        /// <param name="model">参数参考TeacherAdd</param>
+        /// <returns></returns>
         [HttpPost, Route("modteacher")]
         public ApiResult ModifyTeacher([FromBody]TeacherModify model)
         {
@@ -196,6 +219,13 @@ namespace HnrMgmtAPI.Controllers.API.Sys
         #endregion
 
         #region 校团委管理员可访问接口 用于管理 校团委助理账号、各二级单位 等具有审核权限的账号
+        /// <summary>
+        /// 获取 角色类型为2 或 3 的账户信息
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="page">页码</param>
+        /// <param name="size">页面数量</param>
+        /// <returns></returns>
         [HttpPost, Route("admin")]
         public ApiResult GetAdminList(string access_token, int page, int size)
         {
@@ -237,6 +267,11 @@ namespace HnrMgmtAPI.Controllers.API.Sys
             return result;
         }
 
+        /// <summary>
+        /// 添加 角色类型为2 或 3 的账户信息
+        /// </summary>
+        /// <param name="model">参数参考AdminAdd</param>
+        /// <returns></returns>
         [HttpPost, Route("addadmin")]
         public ApiResult AddAdmin([FromBody]AdminAdd model)
         {
@@ -293,6 +328,12 @@ namespace HnrMgmtAPI.Controllers.API.Sys
             return result;
         }
 
+        /// <summary>
+        /// 删除 角色类型为2 或 3 的账户信息
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="accountID">账户ID</param>
+        /// <returns></returns>
         [HttpPost, Route("deladmin")]
         public ApiResult DeleteAdmin(string access_token, string accountID)
         {
@@ -344,6 +385,11 @@ namespace HnrMgmtAPI.Controllers.API.Sys
             return result;
         }
 
+        /// <summary>
+        /// 修改 角色类型为2 或 3 的账户信息
+        /// </summary>
+        /// <param name="model">参数参考AdminModify</param>
+        /// <returns></returns>
         [HttpPost, Route("modadmin")]
         public ApiResult ModifyAdmin([FromBody]AdminModify model)
         {

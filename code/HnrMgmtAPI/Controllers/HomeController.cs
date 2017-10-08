@@ -15,10 +15,22 @@ namespace HnrMgmtAPI.Controllers
             return View();
         }
 
-        public ActionResult ApiIndex()
+        /// <summary>
+        /// 基础数据 API 接口
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Api_JC()
         {
             return View();
         }
-
+        
+        /// <summary>
+        /// 系统管理 API 接口
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Api_Sys()
+        {
+            return View();
+        }
     }
 }
