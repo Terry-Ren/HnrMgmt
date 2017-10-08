@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = null;
+
 }
 
 <!DOCTYPE html>
@@ -7,11 +7,119 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title></title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <title>API接口测试</title>
+    <script>
+        const serverPath = 'http://localhost:59996/';
+        const access_token = '';
+
+        //模拟Get请求
+        function AjaxRequestGet(uri) {
+            var server = serverPath;
+            var url = server + uri;
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                dataType: 'json',
+                url: url,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function () {
+                    console.log('Ajax请求失败！');
+                }
+            });
+        }
+
+        //模拟Post请求
+        function AjaxRequestPost(uri, data) {
+            var server = serverPath;
+            var url = server + uri;
+            $.ajax({
+                type: 'POST',
+                //contentType: 'application/json',//此句话需要配合 json序列化方法使用
+                dataType: 'json',
+                data: data,
+                url: url,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (response) {
+                    console.log('Ajax请求失败！');
+                    console.log(response);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            //荣誉接口测试
+            $('#btnAccountTeacher').click(function (e) {
+                AjaxRequestGet('api/account/teacher?access_token=11&page=1&size=10');
+            });
+
+            $('#btnTeacherAdd').click(function (e) {
+                var data = { 'access_token': '11', 'AccountID': '1214001', 'Name': '王健铭', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Tel': '15307179930' }
+                AjaxRequestPost('api/account/addteacher', data);
+            });
+
+            $('#btnTeacherDelete').click(function (e) {
+                AjaxRequestGet('api/account/delteacher?access_token=11&accountID=1214001');
+            });
+
+            $('#btnTeacherModify').click(function (e) {
+                var data = { 'access_token': '11', 'AccountID': '1214001', 'Name': '修改过后的数据-王健铭', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Tel': '15307179930' }
+                AjaxRequestPost('api/account/modteacher', data);
+            });
+        });
+
+    </script>
 </head>
 <body>
     <div>
-    
+        <h1>API 接口测试：</h1>
+        <br />
+        <div style="margin-left:200px;">
+            <h3>帐户管理接口测试：</h3>
+            <input type="button" value="api/account/teacher" id="btnAccountTeacher" />
+            <br />
+            <br />
+            <input type="button" value="api/account/addteacher" id="btnTeacherAdd" />
+            <br />
+            <br />
+            <input type="button" value="api/account/delteacher" id="btnTeacherDelete" />
+            <br />
+            <br />
+            <input type="button" value="api/account/modteacher" id="btnTeacherModify" />
+            <br />
+            <br />
+            @*<h3>奖项管理接口测试：</h3>
+            <input type="button" value="api/award/get" id="btnAwardGet" />
+            <br />
+            <br />
+            <input type="button" value="api/award/add" id="btnAwardAdd" />
+            <br />
+            <br />
+            <input type="button" value="api/award/delete" id="btnAwardDelete" />
+            <br />
+            <br />
+            <input type="button" value="api/award/modify" id="btnAwardModify" />
+            <br />
+            <br />
+            <h3>单位信息管理接口测试：</h3>
+            <input type="button" value="api/org/get" id="btnOrgGet" />
+            <br />
+            <br />
+            <input type="button" value="api/org/add" id="btnOrgAdd" />
+            <br />
+            <br />
+            <input type="button" value="api/org/delete" id="btnOrgDelete" />
+            <br />
+            <br />
+            <input type="button" value="api/org/modify" id="btnOrgModify" />
+            <br />
+            <br />*@
+        </div>
     </div>
 </body>
 </html>

@@ -216,7 +216,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Common\AccessToken.cs" />
     <Compile Include="Common\Public.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\JC\AwardController.cs" />
     <Compile Include="Controllers\API\JC\HonorController.cs" />
     <Compile Include="Controllers\API\JC\OrganizationController.cs" />

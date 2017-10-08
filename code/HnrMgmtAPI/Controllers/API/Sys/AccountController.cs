@@ -20,7 +20,7 @@ namespace HnrMgmtAPI.Controllers.API.Sys
         /// <param name="size">每页条数</param>
         /// <returns></returns>
         [HttpGet, Route("teacher")]
-        public ApiResult GetTeacherList(string access_token, int page, int size)
+        public ApiResult GetTeacherList(string access_token, int page, int size)//若第一次请求第十页 每页20条数据 如何处理？是否报错？
         {
             result = AccessToken.Check(access_token, "api/account/teacher");
             if (result == null)
@@ -42,6 +42,7 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                 result.messages = "获取数据成功";
 
                 //vw_Account.RoleID == "1"  1 代表校团委老师
+                //此处需验证  若其他字段为null时的 返回结果，在前面测试中，若包含字段结果类型为null，则不能返回值
                 var accountList = from vw_Account in db.vw_Account where (vw_Account.RoleID == "1") orderby vw_Account.AccountName select vw_Account;
                 if (accountList.Any())
                 {
@@ -68,6 +69,8 @@ namespace HnrMgmtAPI.Controllers.API.Sys
         [HttpPost, Route("addteacher")]
         public ApiResult AddTeacher([FromBody]TeacherAdd model)
         {
+            //此处的参数中，OrgID 和 RoleID  不能为空，且必须是数据库中包含的数据
+            //需要对OrgID  和  RoleID 对验证处理 验证处理部分代码尚未实现
             result = AccessToken.Check(model.access_token, "api/account/addteacher");
             if (result == null)
             {
@@ -95,7 +98,7 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                         account.OrgID = model.OrgID.Trim();
                         account.Tel = model.Tel.Trim();
                         account.RoleID = "1";
-                        account.Password = model.AccountID.Substring(model.AccountID.Length - 6, model.AccountID.Length);
+                        account.Password = model.AccountID.Substring(model.AccountID.Length - 6, 6);
                         account.State = "1";//1代表可使用
 
                         db.T_Account.Add(account);
