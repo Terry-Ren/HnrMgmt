@@ -18,12 +18,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("应用程序名称", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("API接口测试", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("主页", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "ApiIndex", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("基础数据API", "Api_JC", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("系统管理API", "Api_Sys", "Home", new { area = "" }, null)</li>
                 </ul>
             </div>
         </div>

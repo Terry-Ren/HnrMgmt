@@ -8,7 +8,7 @@ using HnrMgmtAPI.Common;
 
 namespace HnrMgmtAPI.Controllers.API.Sys
 {
-    [RoutePrefix("api/account")]
+    [RoutePrefix("api/pwd")]
     public class PasswordController : BaseApiController
     {
 
