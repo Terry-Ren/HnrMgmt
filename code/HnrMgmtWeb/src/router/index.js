@@ -1,12 +1,19 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store/index'
+import * as types from '../store/mutation-types'
 import Home from '../views/Home.vue'
+import Login from '../views/Login.vue'
 import NotFoundComponent from '../views/404'
 import Hello from '@/components/Hello123'
-import Hnrlist from '../components/BasicData/Hnrlist.vue'
-import Awdlist from '../components/BasicData/Awdlist.vue'
-import Orglist from '../components/BasicData/Orglist.vue'
-import Acclist from '../components/SystemData/Acclist.vue'
+import ComAcclist from '../components/SystemData/ComAcclist.vue'
+
+// import AccTchlist from '../components/SystemData/AccTchlist.vue'
+
+// 将基础数据组件全部打包异步加载（webpack特殊的注释语法）
+const Hnrlist = () => import(/* webpackChunkName: "BasicData" */ '../components/BasicData/Hnrlist.vue')
+const Awdlist = () => import(/* webpackChunkName: "BasicData" */ '../components/BasicData/Awdlist.vue')
+const Orglist = () => import(/* webpackChunkName: "BasicData" */ '../components/BasicData/Orglist.vue')
 
 Vue.use(Router)
 
@@ -22,13 +29,23 @@ const routes = [
 // 404页面
   {
     path: '*',
+    name: 'Error',
     component: NotFoundComponent
+  },
+  // 登录页
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
   },
   // 首页
   {
     path: '/',
     name: 'Home',
     component: Home,
+    meta: {
+      requireAuth: true
+    },
     redirect: '/index',
     children: [
       {path: '/index', component: Hello, name: 'index', menuShow: true}
@@ -39,6 +56,9 @@ const routes = [
     path: '/',
     component: Home,
     name: 'BasicData',
+    meta: {
+      requireAuth: true
+    },
     menuShow: true,
     // iconCls: 'iconfont icon-users', // 图标样式class
     children: [
@@ -52,13 +72,21 @@ const routes = [
     path: '/',
     component: Home,
     name: 'SystemData',
+    meta: {
+      requireAuth: true
+    },
     menuShow: true,
     children: [
-      {path: '/system/acclist', component: Acclist, name: 'Acclist', menuShow: true}
+      {path: '/system/Acclist', component: ComAcclist, name: 'ComAcclist', menuShow: true}
     ]
 
   }
 ]
+
+// 页面刷新时，重新赋值给state中相应的变量
+if (window.localStorage.getItem('access_token')) {
+  store.commit(types.REFREST)
+}
 
 // 声明路由
 const router = new Router({
@@ -68,9 +96,15 @@ const router = new Router({
 
 // 导航守卫
 router.beforeEach((to, from, next) => {
-  if (true) {
-    console.log('git')
-    next()
+  if (to.matched.some(r => r.meta.requireAuth)) {
+    if (store.state.access_token) {
+      next()
+    } else {
+      next({
+        path: '/login',
+        query: {redirect: to.fullPath}
+      })
+    }
   } else {
     next()
   }

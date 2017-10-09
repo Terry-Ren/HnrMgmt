@@ -1,4 +1,27 @@
 import axios from 'axios'
+import store from '../store/index'
+import * as types from '../store/mutation-types'
+import router from '../router/index'
+
+// http response 拦截器
+axios.interceptors.response.use(
+    response => {
+      return response
+    },
+    error => {
+      if (error.response) {
+        switch (error.response.status) {
+          case 401:
+          // 返回 401 清除token信息并跳转到登录页面
+            store.commit(types.LOGOUT)
+            router.replace({
+              path: '/login',
+              query: {redirect: router.currentRoute.fullPath}
+            })
+        }
+      }
+      return Promise.reject(error.response.data)   // 返回接口返回的错误信息
+    })
 
 let base = 'http://localhost:59996/'
 
@@ -28,3 +51,6 @@ export const posAddOrg = params => { return axios.post(`${base}api/org/add`, par
 export const posModifyOrg = params => { return axios.post(`${base}api/org/modify`, params) }
 // 删除单位
 export const reqDeleteOrg = params => { return axios.get(`${base}api/org/delete`, {params: params}) }
+
+// 新增三级管理员
+export const reqGetAccTchList = params => { return axios.get(`${base}api/account/teacher`, {params: params}) }

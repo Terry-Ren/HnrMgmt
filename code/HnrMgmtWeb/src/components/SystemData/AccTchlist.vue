@@ -13,15 +13,18 @@
     <!-- 工具栏 -->
     <el-col :span="24" class="toolBar" >    
       <el-form :inline="true" style="margin-bottom:15px">
-        <el-button type="primary" @click="addFormVisible = true" >新增单位</el-button>
+        <el-button type="primary" @click="addFormVisible = true" >新增账户</el-button>
       </el-form>
     </el-col>
     <!-- 表格区 -->
     <el-col :span="24">
-      <el-table  :data="OrgData" border style="width:100%" v-loading="listLoading" > 
+      <el-table  :data="AccData" border style="width:100%" v-loading="listLoading" > 
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column type="index" width="65" label="序号" style="text-aligin:center" align="center"></el-table-column>
-        <el-table-column prop="Name" label="单位名称" sortable align="center" ></el-table-column>
+        <el-table-column prop="AccountID" label="账户名" sortable align="center" ></el-table-column>
+        <el-table-column prop="AccountName" label="姓名" sortable align="center" ></el-table-column>
+        <el-table-column prop="OrgName" label="所属单位" sortable align="center" ></el-table-column>
+        <el-table-column prop="RoleName" label="角色" sortable align="center" ></el-table-column>
         <el-table-column label="操作" width="150">
           <template scope="scope">
             <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >编辑</el-button>
@@ -66,7 +69,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {reqGetOrgList,posAddOrg,posModifyOrg,reqDeleteOrg} from '../../api/api'
+import {reqGetAccTchList,posAddOrg,posModifyOrg,reqDeleteOrg} from '../../api/api'
 import PubMethod from '../../common/util'
  export default {
    data() {
@@ -74,7 +77,7 @@ import PubMethod from '../../common/util'
        // 用户令牌
        access_token:'',
        // 表格数据
-       OrgData: [],
+       AccData: [],
        listLoading:false,
 
        selectRowIndex:'',
@@ -113,18 +116,18 @@ import PubMethod from '../../common/util'
 
    //方法集合
    methods:{
-     //获取荣誉列表
+     //获取校团委教师列表
      getList(){
        this.listLoading=true
        let param={
            access_token : "11",
            page : this.page,
-           limit : this.size
+           size : this.size
            }
-           reqGetOrgList(param).then((res)=>{
-               this.OrgData = res.data.data.list
+           reqGetAccTchList(param).then((res)=>{
+               this.AccData = res.data.data.list
                this.totalNum = res.data.data.count;
-               //console.log(this.OrgData)
+               //console.log(this.AccData)
                this.listLoading=false
                }).catch((res)=>{
                    console.log(res)

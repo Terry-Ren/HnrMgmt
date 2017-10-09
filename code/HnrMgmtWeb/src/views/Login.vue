@@ -1,0 +1,88 @@
+<template>
+  <el-form :model="loginForm"  ref="loginForm" label-position="left" label-width="0px" class="demo-ruleForm login-container">
+    <h3 class="title">荣誉管理信息系统登录</h3>
+    <el-form-item prop="AccountID">
+      <el-input type="text" v-model="loginForm.AccountID" auto-complete="off" placeholder="账号"></el-input>
+    </el-form-item>
+    <el-form-item prop="Password">
+      <el-input type="password" v-model="loginForm.Password" auto-complete="off" placeholder="密码"></el-input>
+    </el-form-item>
+    <el-form-item prop="RoleID">
+      <el-select v-model="loginForm.RoleID" placeholder="请选择角色">
+        <el-option v-for="Role in RoleIDs" :key="Role.value" :label="Role.label" :value="Role.value"></el-option>
+      </el-select>
+    </el-form-item>
+    <!-- <el-checkbox v-model="checked" checked class="remember">记住密码</el-checkbox> -->
+    <el-form-item style="width:100%;">
+      <el-button type="primary" style="width:100%;" @click.native.prevent="login">登录</el-button>
+      <!--<el-button @click.native.prevent="handleReset2">重置</el-button>-->
+    </el-form-item>
+  </el-form>
+</template>
+
+<script type="text/ecmascript-6">
+import * as types from '../store/mutation-types'
+ export default {
+   data() {
+     return {
+         // 表单需要内容
+         loginForm:{
+             AccountID:'',
+             Password:'',
+             RoleID:''
+         },
+         //角色
+         RoleIDs:[{
+             value:'0',
+             label:'超级管理员'
+         },{
+             value:'1',
+             label:'校团委账号'
+         },{
+             value:'2',
+             label:'校团委助理'
+         },{
+             value:'3',
+             label:'学院账号'
+         }]
+
+     }
+      },
+      methods:{
+          // 登录方法 还没有判断
+          login(){
+             this.$store.commit(types.LOGIN,this.loginForm)
+             let redirect = decodeURIComponent(this.$route.query.redirect || '/')
+             this.$router.push({
+                path: redirect
+                })
+
+          }
+
+      }
+ }
+</script>
+
+<style scoped lang="scss">
+  .login-container {
+    /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    background-clip: padding-box;
+    margin: 100px auto;
+    width: 350px;
+    padding: 35px 35px 15px 35px;
+    background: #fff;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 0 25px #cac6c6;
+
+    .title{
+        text-align: center;
+    }
+    }
+    .el-select{
+            width: 100%;
+    }
+ 
+</style>

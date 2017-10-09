@@ -4,9 +4,10 @@ import Vue from 'vue'
 // 引用elementUI
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
-
+// 引入vue全家桶
 import App from './App'
 import router from './router'
+import store from './store/index'
 
 import './styles/main.scss'
 // 引入图标库
@@ -20,6 +21,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })
