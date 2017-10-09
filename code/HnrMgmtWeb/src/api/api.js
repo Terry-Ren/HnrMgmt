@@ -3,6 +3,18 @@ import store from '../store/index'
 import * as types from '../store/mutation-types'
 import router from '../router/index'
 
+// http request 拦截器
+axios.interceptors.request.use(
+  config => {
+    if (store.state.access_token) {
+      config.headers.Authorization = `access_token ${store.state.access_token}`
+    }
+    return config
+  },
+  err => {
+    return Promise.reject(err)
+  })
+
 // http response 拦截器
 axios.interceptors.response.use(
     response => {
