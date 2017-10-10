@@ -1,0 +1,1053 @@
+
+        <html xmlns:v="urn:schemas-microsoft-com:vml"
+        xmlns:o="urn:schemas-microsoft-com:office:office"
+        xmlns:w="urn:schemas-microsoft-com:office:word"
+        xmlns="http://www.w3.org/TR/REC-html40">
+        <head><meta http-equiv=Content-Type content="text/html;  
+        charset=utf-8">
+        <style type="text/css">
+            table  
+            {  
+                border-collapse: collapse;
+                border: none;  
+                width: 100%;  
+            }  
+            td  
+            {  
+                border: solid #CCC 1px;  
+            }  
+            .codestyle{
+                word-break: break-all;
+                background:silver;mso-highlight:silver;
+            }
+        </style>
+        <meta name=ProgId content=Word.Document>
+        <meta name=Generator content="Microsoft Word 11">
+        <meta name=Originator content="Microsoft Word 11">
+        <xml><w:WordDocument><w:View>Print</w:View></xml></head>
+        <body><h1>1、基础数据管理</h1><div style="margin-left:20px;"><h2>1.1、奖项管理接口</h2><div style="margin-left:20px;"><h3>1.1.1、获取全部数据</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>获取T_Award表中全部数据</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/award/get</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+</tbody>
+</table></div><h3>1.1.2、获取第page页数据</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>获取T_Award表中第page页数据   </li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/award/get</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">password</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>page</td>
+</tr>
+<tr>
+<td style="text-align: left;">limit</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>每页条数</td>
+</tr>
+</tbody>
+</table></div><h3>1.1.3、添加到一条数据</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>添加到一条数据 T_Award</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/award/add</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>奖项名</td>
+</tr>
+<tr>
+<td style="text-align: left;">GradeName</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>级别</td>
+</tr>
+<tr>
+<td style="text-align: left;">Grade</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>等次</td>
+</tr>
+</tbody>
+</table></div><h3>1.1.4、删除一条记录</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>删除一条记录 T_Award</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/award/delete</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">awardID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>奖项ID</td>
+</tr>
+</tbody>
+</table></div><h3>1.1.5、修改一条记录</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>修改一条记录 T_Award</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/award/modify</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">AwdID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>奖项ID</td>
+</tr>
+<tr>
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>奖项名</td>
+</tr>
+<tr>
+<td style="text-align: left;">GradeName</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>级别</td>
+</tr>
+<tr>
+<td style="text-align: left;">Grade</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>等次</td>
+</tr>
+</tbody>
+</table></div></div><h2>1.2、荣誉管理接口</h2><div style="margin-left:20px;"><h3>1.2.1、获取全部记录</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>获取全部记录 T_Honor</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/honor/get</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+</tbody>
+</table></div><h3>1.2.2、获取第Page页数据</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>根据页码和每页条数 获取记录 T_Honor</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/honor/get</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">password</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>page</td>
+</tr>
+<tr>
+<td style="text-align: left;">limit</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>每页条数</td>
+</tr>
+</tbody>
+</table></div><h3>1.2.3、添加到一条数据</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>添加到一条数据 T_Honor</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/honor/add</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>荣誉名</td>
+</tr>
+<tr>
+<td style="text-align: left;">GradeName</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>级别</td>
+</tr>
+</tbody>
+</table></div><h3>1.2.4、删除一条记录</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>删除一条记录 T_Honor</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/honor/delete</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">honorID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>荣誉ID</td>
+</tr>
+</tbody>
+</table></div><h3>1.2.5、修改一条记录</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>修改一条记录 T_Honor</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/honor/modify</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">honorID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>荣誉ID</td>
+</tr>
+<tr>
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>荣誉名</td>
+</tr>
+<tr>
+<td style="text-align: left;">GradeName</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>级别</td>
+</tr>
+</tbody>
+</table></div></div><h2>1.3、单位信息管理接口</h2><div style="margin-left:20px;"><h3>1.3.1、获取全部数据</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>获取T_Organization表中全部数据</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/org/get</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+</tbody>
+</table></div><h3>1.3.2、获取第Page页数据</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>根据页码和每页条数 获取记录 T_Organization</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/org/get</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">password</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>page</td>
+</tr>
+<tr>
+<td style="text-align: left;">limit</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>每页条数</td>
+</tr>
+</tbody>
+</table></div><h3>1.3.3、添加到一条数据</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>添加到一条数据 T_Organization</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/org/add</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>单位名</td>
+</tr>
+</tbody>
+</table></div><h3>1.3.4、删除一条记录</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>删除一条记录 T_Organization</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/org/delete</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">orgID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>单位ID</td>
+</tr>
+</tbody>
+</table></div><h3>1.3.5、修改一条记录</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>修改一条记录 T_Organization</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/org/modify</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">orgID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>单位ID</td>
+</tr>
+<tr>
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>单位名</td>
+</tr>
+</tbody>
+</table></div></div></div><h1>2、系统管理</h1><div style="margin-left:20px;"><h2>2.1、帐户管理接口</h2><div style="margin-left:20px;"><h3>2.1.1、获取校团委老师信息</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>获取校团委老师信息</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/account/teacher</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">page</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>页码</td>
+</tr>
+<tr>
+<td style="text-align: left;">size</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>每页条数</td>
+</tr>
+</tbody>
+</table></div><h3>2.1.2、添加老师信息</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>添加老师信息</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/account/addteacher</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">AccountID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>账户ID</td>
+</tr>
+<tr>
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>姓名</td>
+</tr>
+<tr>
+<td style="text-align: left;">OrgID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>单位ID</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tel</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>联系电话</td>
+</tr>
+</tbody>
+</table></div><h3>2.1.3、删除老师信息</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>删除老师信息</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/account/delteacher</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">accountID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>账户ID</td>
+</tr>
+</tbody>
+</table></div><h3>2.1.4、修改老师信息</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>修改老师信息</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/account/modteacher</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">AccountID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>账户ID</td>
+</tr>
+<tr>
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>姓名</td>
+</tr>
+<tr>
+<td style="text-align: left;">OrgID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>单位ID</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tel</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>联系电话</td>
+</tr>
+</tbody>
+</table></div><h3>2.1.5、重置老师账户密码（系统管理员）</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>系统管理员 -> 校团委老师账号 重置账户密码 操作T_Account表</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/account/resetteacher</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">accountID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>账户ID</td>
+</tr>
+</tbody>
+</table></div><h3>2.1.6、获取2/3角色信息</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>获取 角色类型为2 或 3 的账户信息</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/account/admin</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">page</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>页码</td>
+</tr>
+<tr>
+<td style="text-align: left;">size</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>每页条数</td>
+</tr>
+</tbody>
+</table></div><h3>2.1.7、添加2/3角色信息</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>添加 角色类型为2 或 3 的账户信息</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/account/addadmin</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">AccountID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>账户ID</td>
+</tr>
+<tr>
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>姓名</td>
+</tr>
+<tr>
+<td style="text-align: left;">OrgID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>单位ID</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tel</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>联系电话</td>
+</tr>
+<tr>
+<td style="text-align: left;">RoleID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>角色ID（仅为2/3）</td>
+</tr>
+</tbody>
+</table></div><h3>2.1.8、删除2/3角色信息</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>删除 角色类型为2 或 3 的账户信息</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/account/deladmin</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">AccountID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>账户ID</td>
+</tr>
+</tbody>
+</table></div><h3>2.1.9、修改2/3角色信息</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>修改 角色类型为2 或 3 的账户信息</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/account/modadmin</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">AccountID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>账户ID</td>
+</tr>
+<tr>
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>姓名</td>
+</tr>
+<tr>
+<td style="text-align: left;">OrgID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>单位ID</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tel</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>联系电话</td>
+</tr>
+<tr>
+<td style="text-align: left;">State</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>账户状态</td>
+</tr>
+</tbody>
+</table></div><h3>2.1.10、重置2/3角色账户密码（校团委老师）</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>校团委老师 -> 校团委助理账号/学院账号 重置账户密码 操作T_Account表</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/account/resetadmin</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">accountID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>账户ID</td>
+</tr>
+</tbody>
+</table></div></div></div></body></html>
