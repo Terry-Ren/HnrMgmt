@@ -529,6 +529,12 @@ namespace HnrMgmtAPI.Controllers.API.Sys
             return result;
         }
 
+        /// <summary>
+        /// 校团委助理账号 锁定账号
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="accountID">账号ID</param>
+        /// <returns></returns>
         [HttpGet, Route("blockstate")]
         public ApiResult BlockAccount(string access_token, string accountID)
         {
