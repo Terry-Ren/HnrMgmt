@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace HnrMgmtAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/values")]
     public class ValuesController : ApiController
     {
