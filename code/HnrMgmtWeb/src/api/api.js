@@ -25,7 +25,7 @@ axios.interceptors.response.use(
         switch (error.response.status) {
           case 401:
           // 返回 401 清除token信息并跳转到登录页面
-            store.commit(types.LOGOUT)
+            store.commit(types.DENY)
             router.replace({
               path: '/login',
               query: {redirect: router.currentRoute.fullPath}
@@ -64,5 +64,24 @@ export const posModifyOrg = params => { return axios.post(`${base}api/org/modify
 // 删除单位
 export const reqDeleteOrg = params => { return axios.get(`${base}api/org/delete`, {params: params}) }
 
-// 新增三级管理员
+// 获取三级管理员
 export const reqGetAccTchList = params => { return axios.get(`${base}api/account/teacher`, {params: params}) }
+// 新增三级管理员
+export const posAccTch = params => { return axios.post(`${base}api/account/addteacher`, params) }
+// 修改三级管理员
+export const posModifyAccTch = params => { return axios.post(`${base}api/account/modteacher`, params) }
+// 删除三级管理员
+export const reqDeleteAccTch = params => { return axios.get(`${base}api/account/delteacher`, {params: params}) }
+// 重置三级管理员密码
+export const reqResetAccTch = params => { return axios.get(`${base}api/account/resetteacher`, {params: params}) }
+
+// 获取助理人员
+export const reqGetAccAdmList = params => { return axios.get(`${base}api/account/admin`, {params: params}) }
+// 新增助理人员
+export const posAccAdm = params => { return axios.post(`${base}api/account/addadmin`, params) }
+// 修改助理人员
+export const posModifyAccAdm = params => { return axios.post(`${base}api/account/modteacher`, params) }
+// 删除助理人员
+export const reqDeleteAccAdm = params => { return axios.get(`${base}api/account/deladmin`, {params: params}) }
+// 重置助理人员密码
+export const reqResetAccAdm = params => { return axios.get(`${base}api/account/resetadmin`, {params: params}) }

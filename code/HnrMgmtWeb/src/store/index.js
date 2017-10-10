@@ -18,6 +18,13 @@ export default new Vuex.Store({
             state.access_token=data.Password
             state.RoleID=data.RoleID
         },
+        // 登出时清空
+        [types.LOGOUT]:(state)=>{
+            localStorage.access_token=''
+            localStorage.RoleID=''
+            state.access_token=''
+            state.RoleID=''
+        },
         // 刷新时重写
         [types.REFREST]:(state)=>{
             state.access_token=localStorage.access_token,

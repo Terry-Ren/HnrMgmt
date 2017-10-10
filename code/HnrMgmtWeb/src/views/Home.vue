@@ -31,7 +31,7 @@
              <router-link to="/hnrlist"><span style=" color: #000; font-size: 14px;">修改密码</span></router-link>
           </el-dropdown-item>
           <el-dropdown-item divided>
-             <span style="font-size: 14px;">退出登录</span>
+             <span style="font-size: 14px;" @click.prevent="logout">退出登录</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -115,6 +115,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+import * as types from '../store/mutation-types'
  export default {
    data() {
 	 return {
@@ -125,11 +126,19 @@
    components: {
 
    },
-   //折叠
    methods:{
-     collapse: function () {
+      //折叠     
+      collapse: function () {
        this.isCollapse = !this.isCollapse;
        },
+       // 登出
+       logout(){
+         this.$store.commit(types.LOGOUT)
+         this.$router.push({
+           path:'/login'
+         })
+       }
+       
    }
  }
 </script>
