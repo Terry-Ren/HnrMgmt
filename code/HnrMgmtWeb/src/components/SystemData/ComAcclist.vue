@@ -4,7 +4,7 @@
 
 <script type="text/ecmascript-6">
 import AccTchlist from '../SystemData/AccTchlist'
-import Hnrlist from '../BasicData/Hnrlist.vue'
+import AccAdmlist from '../SystemData/AccAdmlist'
  export default {
    data() {
      return {
@@ -13,7 +13,7 @@ import Hnrlist from '../BasicData/Hnrlist.vue'
    },
    components: {
        AccTchlist,
-       Hnrlist,
+       AccAdmlist,
    },
    beforeRouteEnter(to,from,next) {
        next(vm=>{
@@ -21,7 +21,7 @@ import Hnrlist from '../BasicData/Hnrlist.vue'
        vm.componentId='AccTchlist'
        }
        else{
-           vm.componentId='Hnrlist'
+           vm.componentId='AccAdmlist'
        }
        })    
    }

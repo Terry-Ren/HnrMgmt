@@ -25,6 +25,7 @@
         <el-table-column prop="AccountName" label="姓名" sortable align="center" ></el-table-column>
         <el-table-column prop="OrgName" label="所属单位" sortable align="center" ></el-table-column>
         <el-table-column prop="RoleName" label="角色" sortable align="center" ></el-table-column>
+        <el-table-column prop="State" label="状态" sortable align="center" :formatter="transfState" ></el-table-column>
         <el-table-column label="操作" width="200">
           <template scope="scope">
             <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >编辑</el-button>
@@ -41,7 +42,7 @@
     </el-col>
 
     <!-- 新增表单 -->
-    <el-dialog title="新增教师信息" :visible.sync="addFormVisible" v-loading="submitLoading" >
+    <el-dialog title="新增助理信息" :visible.sync="addFormVisible" v-loading="submitLoading" >
       <el-form :model="addFormBody" label-width="80px" ref="addForm" :rules="rules" auto>
         <el-form-item label="账号" prop="AccountID">
           <el-input v-model="addFormBody.AccountID" placeholder="请输入账号"  ></el-input>
@@ -92,7 +93,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {reqGetOrgList,reqGetAccTchList,posAccTch,posModifyAccTch,reqDeleteAccTch,reqResetAccTch} from '../../api/api'
+import {reqGetOrgList,reqGetAdmTchList,posAccTch,posModifyAccTch,reqDeleteAccTch,reqResetAccTch} from '../../api/api'
 import PubMethod from '../../common/util'
  export default {
    data() {
@@ -142,10 +143,11 @@ import PubMethod from '../../common/util'
        modifyFormVisible:false,
        modifyLoading:false,
        modifyFromBody:{
-         Name:'',
-         AccountID:'',
-         OrgID:'',
-         Tel:''
+           AccountName:'',
+           Name:'',
+           AccountID:'',
+           OrgID:'',
+           Tel:''
        }
 
 
@@ -160,6 +162,10 @@ import PubMethod from '../../common/util'
 
    //方法集合
    methods:{
+     //公共类方法--转换状态
+     transfState(row){
+       return PubMethod.transfState(row)
+     },
      // 填充单位信息
      getOrg(){
        this.listLoading=true
@@ -174,7 +180,7 @@ import PubMethod from '../../common/util'
          console.log(res)
          })
      },
-     //获取助理人员列表
+     //获取校团委教师列表
      getList(){
        this.listLoading=true
        let param={
@@ -182,7 +188,7 @@ import PubMethod from '../../common/util'
            page : this.page,
            size : this.size
            }
-           reqGetAccTchList(param).then((res)=>{
+           reqGetAdmTchList(param).then((res)=>{
                this.AccData = res.data.data.list
                this.totalNum = res.data.data.count;
                //console.log(this.AccData)
@@ -216,6 +222,7 @@ import PubMethod from '../../common/util'
      showModifyDialog (index,row) {
        this.modifyFormVisible=true
        this.modifyFromBody= Object.assign({},row)
+       this.modifyFromBody.Name=this.modifyFromBody.AccountName
        this.selectRowIndex=index
        //console.log(this.selectRowIndex)
        },

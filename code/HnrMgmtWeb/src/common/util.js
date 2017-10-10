@@ -11,6 +11,10 @@ export default {
      transfGrande(row){
         return row.Grade == '0' ? '三等奖' : row.Grade == '1' ? '二等奖' : row.Grade == '2' ? '一等奖': '特等奖';
       },
+     // 进行状态转换
+     transfState(row){
+       return row.State=='0' ? '冻结' : '正常';
+     },
       //公共提示方法，传入当前的vue以及res.data。 返回状态判断并给出提示
       statusinfo(vue,data){
         if(data.status=='success'){
