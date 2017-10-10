@@ -26,10 +26,11 @@
         <el-table-column prop="OrgName" label="所属单位" sortable align="center" ></el-table-column>
         <el-table-column prop="RoleName" label="角色" sortable align="center" ></el-table-column>
         <el-table-column prop="State" label="状态" sortable align="center" :formatter="transfState" ></el-table-column>
-        <el-table-column label="操作" width="200">
+        <el-table-column label="操作" width="280" align="center">
           <template scope="scope">
             <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >编辑</el-button>
             <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重置</el-button>
+            <el-button type="primary" size="small"  @click="blockAccTch(scope.$index,scope.row)" >冻结</el-button>
             <el-button type="danger" size="small"  @click="delectAccTch(scope.$index,scope.row)" >删除</el-button>
           </template>
         </el-table-column>
@@ -93,7 +94,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {reqGetOrgList,reqGetAdmTchList,posAccTch,posModifyAccTch,reqDeleteAccTch,reqResetAccTch} from '../../api/api'
+import {reqGetOrgList,reqGetAccAdmList,posAccAdm,posModifyAccTch,reqDeleteAccTch,reqResetAccAdm} from '../../api/api'
 import PubMethod from '../../common/util'
  export default {
    data() {
@@ -188,7 +189,7 @@ import PubMethod from '../../common/util'
            page : this.page,
            size : this.size
            }
-           reqGetAdmTchList(param).then((res)=>{
+           reqGetAccAdmList(param).then((res)=>{
                this.AccData = res.data.data.list
                this.totalNum = res.data.data.count;
                //console.log(this.AccData)
@@ -197,7 +198,7 @@ import PubMethod from '../../common/util'
                    console.log(res)
                    })
             },
-     //新增教师
+     //新增助理信息
      addSubmit(){
        let param
        this.$refs['addForm'].validate((valid)=>{
@@ -207,7 +208,7 @@ import PubMethod from '../../common/util'
            let para = Object.assign({}, this.addFormBody);
            console.log(para)
            para.access_token='terry'
-           posAccTch(para).then((res)=>{
+           posAccAdm(para).then((res)=>{
               this.submitLoading=false
             //公共提示方法，传入当前的vue以及res.data
             PubMethod.statusinfo(this,res.data)
@@ -255,7 +256,7 @@ import PubMethod from '../../common/util'
           let para={accountID:row.AccountID}
           para.access_token='terry'
          
-          reqResetAccTch(para).then((res)=>{
+          reqResetAccAdm(para).then((res)=>{
             //公共提示方法，传入当前的vue以及res.data
             PubMethod.statusinfo(this,res.data)
             this.getList()
@@ -267,6 +268,29 @@ import PubMethod from '../../common/util'
                 message: '已取消重置'
                 });          
               });
+    },
+    // 冻结助理用户
+    blockAccTch(index,row){
+       this.$confirm('此操作将冻结该用户, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+        }).then(() => {
+          let para={accountID:row.AccountID}
+          para.access_token='terry'
+         
+          reqResetAccAdm(para).then((res)=>{
+            //公共提示方法，传入当前的vue以及res.data
+            PubMethod.statusinfo(this,res.data)
+            this.getList()
+          })
+
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '已取消冻结'
+                });          
+              });  
     },
     //删除教师用户
     delectAccTch(index,row){

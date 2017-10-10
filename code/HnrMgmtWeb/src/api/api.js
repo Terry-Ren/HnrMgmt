@@ -76,4 +76,12 @@ export const reqDeleteAccTch = params => { return axios.get(`${base}api/account/
 export const reqResetAccTch = params => { return axios.get(`${base}api/account/resetteacher`, {params: params}) }
 
 // 获取助理人员
-export const reqGetAdmTchList = params => { return axios.get(`${base}api/account/admin`, {params: params}) }
+export const reqGetAccAdmList = params => { return axios.get(`${base}api/account/admin`, {params: params}) }
+// 新增助理人员
+export const posAccAdm = params => { return axios.post(`${base}api/account/addadmin`, params) }
+// 修改助理人员
+export const posModifyAccAdm = params => { return axios.post(`${base}api/account/modteacher`, params) }
+// 删除助理人员
+export const reqDeleteAccAdm = params => { return axios.get(`${base}api/account/deladmin`, {params: params}) }
+// 重置助理人员密码
+export const reqResetAccAdm = params => { return axios.get(`${base}api/account/resetadmin`, {params: params}) }

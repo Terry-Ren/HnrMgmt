@@ -134,6 +134,7 @@ import PubMethod from '../../common/util'
        addFormBody:{
          Name:'',
          AccountID:'',
+         AccountName:'',
          OrgID:'',
          Tel:''
 
@@ -144,6 +145,7 @@ import PubMethod from '../../common/util'
        modifyFromBody:{
          Name:'',
          AccountID:'',
+         AccountName:'',
          OrgID:'',
          Tel:''
        }
@@ -199,7 +201,6 @@ import PubMethod from '../../common/util'
            this.submitLoading=true
            //复制字符串
            let para = Object.assign({}, this.addFormBody);
-           console.log(para)
            para.access_token='terry'
            posAccTch(para).then((res)=>{
               this.submitLoading=false
@@ -216,6 +217,7 @@ import PubMethod from '../../common/util'
      showModifyDialog (index,row) {
        this.modifyFormVisible=true
        this.modifyFromBody= Object.assign({},row)
+       this.modifyFromBody.Name=this.modifyFromBody.AccountName
        this.selectRowIndex=index
        //console.log(this.selectRowIndex)
        },
