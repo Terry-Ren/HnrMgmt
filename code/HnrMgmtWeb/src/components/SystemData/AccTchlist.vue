@@ -46,8 +46,8 @@
         <el-form-item label="账号" prop="AccountID">
           <el-input v-model="addFormBody.AccountID" placeholder="请输入账号"  ></el-input>
         </el-form-item>  
-        <el-form-item label="姓名" prop="Name">
-          <el-input v-model="addFormBody.Name" placeholder="请输入姓名"  ></el-input>
+        <el-form-item label="姓名" prop="AccountName">
+          <el-input v-model="addFormBody.AccountName" placeholder="请输入姓名"  ></el-input>
         </el-form-item>
         <el-form-item label="电话" prop="Tel">
           <el-input v-model="addFormBody.Tel" placeholder="请输入电话"  ></el-input>
@@ -70,8 +70,8 @@
         <el-form-item label="账号" prop="AccountID">
           <el-input v-model="modifyFromBody.AccountID" placeholder="请输入账号"  ></el-input>
         </el-form-item>  
-        <el-form-item label="姓名" prop="Name">
-          <el-input v-model="modifyFromBody.Name" placeholder="请输入姓名"  ></el-input>
+        <el-form-item label="姓名" prop="AccountName">
+          <el-input v-model="modifyFromBody.AccountName" placeholder="请输入姓名"  ></el-input>
         </el-form-item>
         <el-form-item label="电话" prop="Tel">
           <el-input v-model="modifyFromBody.Tel" placeholder="请输入电话"  ></el-input>
@@ -116,7 +116,7 @@ import PubMethod from '../../common/util'
          AccountID:[
            {required: true, message: '请输入账号' , trigger: 'blur'}
          ],
-         Name:[
+         AccountName:[
            {required: true, message: '请输入姓名' , trigger: 'blur' },
            {pattern: /^[\u4e00-\u9fa5]{1,6}$/,message:'请输入1-6位汉字',trigger:'blur'}
          ],
@@ -132,7 +132,6 @@ import PubMethod from '../../common/util'
        submitLoading:false,       
        addFormVisible: false,
        addFormBody:{
-         Name:'',
          AccountID:'',
          AccountName:'',
          OrgID:'',
@@ -143,7 +142,6 @@ import PubMethod from '../../common/util'
        modifyFormVisible:false,
        modifyLoading:false,
        modifyFromBody:{
-         Name:'',
          AccountID:'',
          AccountName:'',
          OrgID:'',
@@ -217,7 +215,6 @@ import PubMethod from '../../common/util'
      showModifyDialog (index,row) {
        this.modifyFormVisible=true
        this.modifyFromBody= Object.assign({},row)
-       this.modifyFromBody.Name=this.modifyFromBody.AccountName
        this.selectRowIndex=index
        //console.log(this.selectRowIndex)
        },

@@ -37,6 +37,9 @@ axios.interceptors.response.use(
 
 let base = 'http://localhost:59996/'
 
+// 登录接口
+export const posLogin = params => { return axios.post(`${base}api/auth/login`, params) }
+
 // 请求荣誉列表
 export const reqGetHonorList = params => { return axios.get(`${base}api/honor/get?access_token=11`, { params: params }) }
 // 添加荣誉项
@@ -85,3 +88,5 @@ export const posModifyAccAdm = params => { return axios.post(`${base}api/account
 export const reqDeleteAccAdm = params => { return axios.get(`${base}api/account/deladmin`, {params: params}) }
 // 重置助理人员密码
 export const reqResetAccAdm = params => { return axios.get(`${base}api/account/resetadmin`, {params: params}) }
+// 冻结助理人员
+export const reqBlockAccAdm = params => { return axios.get(`${base}api/account/blockstate`, {params: params}) }

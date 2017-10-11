@@ -1050,4 +1050,80 @@
 <td>账户ID</td>
 </tr>
 </tbody>
+</table></div><h3>2.1.11、锁定账号（校团委助理）</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>校团委助理账号 锁定账号</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/account/blockstate</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">access_token</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>授权令牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">accountID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>账户ID</td>
+</tr>
+</tbody>
+</table></div></div></div><h1>3、登录</h1><div style="margin-left:20px;"><h2>3.1、登录接口</h2><div style="margin-left:20px;"><h3>3.1.1、登录</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>登录</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>api/auth/login</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>账户ID</td>
+</tr>
+<tr>
+<td style="text-align: left;">pwd</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>密码</td>
+</tr>
+<tr>
+<td style="text-align: left;">roleID</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>角色ID</td>
+</tr>
+</tbody>
 </table></div></div></div></body></html>

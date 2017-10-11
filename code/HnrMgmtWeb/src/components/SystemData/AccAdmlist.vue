@@ -30,7 +30,7 @@
           <template scope="scope">
             <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >编辑</el-button>
             <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重置</el-button>
-            <el-button type="primary" size="small"  @click="blockAccTch(scope.$index,scope.row)" >冻结</el-button>
+            <el-button type="primary" size="small"  @click="blockAccAdm(scope.$index,scope.row)" >冻结</el-button>
             <el-button type="danger" size="small"  @click="delectAccTch(scope.$index,scope.row)" >删除</el-button>
           </template>
         </el-table-column>
@@ -48,8 +48,8 @@
         <el-form-item label="账号" prop="AccountID">
           <el-input v-model="addFormBody.AccountID" placeholder="请输入账号"  ></el-input>
         </el-form-item>  
-        <el-form-item label="姓名" prop="Name">
-          <el-input v-model="addFormBody.Name" placeholder="请输入姓名"  ></el-input>
+        <el-form-item label="姓名" prop="AccountName">
+          <el-input v-model="addFormBody.AccountName" placeholder="请输入姓名"  ></el-input>
         </el-form-item>
         <el-form-item label="电话" prop="Tel">
           <el-input v-model="addFormBody.Tel" placeholder="请输入电话"  ></el-input>
@@ -72,8 +72,8 @@
         <el-form-item label="账号" prop="AccountID">
           <el-input v-model="modifyFromBody.AccountID" placeholder="请输入账号"  ></el-input>
         </el-form-item>  
-        <el-form-item label="姓名" prop="Name">
-          <el-input v-model="modifyFromBody.Name" placeholder="请输入姓名"  ></el-input>
+        <el-form-item label="姓名" prop="AccountName">
+          <el-input v-model="modifyFromBody.AccountName" placeholder="请输入姓名"  ></el-input>
         </el-form-item>
         <el-form-item label="电话" prop="Tel">
           <el-input v-model="modifyFromBody.Tel" placeholder="请输入电话"  ></el-input>
@@ -94,7 +94,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {reqGetOrgList,reqGetAccAdmList,posAccAdm,posModifyAccTch,reqDeleteAccAdm,reqResetAccAdm} from '../../api/api'
+import {reqGetOrgList,reqGetAccAdmList,posAccAdm,posModifyAccTch,reqDeleteAccAdm,reqResetAccAdm,reqBlockAccAdm} from '../../api/api'
 import PubMethod from '../../common/util'
  export default {
    data() {
@@ -118,7 +118,7 @@ import PubMethod from '../../common/util'
          AccountID:[
            {required: true, message: '请输入账号' , trigger: 'blur'}
          ],
-         Name:[
+         AccountName:[
            {required: true, message: '请输入姓名' , trigger: 'blur' },
            {pattern: /^[\u4e00-\u9fa5]{1,6}$/,message:'请输入1-6位汉字',trigger:'blur'}
          ],
@@ -134,7 +134,7 @@ import PubMethod from '../../common/util'
        submitLoading:false,       
        addFormVisible: false,
        addFormBody:{
-         Name:'',
+         AccountName:'',
          AccountID:'',
          OrgID:'',
          Tel:''
@@ -145,7 +145,6 @@ import PubMethod from '../../common/util'
        modifyLoading:false,
        modifyFromBody:{
            AccountName:'',
-           Name:'',
            AccountID:'',
            OrgID:'',
            Tel:''
@@ -163,7 +162,7 @@ import PubMethod from '../../common/util'
 
    //方法集合
    methods:{
-     //公共类方法--转换状态
+     //公共类方法--转换冻结状态
      transfState(row){
        return PubMethod.transfState(row)
      },
@@ -200,7 +199,6 @@ import PubMethod from '../../common/util'
             },
      //新增助理信息
      addSubmit(){
-       let param
        this.$refs['addForm'].validate((valid)=>{
          if(valid){
            this.submitLoading=true
@@ -223,7 +221,6 @@ import PubMethod from '../../common/util'
      showModifyDialog (index,row) {
        this.modifyFormVisible=true
        this.modifyFromBody= Object.assign({},row)
-       this.modifyFromBody.Name=this.modifyFromBody.AccountName
        this.selectRowIndex=index
        //console.log(this.selectRowIndex)
        },
@@ -270,7 +267,7 @@ import PubMethod from '../../common/util'
               });
     },
     // 冻结助理用户
-    blockAccTch(index,row){
+    blockAccAdm(index,row){
        this.$confirm('此操作将冻结该用户, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -279,7 +276,7 @@ import PubMethod from '../../common/util'
           let para={accountID:row.AccountID}
           para.access_token='terry'
          
-          reqResetAccAdm(para).then((res)=>{
+          reqBlockAccAdm(para).then((res)=>{
             //公共提示方法，传入当前的vue以及res.data
             PubMethod.statusinfo(this,res.data)
             this.getList()
