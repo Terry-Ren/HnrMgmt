@@ -23,12 +23,21 @@ namespace HnrMgmtAPI.Controllers
         {
             return View();
         }
-        
+
         /// <summary>
         /// 系统管理 API 接口
         /// </summary>
         /// <returns></returns>
         public ActionResult Api_Sys()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 登录管理 API 接口
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Api_Auth()
         {
             return View();
         }

@@ -59,7 +59,7 @@
             });
 
             $('#btnTeacherAdd').click(function (e) {
-                var data = { 'access_token': '11', 'AccountID': '1214001', 'Name': '王健铭', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Tel': '15307179930' }
+                var data = { 'access_token': '11', 'AccountID': '1214001', 'AccountName': '王健铭', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Tel': '15307179930' }
                 AjaxRequestPost('api/account/addteacher', data);
             });
 
@@ -68,7 +68,7 @@
             });
 
             $('#btnTeacherModify').click(function (e) {
-                var data = { 'access_token': '11', 'AccountID': '1214001', 'Name': '修改过后的数据-王健铭', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Tel': '15307179930' }
+                var data = { 'access_token': '11', 'AccountID': '1214001', 'AccountName': '修改过后的数据-王健铭', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Tel': '15307179930' }
                 AjaxRequestPost('api/account/modteacher', data);
             });
 
@@ -82,7 +82,7 @@
             });
 
             $('#btnAdminAdd').click(function (e) {
-                var data = { 'access_token': '11', 'AccountID': '0121403490106', 'Name': '王健铭', 'RoleID':'2','OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Tel': '15307179930' }
+                var data = { 'access_token': '11', 'AccountID': '0121403490106', 'AccountName': '王健铭', 'RoleID': '2', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Tel': '15307179930' }
                 AjaxRequestPost('api/account/addadmin', data);
             });
 
@@ -91,12 +91,16 @@
             });
 
             $('#btnAdminModify').click(function (e) {
-                var data = { 'access_token': '11', 'AccountID': '0121403490106', 'Name': '修改过后的数据-王健铭', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Tel': '15307179930' }
+                var data = { 'access_token': '11', 'AccountID': '0121403490106', 'AccountName': '修改过后的数据-王健铭', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Tel': '15307179930' }
                 AjaxRequestPost('api/account/modteacher', data);
             });
 
             $('#btnAdminResetPwd').click(function (e) {
                 AjaxRequestGet('api/account/resetadmin?access_token=11&accountID=0121403490106');
+            });
+
+            $('#btnAdminBlockState').click(function (e) {
+                AjaxRequestGet('api/account/blockstate?access_token=11&accountID=0121403490106');
             });
         });
 
@@ -138,6 +142,9 @@
             <br />
             <br />
             <input type="button" value="api/account/resetadmin" id="btnAdminResetPwd" />
+            <br />
+            <br />
+            <input type="button" value="api/account/blockstate" id="btnAdminBlockState" />
             <br />
             <br />
         </div>

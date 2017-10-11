@@ -215,7 +215,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Common\AccessToken.cs" />
+    <Compile Include="Common\ForceHttpStatusCodeResult.cs" />
     <Compile Include="Common\Public.cs" />
+    <Compile Include="Controllers\API\Auth\LoginController.cs" />
     <Compile Include="Controllers\API\JC\AwardController.cs" />
     <Compile Include="Controllers\API\JC\HonorController.cs" />
     <Compile Include="Controllers\API\JC\OrganizationController.cs" />
@@ -230,6 +232,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\API\ApiResult.cs" />
     <Compile Include="Controllers\API\BaseApiController.cs" />
+    <Compile Include="Models\API\Auth\AccountInfo.cs" />
+    <Compile Include="Models\API\Auth\LoginModel.cs" />
     <Compile Include="Models\API\JC\AwardAdd.cs" />
     <Compile Include="Models\API\JC\AwardModify.cs" />
     <Compile Include="Models\API\JC\HonorAdd.cs" />
@@ -357,6 +361,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Api_JC.cshtml" />
     <Content Include="Views\Home\Api_Sys.cshtml" />
+    <Content Include="Views\Home\Api_Auth.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

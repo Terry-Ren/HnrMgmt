@@ -11,7 +11,7 @@ namespace HnrMgmtAPI.Models.API.Sys
 
         public string AccountID { get; set; }
 
-        public string Name { get; set; }
+        public string AccountName { get; set; }
 
         public string OrgID { get; set; }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using HnrMgmtAPI.Models.API;
 
@@ -20,6 +19,8 @@ namespace HnrMgmtAPI.Common
         {
             if (System.Configuration.ConfigurationManager.AppSettings["IsTest"].ToString() == "1")
             {
+                //强制返回401错误
+                //ForceHttpStatusCodeResult.SetForceHttpUnauthorizedHeader();
                 return null;
             }
             ApiResult result = new ApiResult();
@@ -47,6 +48,8 @@ namespace HnrMgmtAPI.Common
             }
             catch (Exception e)
             {
+                //强制返回401错误
+                ForceHttpStatusCodeResult.SetForceHttpUnauthorizedHeader();
                 result.status = "error";
                 result.messages = e.Message;
                 return result;

@@ -97,7 +97,7 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                     {
                         T_Account account = new T_Account();
                         account.AccountID = model.AccountID.Trim();
-                        account.Name = model.Name.Trim();
+                        account.Name = model.AccountName.Trim();
                         account.OrgID = model.OrgID.Trim();
                         account.Tel = model.Tel.Trim();
                         account.RoleID = "1";
@@ -201,7 +201,7 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                     {
                         try
                         {
-                            accountModel.Name = model.Name;
+                            accountModel.Name = model.AccountName;
                             accountModel.OrgID = model.OrgID;
                             accountModel.Tel = model.Tel;
                             db.SaveChanges();
@@ -349,7 +349,7 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                         {
                             T_Account account = new T_Account();
                             account.AccountID = model.AccountID.Trim();
-                            account.Name = model.Name.Trim();
+                            account.Name = model.AccountName.Trim();
                             account.OrgID = model.OrgID.Trim();
                             account.Tel = model.Tel.Trim();
                             account.RoleID = model.RoleID;
@@ -459,10 +459,9 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                         {
                             try
                             {
-                                accountModel.Name = model.Name;
+                                accountModel.Name = model.AccountName;
                                 accountModel.OrgID = model.OrgID;
                                 accountModel.Tel = model.Tel;
-                                accountModel.State = model.State;
                                 db.SaveChanges();
                                 return Success("修改成功");
                             }
@@ -515,6 +514,49 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                         accountModel.Password = accountModel.AccountID.Substring(accountModel.AccountID.Length - 6, 6);
                         db.SaveChanges();
                         return Success("重置密码成功，初始密码为账号后六位");
+                    }
+                    catch
+                    {
+                        return Error("修改失败，请检查参数是否正确");
+                    }
+                }
+                else
+                {
+                    return Error("数据错误，无法查找到此条记录");
+                }
+                #endregion
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 校团委助理账号 锁定账号
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="accountID">账号ID</param>
+        /// <returns></returns>
+        [HttpGet, Route("blockstate")]
+        public ApiResult BlockAccount(string access_token, string accountID)
+        {
+            result = AccessToken.Check(access_token, "api/account/blockstate");
+            if (result == null)
+            {
+                #region 参数验证
+                if (accountID == null || accountID == "")
+                {
+                    return Error("accuntID参数错误");
+                }
+                #endregion
+
+                #region 逻辑操作
+                T_Account accountModel = db.T_Account.Find(accountID);
+                if (accountModel != null)
+                {
+                    try
+                    {
+                        accountModel.State = (accountModel.State == "1") ? "0" : "1";
+                        db.SaveChanges();
+                        return Success("修改状态成功");
                     }
                     catch
                     {
