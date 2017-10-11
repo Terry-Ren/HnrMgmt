@@ -94,7 +94,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {reqGetOrgList,reqGetAccAdmList,posAccAdm,posModifyAccTch,reqDeleteAccTch,reqResetAccAdm} from '../../api/api'
+import {reqGetOrgList,reqGetAccAdmList,posAccAdm,posModifyAccTch,reqDeleteAccAdm,reqResetAccAdm} from '../../api/api'
 import PubMethod from '../../common/util'
  export default {
    data() {
@@ -299,10 +299,10 @@ import PubMethod from '../../common/util'
         cancelButtonText: '取消',
         type: 'warning'
         }).then(() => {
+          this.listLoading=true
           let para={accountID:row.AccountID}
-          para.access_token='terry'
-         
-          reqDeleteAccTch(para).then((res)=>{
+          para.access_token='terry'         
+          reqDeleteAccAdm(para).then((res)=>{
             //公共提示方法，传入当前的vue以及res.data
             PubMethod.statusinfo(this,res.data)
             this.getList()
