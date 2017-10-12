@@ -18,7 +18,7 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#honor-account"></use>
             </svg>
-            <span>超级管理员</span>
+            <span>{{RoleName}}</span>
             <svg class="icon" aria-hidden="true">
             <use xlink:href="#honor-moreunfold"></use>
             </svg>
@@ -119,7 +119,8 @@ import * as types from '../store/mutation-types'
  export default {
    data() {
 	 return {
-      isCollapse: false
+      isCollapse: false,
+      RoleName:this.$store.state.Name
 	 }
 
    },

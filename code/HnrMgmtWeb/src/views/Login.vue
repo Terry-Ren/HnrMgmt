@@ -1,5 +1,5 @@
-<template>
-  <el-form :model="loginForm"  ref="loginForm1" label-position="left" label-width="0px" class="demo-ruleForm login-container">
+<template >
+  <el-form :model="loginForm" v-loading="loginLoading" ref="loginForm1" label-position="left" label-width="0px" class=" login-container">
     <h3 class="title">荣誉管理信息系统登录</h3>
     <el-form-item prop="AccountID">
       <el-input type="text" v-model="loginForm.AccountID" auto-complete="off" placeholder="账号"></el-input>
@@ -21,11 +21,13 @@
 </template>
 
 <script type="text/ecmascript-6">
+import PubMethod from '../common/util'
 import * as types from '../store/mutation-types'
 import {posLogin} from '../api/api'
  export default {
    data() {
      return {
+       loginLoading:false,
          // 表单需要内容
          loginForm:{
              AccountID:'',
@@ -50,25 +52,37 @@ import {posLogin} from '../api/api'
      }
       },
       methods:{
-          // 登录方法 还没有判断
+          // 登录方法 
           login(){
             let param
             this.$refs['loginForm1'].validate((valid)=>{
               if(valid){
+                this.loginLoading=true
                 let para=Object.assign({},this.loginForm)
+                para.id=para.AccountID
+                para.pwd=para.Password
                 posLogin(para).then((res)=>{
                   //公共提示方法，传入当前的vue以及res.data
-                  PubMethod.statusinfo(this,res.data)
-                  this.$store.commit(types.LOGIN,this.loginForm)
-                  let redirect = decodeURIComponent(this.$route.query.redirect || '/')
-                  this.$router.push({
-                    path: redirect
+                  let resData=res.data    
+                  if(resData.status=='success'){
+                    this.$message({
+                      type: 'success',
+                      message: resData.messages
+                      })
+                      this.$store.commit(types.LOGIN,resData)
+                      let redirect = decodeURIComponent(this.$route.query.redirect || '/')
+                      this.$router.push({
+                        path: redirect
                     })
-                  })
-                  }
-                  })           
-                  }
-                  }
+                    }else{ 
+                      this.$message({
+                        type: 'error',
+                        message: resData.messages
+                        })
+                      this.loginLoading=false             
+                        }})
+                  }})}
+            }
  }
 </script>
 
