@@ -244,6 +244,7 @@
     <Compile Include="Models\API\Return_GetList.cs" />
     <Compile Include="Models\API\Sys\AdminAdd.cs" />
     <Compile Include="Models\API\Sys\AdminModify.cs" />
+    <Compile Include="Models\API\Sys\PasswordModify.cs" />
     <Compile Include="Models\API\Sys\TeacherAdd.cs" />
     <Compile Include="Models\API\Sys\TeacherModify.cs" />
     <Compile Include="Models\API\UserInfo.cs" />

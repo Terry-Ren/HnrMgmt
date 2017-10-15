@@ -1,7 +1,7 @@
-﻿using System;
+﻿using HnrMgmtAPI.Models.API;
+using System;
 using System.Collections.Generic;
 using System.Web;
-using HnrMgmtAPI.Models.API;
 
 namespace HnrMgmtAPI.Common
 {
@@ -12,17 +12,36 @@ namespace HnrMgmtAPI.Common
         /// 验证是否存在该令牌
         /// 验证该令牌是否具有该操作权限
         /// </summary>
-        /// <param name="access_token"></param>
-        /// <param name="apiPath"></param>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="ApiPath">Api接口路径</param>
         /// <returns></returns>
-        public static ApiResult Check(string access_token, string apiPath)
+        public static ApiResult Check(string access_token, string ApiPath)
         {
-            if (System.Configuration.ConfigurationManager.AppSettings["IsTest"].ToString() == "1")
+            #region 测试代码--测试401错误，默认返回ApiResult
+            //判断是否处于测试状态，1代表测试状态，其他代表非测试状态
+            if (System.Configuration.ConfigurationManager.AppSettings["IsTest401"].ToString() == "1")
             {
                 //强制返回401错误
-                //ForceHttpStatusCodeResult.SetForceHttpUnauthorizedHeader();
+                ForceHttpStatusCodeResult.SetForceHttpUnauthorizedHeader();
+
+                ApiResult result_401 = new ApiResult();
+                result_401.status = "error";
+                result_401.messages = "发生401错误（处于测试模式）";
+
+                return result_401;
+            }
+            #endregion
+
+            #region 测试代码--跳过令牌验证，返回null
+            //判断是否处于测试状态，1代表测试状态，其他代表非测试状态
+            if (System.Configuration.ConfigurationManager.AppSettings["IsTest"].ToString() == "1")
+            {
+                //返回null  代表验证通过
                 return null;
             }
+            #endregion
+
+            #region 令牌验证代码
             ApiResult result = new ApiResult();
             try
             {
@@ -30,10 +49,10 @@ namespace HnrMgmtAPI.Common
                 if (HttpRuntime.Cache.Get(access_token) != null)
                 {
                     List<string> permissionList = userInfo.permissionList;
-                    if (permissionList.IndexOf(apiPath) == -1)
+                    if (permissionList.IndexOf(ApiPath) == -1)
                     {
                         Dictionary<string, string> rolePermission = (Dictionary<string, string>)HttpRuntime.Cache.Get("rolePermission");
-                        throw new Exception("该账户缺少权限，权限名称：" + rolePermission[apiPath].ToString());
+                        throw new Exception("该账户缺少权限，权限名称：" + rolePermission[ApiPath].ToString());
                     }
                     else
                     {
@@ -54,6 +73,84 @@ namespace HnrMgmtAPI.Common
                 result.messages = e.Message;
                 return result;
             }
+            #endregion
+        }
+
+        /// <summary>
+        /// 验证是否为本人操作
+        /// 令牌验证
+        /// 验证是否存在该令牌
+        /// 验证该令牌是否具有该操作权限
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="ApiPath">Api接口路径</param>
+        /// <param name="AccountID">操作人ID</param>
+        /// <returns></returns>
+        public static ApiResult Check(string access_token, string ApiPath, string AccountID)
+        {
+            #region 测试代码--测试401错误，默认返回ApiResult
+            //判断是否处于测试状态，1代表测试状态，其他代表非测试状态
+            if (System.Configuration.ConfigurationManager.AppSettings["IsTest401"].ToString() == "1")
+            {
+                //强制返回401错误
+                ForceHttpStatusCodeResult.SetForceHttpUnauthorizedHeader();
+
+                ApiResult result_401 = new ApiResult();
+                result_401.status = "error";
+                result_401.messages = "发生401错误（处于测试模式）";
+
+                return result_401;
+            }
+            #endregion
+
+            #region 测试代码
+            //判断是否处于测试状态，1代表测试状态，其他代表非测试状态
+            if (System.Configuration.ConfigurationManager.AppSettings["IsTest"].ToString() == "1")
+            {
+                //返回null  代表验证通过
+                return null;
+            }
+            #endregion
+
+            #region 令牌验证代码
+            ApiResult result = new ApiResult();
+            try
+            {
+                UserInfo userInfo = (UserInfo)HttpRuntime.Cache.Get(access_token);
+                if (HttpRuntime.Cache.Get(access_token) != null)
+                {
+                    List<string> permissionList = userInfo.permissionList;
+                    if (permissionList.IndexOf(ApiPath) == -1)
+                    {
+                        Dictionary<string, string> rolePermission = (Dictionary<string, string>)HttpRuntime.Cache.Get("rolePermission");
+                        throw new Exception("该账户缺少权限，权限名称：" + rolePermission[ApiPath].ToString());
+                    }
+                    else
+                    {
+                        if (AccountID == userInfo.userID)
+                        {
+                            return null;
+                        }
+                        else
+                        {
+                            throw new Exception("AccessToken错误，此接口不能修改他人账户");
+                        }
+                    }
+                }
+                else
+                {
+                    throw new Exception("AccessToken错误，尚未授权或授权已过期");
+                }
+            }
+            catch (Exception e)
+            {
+                //强制返回401错误
+                ForceHttpStatusCodeResult.SetForceHttpUnauthorizedHeader();
+                result.status = "error";
+                result.messages = e.Message;
+                return result;
+            }
+            #endregion
         }
     }
 }

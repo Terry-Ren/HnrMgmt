@@ -1,7 +1,4 @@
-﻿using System.Net;
-using System.Web.Mvc;
-
-namespace HnrMgmtAPI.Common
+﻿namespace HnrMgmtAPI.Common
 {
     public static class ForceHttpStatusCodeResult
     {

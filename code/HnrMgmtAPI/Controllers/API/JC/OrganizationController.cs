@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using HnrMgmtAPI.Common;
+using HnrMgmtAPI.Models;
 using HnrMgmtAPI.Models.API;
 using HnrMgmtAPI.Models.API.JC;
-using HnrMgmtAPI.Models;
-using HnrMgmtAPI.Common;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Http;
 
 namespace HnrMgmtAPI.Controllers.API.JC
 {

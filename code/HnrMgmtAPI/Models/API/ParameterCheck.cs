@@ -55,7 +55,7 @@ namespace HnrMgmtAPI.Models.API
         /// <summary>
         /// 检查属性参数是否符合格式要求
         /// </summary>
-        /// <param name="typeName">模型名称</param>
+        /// <param name="typeName">类名称</param>
         /// <param name="paramName">属性名称</param>
         /// <param name="value">属性值</param>
         /// <returns></returns>
@@ -84,6 +84,13 @@ namespace HnrMgmtAPI.Models.API
                 case "HonorModify":
 
                     if (paramName == "GrandeName" && value != "0" && value != "1" && value != "2" && value != "3")
+                    {
+                        flag = true;
+                    }
+                    break;
+
+                case "PasswordModify"://长度大于六位
+                    if (paramName == "NewPwd" && value.ToString().Length < 6)
                     {
                         flag = true;
                     }

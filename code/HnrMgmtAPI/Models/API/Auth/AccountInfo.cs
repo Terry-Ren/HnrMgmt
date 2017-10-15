@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace HnrMgmtAPI.Models.API.Auth
+﻿namespace HnrMgmtAPI.Models.API.Auth
 {
     public class AccountInfo
     {
         public string access_token { get; set; }
-        public string id { get; set; }
-        public string name { get; set; }
-        public string orgName { get; set; }
-        public string roleID { get; set; }
-        public string roleName { get; set; }
-        public string tel { get; set; }
-        public string state { get; set; }
+        public string ID { get; set; }
+        public string Name { get; set; }
+        public string OrgName { get; set; }
+        public string RoleID { get; set; }
+        public string RoleName { get; set; }
+        public string Tel { get; set; }
+
+        //账号状态 0代表冻结状态  1代表使用状态
+        public string State { get; set; }
     }
 }

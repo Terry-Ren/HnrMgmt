@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace HnrMgmtAPI.Models.API.Auth
+﻿namespace HnrMgmtAPI.Models.API.Auth
 {
     public class LoginModel
     {
-        public string id { get; set; }
-        public string pwd { get; set; }
-        public string roleID { get; set; }
+        public string ID { get; set; }
+        public string Password { get; set; }
+        public string RoleID { get; set; }
     }
 }
