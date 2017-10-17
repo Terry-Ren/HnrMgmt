@@ -1,9 +1,8 @@
-﻿using System.Web.Http;
+﻿using HnrMgmtAPI.Common;
 using Microsoft.Owin.Security.OAuth;
-using System.Web.Http.Cors;
 using System.Web;
-using System;
-using HnrMgmtAPI.Common;
+using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace HnrMgmtAPI
 {

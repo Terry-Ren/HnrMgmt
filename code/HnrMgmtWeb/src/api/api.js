@@ -4,34 +4,42 @@ import * as types from '../store/mutation-types'
 import router from '../router/index'
 
 // http request 拦截器
-axios.interceptors.request.use(
-  config => {
-    if (store.state.access_token) {
-      config.headers.Authorization = `access_token ${store.state.access_token}`
-    }
-    return config
-  },
-  err => {
-    return Promise.reject(err)
-  })
+// axios.interceptors.request.use(
+//   config => {
+//     if (store.state.access_token) {
+//       config.headers.Authorization = `access_token ${store.state.access_token}`
+//     }
+//     return config
+//   },
+//   err => {
+//     return Promise.reject(err)
+//   })
 
 // http response 拦截器
 axios.interceptors.response.use(
     response => {
+      console.log(response)
       return response
     },
     error => {
-      if (error.response) {
-        switch (error.response.status) {
-          case 401:
-          // 返回 401 清除token信息并跳转到登录页面
-            store.commit(types.DENY)
-            router.replace({
-              path: '/login',
-              query: {redirect: router.currentRoute.fullPath}
-            })
-        }
-      }
+       console.log(error)
+      // if (error.response) {
+      //   switch (error.response.status) {
+      //     case 401:
+      //     // 返回 401 清除token信息并跳转到登录页面
+      //       console.log('error')
+      //       store.commit(types.DENY)
+      //       router.replace({
+      //         path: '/login',
+      //         query: {redirect: router.currentRoute.fullPath}
+      //       })
+      //   }
+      // }
+      // store.commit(types.DENY)
+      // router.replace({
+      //   path: '/login',
+      //   query: {redirect: router.currentRoute.fullPath}
+      // })
       return Promise.reject(error.response.data)   // 返回接口返回的错误信息
     })
 

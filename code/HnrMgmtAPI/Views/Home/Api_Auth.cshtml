@@ -54,7 +54,7 @@
 
         $(document).ready(function () {
             $('#btnLogin').click(function (e) {
-                var data = { "id": "1214001", "pwd": "214001", "roleID": "1" }
+                var data = { "id": "1214001", "password": "214001", "roleID": "1" }
                 AjaxRequestPost('api/auth/login', data);
             });
         });

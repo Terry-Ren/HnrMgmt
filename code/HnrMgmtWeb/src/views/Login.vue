@@ -62,7 +62,6 @@ import {posLogin} from '../api/api'
                 para.id=para.AccountID
                 para.pwd=para.Password
                 posLogin(para).then((res)=>{
-                  //公共提示方法，传入当前的vue以及res.data
                   let resData=res.data    
                   if(resData.status=='success'){
                     this.$message({

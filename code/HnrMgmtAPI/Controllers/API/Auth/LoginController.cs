@@ -19,6 +19,8 @@ namespace HnrMgmtAPI.Controllers.API.Auth
         [HttpPost, Route("login")]
         public ApiResult Login([FromBody]LoginModel loginIngo)
         {
+
+
             string AccountID = loginIngo.ID.Trim();
             string AccountPwd = loginIngo.Password.Trim();
             string AccountRoleID = loginIngo.RoleID.Trim();
