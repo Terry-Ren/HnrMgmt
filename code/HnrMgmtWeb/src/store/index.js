@@ -15,11 +15,11 @@ export default new Vuex.Store({
         // 登录时写入
         [types.LOGIN]:(state,resData)=>{
             localStorage.access_token=resData.data.access_token
-            localStorage.RoleID=resData.data.roleID
-            localStorage.Name=resData.data.name
+            localStorage.RoleID=resData.data.RoleID
+            localStorage.Name=resData.data.Name
             state.access_token=resData.data.access_token
-            state.RoleID=resData.data.roleID
-            state.Name=resData.data.name
+            state.RoleID=resData.data.RoleID
+            state.Name=resData.data.Name
         },
         // 登出时清空
         [types.LOGOUT]:(state)=>{
@@ -35,6 +35,10 @@ export default new Vuex.Store({
             state.access_token=localStorage.access_token,
             state.RoleID=localStorage.RoleID
             state.Name=localStorage.Name
+        },
+        // 401时
+        [types.DENY]:(state)=>{
+            state.access_token=''
         }
     }
 })

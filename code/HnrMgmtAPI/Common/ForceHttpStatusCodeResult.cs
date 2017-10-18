@@ -9,6 +9,7 @@
         {
             //添加响应头 返回401错误
             System.Web.HttpContext.Current.Response.AddHeader(ForceHttpUnauthorizedHeaderName, ForceHttpUnauthorizedHeaderValue);
+            System.Web.HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "*");
         }
     }
 }

@@ -67,7 +67,7 @@
           <el-menu-item index="/system/acclist">
             账户管理
           </el-menu-item>
-          <el-menu-item index="Role">
+          <el-menu-item index="/system/Role">
             角色管理
           </el-menu-item>
           <el-menu-item index="PassWord">
