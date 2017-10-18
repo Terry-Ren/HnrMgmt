@@ -90,11 +90,12 @@
         </EntityType>
         <EntityType Name="T_Right">
           <Key>
-            <PropertyRef Name="RoleID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="RoleID" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Page" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="Url" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Priority" Type="int" />
         </EntityType>
         <EntityType Name="T_Role">
           <Key>
@@ -102,6 +103,16 @@
           </Key>
           <Property Name="RoleID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.T_RoleRight”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="T_RoleRight">
+          <Key>
+            <PropertyRef Name="RoleID" />
+            <PropertyRef Name="RightID" />
+          </Key>
+          <Property Name="RoleID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="RightID" Type="varchar" MaxLength="64" Nullable="false" />
         </EntityType>
         <EntityType Name="T_Team">
           <Key>
@@ -118,19 +129,15 @@
           <Key>
             <PropertyRef Name="AccountID" />
             <PropertyRef Name="AccountName" />
-            <PropertyRef Name="OrgID" />
-            <PropertyRef Name="OrgName" />
-            <PropertyRef Name="RoleID" />
-            <PropertyRef Name="RoleName" />
             <PropertyRef Name="Tel" />
             <PropertyRef Name="State" />
           </Key>
           <Property Name="AccountID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="AccountName" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="OrgID" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="OrgName" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="RoleID" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="RoleName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="OrgID" Type="varchar" MaxLength="64" />
+          <Property Name="OrgName" Type="varchar" MaxLength="64" />
+          <Property Name="RoleID" Type="varchar" MaxLength="64" />
+          <Property Name="RoleName" Type="varchar" MaxLength="64" />
           <Property Name="Tel" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="State" Type="varchar" MaxLength="64" Nullable="false" />
         </EntityType>
@@ -146,6 +153,12 @@
           <EntitySet Name="T_Right" EntityType="Self.T_Right" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Role" EntityType="Self.T_Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Team" EntityType="Self.T_Team" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_RoleRight" EntityType="Self.T_RoleRight" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [T_RoleRight].[RoleID] AS [RoleID], 
+    [T_RoleRight].[RightID] AS [RightID]
+    FROM [dbo].[T_RoleRight] AS [T_RoleRight]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_Account" EntityType="Self.vw_Account" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_Account].[AccountID] AS [AccountID], 
@@ -249,11 +262,12 @@
         </EntityType>
         <EntityType Name="T_Right">
           <Key>
-            <PropertyRef Name="RoleID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Page" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Url" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Priority" Type="Int32" />
         </EntityType>
         <EntityType Name="T_Role">
           <Key>
@@ -271,23 +285,27 @@
           <Property Name="AwdeeID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Rank" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
+        <EntityType Name="T_RoleRight">
+          <Key>
+            <PropertyRef Name="RoleID" />
+            <PropertyRef Name="RightID" />
+          </Key>
+          <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RightID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
         <EntityType Name="vw_Account">
           <Key>
             <PropertyRef Name="AccountID" />
             <PropertyRef Name="AccountName" />
-            <PropertyRef Name="OrgID" />
-            <PropertyRef Name="OrgName" />
-            <PropertyRef Name="RoleID" />
-            <PropertyRef Name="RoleName" />
             <PropertyRef Name="Tel" />
             <PropertyRef Name="State" />
           </Key>
           <Property Name="AccountID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AccountName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="OrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="OrgName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="RoleName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="OrgName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="RoleName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
@@ -303,6 +321,7 @@
           <EntitySet Name="T_Right" EntityType="Self.T_Right" />
           <EntitySet Name="T_Role" EntityType="Self.T_Role" />
           <EntitySet Name="T_Team" EntityType="Self.T_Team" />
+          <EntitySet Name="T_RoleRight" EntityType="Self.T_RoleRight" />
           <EntitySet Name="vw_Account" EntityType="Self.vw_Account" />
         </EntityContainer>
       </Schema>
@@ -405,9 +424,10 @@
           <EntitySetMapping Name="T_Right">
             <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_Right">
               <MappingFragment StoreEntitySet="T_Right">
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="Page" ColumnName="Page" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -426,6 +446,14 @@
                 <ScalarProperty Name="TeamID" ColumnName="TeamID" />
                 <ScalarProperty Name="AwdeeID" ColumnName="AwdeeID" />
                 <ScalarProperty Name="Rank" ColumnName="Rank" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_RoleRight">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_RoleRight">
+              <MappingFragment StoreEntitySet="T_RoleRight">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RightID" ColumnName="RightID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

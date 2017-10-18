@@ -223,6 +223,7 @@
     <Compile Include="Controllers\API\JC\OrganizationController.cs" />
     <Compile Include="Controllers\API\Sys\AccountController.cs" />
     <Compile Include="Controllers\API\Sys\PasswordController.cs" />
+    <Compile Include="Controllers\API\Sys\RoleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -244,6 +245,8 @@
     <Compile Include="Models\API\Return_GetList.cs" />
     <Compile Include="Models\API\Sys\AdminAdd.cs" />
     <Compile Include="Models\API\Sys\AdminModify.cs" />
+    <Compile Include="Models\API\Sys\MenuAdd.cs" />
+    <Compile Include="Models\API\Sys\MenuModify.cs" />
     <Compile Include="Models\API\Sys\PasswordModify.cs" />
     <Compile Include="Models\API\Sys\TeacherAdd.cs" />
     <Compile Include="Models\API\Sys\TeacherModify.cs" />
@@ -292,6 +295,9 @@
       <DependentUpon>HnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_Role.cs">
+      <DependentUpon>HnrMgmt.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\T_RoleRight.cs">
       <DependentUpon>HnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_Team.cs">

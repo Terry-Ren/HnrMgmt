@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3fafeb3b85bb4ec088db406b4515399d" Name="Diagram1">
+      <Diagram DiagramId="8dbe63980a114ef0a7a8ea8202bd1186" Name="Diagram1">
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.T_Account" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.T_Award" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.T_Awardee" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
@@ -16,7 +16,8 @@
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.T_Right" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.T_Role" Width="1.5" PointX="4.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.T_Team" Width="1.5" PointX="6.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_Account" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.T_RoleRight" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_Account" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

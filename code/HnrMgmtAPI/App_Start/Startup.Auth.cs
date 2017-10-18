@@ -1,11 +1,11 @@
-﻿using System;
+﻿using HnrMgmtAPI.Models;
+using HnrMgmtAPI.Providers;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using HnrMgmtAPI.Providers;
-using HnrMgmtAPI.Models;
+using System;
 
 namespace HnrMgmtAPI
 {

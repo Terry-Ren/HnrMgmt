@@ -19,6 +19,14 @@ namespace HnrMgmtAPI.Controllers.API.Auth
         [HttpPost, Route("login")]
         public ApiResult Login([FromBody]LoginModel loginIngo)
         {
+            #region 参数验证
+            result = ParameterCheck.CheckParameters(loginIngo);
+            if (result != null)
+            {
+                return result;
+            }
+            #endregion
+
             string AccountID = loginIngo.ID.Trim();
             string AccountPwd = loginIngo.Password.Trim();
             string AccountRoleID = loginIngo.RoleID.Trim();

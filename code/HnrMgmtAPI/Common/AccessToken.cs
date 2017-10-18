@@ -52,7 +52,7 @@ namespace HnrMgmtAPI.Common
                     if (permissionList.IndexOf(ApiPath) == -1)
                     {
                         Dictionary<string, string> rolePermission = (Dictionary<string, string>)HttpRuntime.Cache.Get("rolePermission");
-                        throw new Exception("该账户缺少权限，权限名称：" + rolePermission[ApiPath].ToString());
+                        throw new Exception("该账户缺少权限，接口名称：" + rolePermission[ApiPath].ToString());
                     }
                     else
                     {

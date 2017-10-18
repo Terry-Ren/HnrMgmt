@@ -14,8 +14,9 @@ namespace HnrMgmtAPI.Models
     
     public partial class T_Right
     {
-        public string RoleID { get; set; }
-        public string Page { get; set; }
+        public string ID { get; set; }
+        public string Name { get; set; }
         public string Url { get; set; }
+        public Nullable<int> Priority { get; set; }
     }
 }
