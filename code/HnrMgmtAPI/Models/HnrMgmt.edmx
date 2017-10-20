@@ -141,6 +141,16 @@
           <Property Name="Tel" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="State" Type="varchar" MaxLength="64" Nullable="false" />
         </EntityType>
+        <!--生成过程中发现错误:
+警告 6013: 表/视图“DB_whut_HnrMgmt.dbo.vw_Role”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
+        <EntityType Name="vw_Role">
+          <Property Name="RoleID" Type="varchar" MaxLength="64" />
+          <Property Name="RoleName" Type="varchar" MaxLength="64" />
+          <Property Name="MenuID" Type="varchar" MaxLength="64" />
+          <Property Name="MenuName" Type="varchar" MaxLength="64" />
+          <Property Name="Url" Type="varchar" MaxLength="64" />
+          <Property Name="Priority" Type="int" />
+        </EntityType>-->
         <EntityContainer Name="DB_whut_HnrMgmtModelStoreContainer">
           <EntitySet Name="T_Account" EntityType="Self.T_Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Award" EntityType="Self.T_Award" Schema="dbo" store:Type="Tables" />

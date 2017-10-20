@@ -96,15 +96,34 @@ namespace HnrMgmtAPI.Controllers.API.Sys
             return result;
         }
 
+        /// <summary>
+        /// 修改功能表
+        /// </summary>
+        /// <param name="model">参数参考MenuModify</param>
+        /// <returns></returns>
         [HttpPost, Route("modmenu")]
         public ApiResult ModifyMenu([FromBody]MenuModify model)
         {
-            result = AccessToken.Check(model.access_token, "api/role/addmenu");
+            result = AccessToken.Check(model.access_token, "api/role/modmenu");
             if (result == null)
             {
+                #region 参数验证
+                result = ParameterCheck.CheckParameters(model);
+                if (result != null)
+                {
+                    return result;
+                }
+                #endregion
+
+                #region 逻辑操作
                 T_Right rightModel = db.T_Right.Find(model.ID);
                 if (rightModel != null)
                 {
+                    if (rightModel.Priority == 0)
+                    {
+                        return Error("此记录不能被修改");
+                    }
+
                     rightModel.Name = model.Name;
                     rightModel.Url = model.Url;
 
@@ -123,6 +142,55 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                 {
                     return Error("未找到此记录");
                 }
+                #endregion
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 删除功能表中记录
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="ID">记录ID</param>
+        /// <returns></returns>
+        [HttpGet, Route("delmenu")]
+        public ApiResult DeleteMenu(string access_token, string ID)
+        {
+            result = AccessToken.Check(access_token, "api/role/delmenu");
+            if (result == null)
+            {
+                #region 参数验证
+                if (ID == null || ID == "")
+                {
+                    return Error("参数错误，ID不能为空");
+                }
+                #endregion
+
+                #region 逻辑操作
+                T_Right rightModel = db.T_Right.Find(ID);
+                if (rightModel != null)
+                {
+                    if (rightModel.Priority == 0)
+                    {
+                        return Error("此记录不能被删除");
+                    }
+
+                    try
+                    {
+                        db.T_Right.Remove(rightModel);
+
+                        return Success("删除成功");
+                    }
+                    catch
+                    {
+                        return Error("删除失败");
+                    }
+                }
+                else
+                {
+                    return Error("未找到此记录");
+                }
+                #endregion
             }
             return result;
         }
@@ -155,6 +223,32 @@ namespace HnrMgmtAPI.Controllers.API.Sys
         #endregion
 
         #region 角色设定功能管理（用户可根据需要为某种角色设定可执行的操作）
+        [HttpGet,Route("getrolemenu")]
+        public ApiResult GetRoleMenu(string access_token)
+        {
+            result = AccessToken.Check(access_token, "api/role/getrolemenu");
+            if (result == null)
+            {
+                #region 参数验证
+                #endregion
+
+                #region 逻辑操作
+                var roleList = from T_Role in db.T_Role orderby T_Role.RoleID select T_Role;
+                if (roleList.Any())
+                {
+                    foreach (var item in roleList.ToList())
+                    {
+
+                    }
+                }
+                else
+                {
+                    return Error("尚未设定角色列表");
+                }
+                #endregion
+            }
+            return result;
+        }
         #endregion
     }
 }
