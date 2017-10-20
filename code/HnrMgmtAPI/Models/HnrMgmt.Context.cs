@@ -38,5 +38,6 @@ namespace HnrMgmtAPI.Models
         public virtual DbSet<T_Team> T_Team { get; set; }
         public virtual DbSet<T_RoleRight> T_RoleRight { get; set; }
         public virtual DbSet<vw_Account> vw_Account { get; set; }
+        public virtual DbSet<vw_Role> vw_Role { get; set; }
     }
 }

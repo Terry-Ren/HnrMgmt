@@ -5,12 +5,12 @@ using System.Web;
 
 namespace HnrMgmtAPI.Models.API.Sys
 {
-    public class MenuAdd
+    public class RoleMenuSet
     {
         public string access_token { get; set; }
 
-        public string Name { get; set; }
+        public string RoleID { get; set; }
 
-        public string Url { get; set; }
+        public List<string> MenuList { get; set; }
     }
 }

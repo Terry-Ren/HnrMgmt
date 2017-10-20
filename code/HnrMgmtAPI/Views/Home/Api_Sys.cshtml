@@ -102,6 +102,35 @@
             $('#btnAdminBlockState').click(function (e) {
                 AjaxRequestGet('api/account/blockstate?access_token=11&accountID=0121403490106');
             });
+
+            //API 接口管理
+            $('#btnRoleGetMenu').click(function (e) {
+                AjaxRequestGet('api/role/getmenu?access_token=11');
+            });
+
+            $('#btnRoleAddMenu').click(function (e) {
+                var data = { 'access_token': '11', 'Name': '新增荣誉称号', 'Url': 'api/honor/add' }
+                AjaxRequestPost('api/role/addmenu', data);
+            });
+
+            $('#btnRoleModifyMenu').click(function (e) {
+                var data = { 'access_token': '11', 'ID': 'f2929712-2820-4ef1-94cc-0f87813338d8', 'Name': '新增荣誉称号', 'Url': 'api/honor/add' }
+                AjaxRequestPost('api/role/modmenu', data);
+            });
+
+            $('#btnRoleDeleteMenu').click(function (e) {
+                AjaxRequestGet('api/role/delmenu?access_token=11&ID=f2929712-2820-4ef1-94cc-0f87813338d8');
+            });
+
+            //角色管理
+            $('#btnRoleGetRole').click(function (e) {
+                AjaxRequestGet('api/role/getrole?access_token=11');
+            });
+
+            //角色功能管理
+            $('#btnRoleGet').click(function (e) {
+                AjaxRequestGet('api/role/get?access_token=11');
+            });
         });
 
     </script>
@@ -145,6 +174,28 @@
             <br />
             <br />
             <input type="button" value="api/account/blockstate" id="btnAdminBlockState" />
+            <br />
+            <br />
+            <h3>角色功能管理接口测试：</h3>
+            <h4>API接口管理</h4>
+            <input type="button" value="api/role/getmenu" id="btnRoleGetMenu" />
+            <br />
+            <br />
+            <input type="button" value="api/role/addmenu" id="btnRoleAddMenu" />
+            <br />
+            <br />
+            <input type="button" value="api/role/modmenu" id="btnRoleModifyMenu" />
+            <br />
+            <br />
+            <input type="button" value="api/role/delmenu" id="btnRoleDeleteMenu" />
+            <br />
+            <br />
+            <h4>角色管理</h4>
+            <input type="button" value="api/role/getrole" id="btnRoleGetRole" />
+            <br />
+            <br />
+            <h4>角色功能管理</h4>
+            <input type="button" value="api/role/get" id="btnRoleGet" />
             <br />
             <br />
         </div>

@@ -19,7 +19,7 @@ namespace HnrMgmtAPI.Controllers.API
             if (System.Configuration.ConfigurationManager.AppSettings["IsTest"].ToString() == "1")
             {
                 //线程 暂停一秒
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(500);
             }
         }
 

@@ -108,9 +108,11 @@
 警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.T_RoleRight”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="T_RoleRight">
           <Key>
+            <PropertyRef Name="ID" />
             <PropertyRef Name="RoleID" />
             <PropertyRef Name="RightID" />
           </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="RightID" Type="varchar" MaxLength="64" Nullable="false" />
         </EntityType>
@@ -142,15 +144,19 @@
           <Property Name="State" Type="varchar" MaxLength="64" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6013: 表/视图“DB_whut_HnrMgmt.dbo.vw_Role”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
+警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.vw_Role”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="vw_Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="RoleID" Type="varchar" MaxLength="64" />
           <Property Name="RoleName" Type="varchar" MaxLength="64" />
           <Property Name="MenuID" Type="varchar" MaxLength="64" />
           <Property Name="MenuName" Type="varchar" MaxLength="64" />
           <Property Name="Url" Type="varchar" MaxLength="64" />
           <Property Name="Priority" Type="int" />
-        </EntityType>-->
+        </EntityType>
         <EntityContainer Name="DB_whut_HnrMgmtModelStoreContainer">
           <EntitySet Name="T_Account" EntityType="Self.T_Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Award" EntityType="Self.T_Award" Schema="dbo" store:Type="Tables" />
@@ -165,6 +171,7 @@
           <EntitySet Name="T_Team" EntityType="Self.T_Team" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_RoleRight" EntityType="Self.T_RoleRight" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
+    [T_RoleRight].[ID] AS [ID], 
     [T_RoleRight].[RoleID] AS [RoleID], 
     [T_RoleRight].[RightID] AS [RightID]
     FROM [dbo].[T_RoleRight] AS [T_RoleRight]</DefiningQuery>
@@ -180,6 +187,17 @@
     [vw_Account].[Tel] AS [Tel], 
     [vw_Account].[State] AS [State]
     FROM [dbo].[vw_Account] AS [vw_Account]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_Role" EntityType="Self.vw_Role" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Role].[ID] AS [ID], 
+    [vw_Role].[RoleID] AS [RoleID], 
+    [vw_Role].[RoleName] AS [RoleName], 
+    [vw_Role].[MenuID] AS [MenuID], 
+    [vw_Role].[MenuName] AS [MenuName], 
+    [vw_Role].[Url] AS [Url], 
+    [vw_Role].[Priority] AS [Priority]
+    FROM [dbo].[vw_Role] AS [vw_Role]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema>
@@ -297,9 +315,11 @@
         </EntityType>
         <EntityType Name="T_RoleRight">
           <Key>
+            <PropertyRef Name="ID" />
             <PropertyRef Name="RoleID" />
             <PropertyRef Name="RightID" />
           </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="RightID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
@@ -319,6 +339,18 @@
           <Property Name="Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
+        <EntityType Name="vw_Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="RoleName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="MenuID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="MenuName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Priority" Type="Int32" />
+        </EntityType>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="T_Account" EntityType="Self.T_Account" />
           <EntitySet Name="T_Award" EntityType="Self.T_Award" />
@@ -333,6 +365,7 @@
           <EntitySet Name="T_Team" EntityType="Self.T_Team" />
           <EntitySet Name="T_RoleRight" EntityType="Self.T_RoleRight" />
           <EntitySet Name="vw_Account" EntityType="Self.vw_Account" />
+          <EntitySet Name="vw_Role" EntityType="Self.vw_Role" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -462,6 +495,7 @@
           <EntitySetMapping Name="T_RoleRight">
             <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_RoleRight">
               <MappingFragment StoreEntitySet="T_RoleRight">
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="RightID" ColumnName="RightID" />
               </MappingFragment>
@@ -478,6 +512,19 @@
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="Tel" ColumnName="Tel" />
                 <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Role">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.vw_Role">
+              <MappingFragment StoreEntitySet="vw_Role">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+                <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

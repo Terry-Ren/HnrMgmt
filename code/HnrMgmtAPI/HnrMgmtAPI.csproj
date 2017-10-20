@@ -249,6 +249,7 @@
     <Compile Include="Models\API\Sys\MenuModify.cs" />
     <Compile Include="Models\API\Sys\PasswordModify.cs" />
     <Compile Include="Models\API\Sys\RoleMenuModel.cs" />
+    <Compile Include="Models\API\Sys\RoleMenuSet.cs" />
     <Compile Include="Models\API\Sys\TeacherAdd.cs" />
     <Compile Include="Models\API\Sys\TeacherModify.cs" />
     <Compile Include="Models\API\UserInfo.cs" />
@@ -305,6 +306,9 @@
       <DependentUpon>HnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_Account.cs">
+      <DependentUpon>HnrMgmt.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_Role.cs">
       <DependentUpon>HnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -12,10 +12,14 @@ namespace HnrMgmtAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class T_RoleRight
+    public partial class vw_Role
     {
         public int ID { get; set; }
         public string RoleID { get; set; }
-        public string RightID { get; set; }
+        public string RoleName { get; set; }
+        public string MenuID { get; set; }
+        public string MenuName { get; set; }
+        public string Url { get; set; }
+        public Nullable<int> Priority { get; set; }
     }
 }

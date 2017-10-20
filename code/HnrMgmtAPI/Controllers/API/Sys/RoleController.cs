@@ -66,7 +66,7 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                 #endregion
 
                 #region 逻辑操作
-                var menulist = from T_Right in db.T_Right where (T_Right.Url == model.MenuUrl) select T_Right;
+                var menulist = from T_Right in db.T_Right where (T_Right.Url == model.Url) select T_Right;
                 if (menulist.Any())
                 {
                     //已存在
@@ -76,12 +76,13 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                 {
                     T_Right rightModel = new T_Right();
                     rightModel.ID = System.Guid.NewGuid().ToString();
-                    rightModel.Name = model.MenuName;
-                    rightModel.Url = model.MenuUrl;
+                    rightModel.Name = model.Name;
+                    rightModel.Url = model.Url;
                     rightModel.Priority = 1;
                     try
                     {
                         db.T_Right.Add(rightModel);
+                        db.SaveChanges();
 
                         return Success("添加成功");
                     }
@@ -170,14 +171,16 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                 T_Right rightModel = db.T_Right.Find(ID);
                 if (rightModel != null)
                 {
-                    if (rightModel.Priority == 0)
+                    var rightMenuList = from vw_Role in db.vw_Role where (vw_Role.MenuID == ID) select vw_Role;
+                    if (rightMenuList.Any())
                     {
-                        return Error("此记录不能被删除");
+                        return Error("此接口已被使用，不能被删除");
                     }
 
                     try
                     {
                         db.T_Right.Remove(rightModel);
+                        db.SaveChanges();
 
                         return Success("删除成功");
                     }
@@ -223,10 +226,10 @@ namespace HnrMgmtAPI.Controllers.API.Sys
         #endregion
 
         #region 角色设定功能管理（用户可根据需要为某种角色设定可执行的操作）
-        [HttpGet,Route("getrolemenu")]
+        [HttpGet, Route("get")]
         public ApiResult GetRoleMenu(string access_token)
         {
-            result = AccessToken.Check(access_token, "api/role/getrolemenu");
+            result = AccessToken.Check(access_token, "api/role/get");
             if (result == null)
             {
                 #region 参数验证
@@ -236,15 +239,61 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                 var roleList = from T_Role in db.T_Role orderby T_Role.RoleID select T_Role;
                 if (roleList.Any())
                 {
+                    //定义返回 数据 Data
+                    Return_GetList<RoleMenuModel> data = new Return_GetList<RoleMenuModel>();
+                    data.count = roleList.Count();
+                    data.list = new System.Collections.Generic.List<RoleMenuModel>();
+
+                    //遍历角色列表
                     foreach (var item in roleList.ToList())
                     {
+                        RoleMenuModel roleMenuModel = new RoleMenuModel();
+                        roleMenuModel.RoleID = item.RoleID;
+                        roleMenuModel.RoleName = item.Name;
+                        var menuList = from vw_Role in db.vw_Role where (vw_Role.RoleID == item.RoleID) select vw_Role;
+                        if (menuList.Any())
+                        {
+                            roleMenuModel.count = menuList.Count();
+                            foreach (var _item in menuList.ToList())
+                            {
+                                MenuModel menuModel = new MenuModel();
+                                menuModel.ApiID = _item.MenuID;
+                                menuModel.ApiName = _item.MenuName;
+                                menuModel.ApiUrl = _item.Url;
 
+                                roleMenuModel.MenuList.Add(menuModel);
+                            }
+                        }
+                        else
+                        {
+                            roleMenuModel.count = 0;
+                            roleMenuModel.MenuList = null;
+                        }
+
+                        data.list.Add(roleMenuModel);
                     }
+
+                    return Success("获取角色功能列表", data);
                 }
                 else
                 {
                     return Error("尚未设定角色列表");
                 }
+                #endregion
+            }
+            return result;
+        }
+
+        [HttpPost, Route("set")]
+        public ApiResult SetRoleMenu([FromBody]RoleMenuSet model)
+        {
+            result = AccessToken.Check(model.access_token, "api/role/set");
+            if (result == null)
+            {
+                #region 参数验证
+                #endregion
+
+                #region 逻辑操作
                 #endregion
             }
             return result;
