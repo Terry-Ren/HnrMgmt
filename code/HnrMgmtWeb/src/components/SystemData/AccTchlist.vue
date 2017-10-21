@@ -51,8 +51,8 @@
         </el-form-item>
         <el-form-item label="电话" prop="Tel">
           <el-input v-model="addFormBody.Tel" placeholder="请输入电话"  ></el-input>
-        </el-form-item>
-        <el-form-item label="单位" prop="Tel">
+        </el-form-item> 
+        <el-form-item label="单位" prop="OrgID">
           <el-select v-model="addFormBody.OrgID" placeholder="请选择所属单位">
             <el-option v-for="org in OrgData" :key="org.OrgID" :value="org.OrgID" :label="org.Name"></el-option>
           </el-select>
@@ -134,10 +134,11 @@ import PubMethod from '../../common/util'
        addFormBody:{
          AccountID:'',
          AccountName:'',
+         RoleID:'',
          OrgID:'',
          Tel:''
-
        },
+       
        //编辑表单相关数据
        modifyFormVisible:false,
        modifyLoading:false,

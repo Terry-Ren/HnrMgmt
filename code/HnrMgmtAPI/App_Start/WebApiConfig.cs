@@ -16,7 +16,7 @@ namespace HnrMgmtAPI
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
             // 跨域配置
-            //config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
             // API权限信息写入Cache
             HttpRuntime.Cache.Insert("rolePermission", Public.GetRolePermission());
