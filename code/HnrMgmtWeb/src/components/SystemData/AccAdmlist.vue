@@ -54,7 +54,12 @@
         <el-form-item label="电话" prop="Tel">
           <el-input v-model="addFormBody.Tel" placeholder="请输入电话"  ></el-input>
         </el-form-item>
-        <el-form-item label="单位" prop="Tel">
+        <el-form-item label="角色" prop="RoleID">
+          <el-select v-model="addFormBody.RoleID" placeholder="请选择新增角色">
+            <el-option v-for="role in RoleData" :key="role.RoleID" :value="role.RoleID" :label="role.Name"></el-option>
+          </el-select>
+        </el-form-item> 
+        <el-form-item label="单位" prop="OrgID">
           <el-select v-model="addFormBody.OrgID" placeholder="请选择所属单位">
             <el-option v-for="org in OrgData" :key="org.OrgID" :value="org.OrgID" :label="org.Name"></el-option>
           </el-select>
@@ -94,7 +99,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {reqGetOrgList,reqGetAccAdmList,posAccAdm,posModifyAccTch,reqDeleteAccAdm,reqResetAccAdm,reqBlockAccAdm} from '../../api/api'
+import {reqGetRoleList,reqGetOrgList,reqGetAccAdmList,posAccAdm,posModifyAccTch,reqDeleteAccAdm,reqResetAccAdm,reqBlockAccAdm} from '../../api/api'
 import PubMethod from '../../common/util'
  export default {
    data() {
@@ -112,6 +117,9 @@ import PubMethod from '../../common/util'
 
        // 获取单位组织信息用于新增编辑
        OrgData: [],
+
+       // 获取可选角色列表
+       RoleData:[],
 
        // 新增教师表单规则验证
        rules:{
@@ -136,6 +144,7 @@ import PubMethod from '../../common/util'
        addFormBody:{
          AccountName:'',
          AccountID:'',
+         RoleID:'',
          OrgID:'',
          Tel:''
 
@@ -158,6 +167,7 @@ import PubMethod from '../../common/util'
    mounted(){
      this.getList();
      this.getOrg();
+     this.getRole();
    },
 
    //方法集合
@@ -165,6 +175,21 @@ import PubMethod from '../../common/util'
      //公共类方法--转换冻结状态
      transfState(row){
        return PubMethod.transfState(row)
+     },
+     // 填充角色信息
+     getRole(){
+       this.listLoading=true
+       let param={
+         access_token:"11"
+       }
+       reqGetRoleList(param).then((res)=>{
+         this.RoleData=res.data.data.list
+         console.log(this.RoleData)
+         this.listLoading=false
+         this.RoleData.splice(0,2)
+       }).catch((res)=>{
+         console.log(res)
+         })
      },
      // 填充单位信息
      getOrg(){
@@ -204,7 +229,6 @@ import PubMethod from '../../common/util'
            this.submitLoading=true
            //复制字符串
            let para = Object.assign({}, this.addFormBody);
-           console.log(para)
            para.access_token='terry'
            posAccAdm(para).then((res)=>{
               this.submitLoading=false

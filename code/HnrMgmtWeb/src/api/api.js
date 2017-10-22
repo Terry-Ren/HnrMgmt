@@ -48,6 +48,8 @@ let base = 'http://localhost:59996/'
 // 登录接口
 export const posLogin = params => { return axios.post(`${base}api/auth/login`, params) }
 
+// text
+export const reqGetAwdListJava = params => { return axios.get(`http://localhost:8787/api/award/get`, { params: params }) }
 // 请求荣誉列表
 export const reqGetHonorList = params => { return axios.get(`${base}api/honor/get?access_token=11`, { params: params }) }
 // 添加荣誉项
@@ -98,3 +100,8 @@ export const reqDeleteAccAdm = params => { return axios.get(`${base}api/account/
 export const reqResetAccAdm = params => { return axios.get(`${base}api/account/resetadmin`, {params: params}) }
 // 冻结助理人员
 export const reqBlockAccAdm = params => { return axios.get(`${base}api/account/blockstate`, {params: params}) }
+
+// 获取角色列表
+export const reqGetRoleList = params => { return axios.get(`${base}api/role/getrole`, {params: params}) }
+// 获取角色权限
+export const reqGetRoleControl = params => { return axios.get(`${base}api/role/get`, {params: params}) }
