@@ -8,7 +8,7 @@ import NotFoundComponent from '../views/404'
 import Hello from '@/components/Hello123'
 import ComAcclist from '../components/SystemData/ComAcclist'
 import Rolelist from '../components/SystemData/Rolelist'
-// import text from '../components/BasicData/text.vue'
+import text from '../components/BasicData/text.vue'
 // import AccTchlist from '../components/SystemData/AccTchlist.vue'
 
 // 将基础数据组件全部打包异步加载（webpack特殊的注释语法）
@@ -79,7 +79,8 @@ const routes = [
     menuShow: true,
     children: [
       {path: '/system/Acclist', component: ComAcclist, name: 'ComAcclist', menuShow: true},
-      {path: '/system/Role', component: Rolelist, name: 'Rolelist', menuShow: true}
+      {path: '/system/Role', component: Rolelist, name: 'Rolelist', menuShow: true},
+      {path: '/system/PassWord', component: text, name: 'text', menuShow: true}
     ]
 
   }

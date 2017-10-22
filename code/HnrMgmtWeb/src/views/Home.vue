@@ -70,7 +70,7 @@
           <el-menu-item index="/system/Role">
             角色管理
           </el-menu-item>
-          <el-menu-item index="PassWord">
+          <el-menu-item index="/system/PassWord">
             密码管理
           </el-menu-item>
         </el-submenu>
