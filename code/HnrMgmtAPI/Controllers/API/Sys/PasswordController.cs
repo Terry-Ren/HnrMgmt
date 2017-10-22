@@ -19,7 +19,7 @@ namespace HnrMgmtAPI.Controllers.API.Sys
         public ApiResult Modify([FromBody]PasswordModify model)
         {
             //此处调用的是Check的重写方法，因为需验证是否操作的是本人的账户
-            result = AccessToken.Check(model.access_token, "api/account/addteacher", model.ID);
+            result = AccessToken.Check(model.access_token, "api/password/modify", model.ID);
             if (result == null)
             {
                 #region 参数验证
@@ -27,6 +27,10 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                 if (result != null)
                 {
                     return result;
+                }
+                if(model.NewPwd == model.OldPwd)
+                {
+                    return Error("新密码不能与原密码相同！");
                 }
                 #endregion
 
