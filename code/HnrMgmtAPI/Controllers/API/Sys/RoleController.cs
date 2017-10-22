@@ -7,7 +7,6 @@ using System.Web.Http;
 
 namespace HnrMgmtAPI.Controllers.API.Sys
 {
-
     [RoutePrefix("api/role")]
     public class RoleController : BaseApiController
     {
@@ -200,6 +199,11 @@ namespace HnrMgmtAPI.Controllers.API.Sys
         #endregion
 
         #region 角色管理 （不对用户开放、数据库中设置用户层级、不允许用户修改）
+        /// <summary>
+        /// 获取系统中的角色列表，不允许用户添加、删除等操作
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <returns></returns>
         [HttpGet, Route("getrole")]
         public ApiResult GetRole(string access_token)
         {
@@ -226,6 +230,11 @@ namespace HnrMgmtAPI.Controllers.API.Sys
         #endregion
 
         #region 角色设定功能管理（用户可根据需要为某种角色设定可执行的操作）
+        /// <summary>
+        /// 获取角色功能列表
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <returns></returns>
         [HttpGet, Route("get")]
         public ApiResult GetRoleMenu(string access_token)
         {
@@ -284,19 +293,34 @@ namespace HnrMgmtAPI.Controllers.API.Sys
             return result;
         }
 
+        /// <summary>
+        /// 设置角色功能
+        /// </summary>
+        /// <param name="model">参数参考 RoleMenuSet</param>
+        /// <returns></returns>
         [HttpPost, Route("set")]
         public ApiResult SetRoleMenu([FromBody]RoleMenuSet model)
         {
-            result = AccessToken.Check(model.access_token, "api/role/set");
-            if (result == null)
-            {
-                #region 参数验证
-                #endregion
+            return Error("接口尚未实现");
+            //result = AccessToken.Check(model.access_token, "api/role/set");
+            //if (result == null)
+            //{
+            //    #region 参数验证
+            //    result = ParameterCheck.CheckParameters(model);
+            //    if (result != null)
+            //    {
+            //        return result;
+            //    }
+            //    #endregion
 
-                #region 逻辑操作
-                #endregion
-            }
-            return result;
+            //    #region 逻辑操作
+            //    if (model.MenuList != null && model.MenuList.Count > 0)
+            //    {
+
+            //    }
+            //    #endregion
+            //}
+            //return result;
         }
         #endregion
     }

@@ -103,6 +103,12 @@
                 AjaxRequestGet('api/account/blockstate?access_token=11&accountID=0121403490106');
             });
 
+            //修改密码
+            $('#btnPasswordModfy').click(function (e) {
+                var data = { 'access_token': '11', 'ID': '0121403490106', 'OldPwd': '40010', 'NewPwd': '400220' }
+                AjaxRequestPost('api/password/modify', data);
+            });
+
             //API 接口管理
             $('#btnRoleGetMenu').click(function (e) {
                 AjaxRequestGet('api/role/getmenu?access_token=11');
@@ -174,6 +180,11 @@
             <br />
             <br />
             <input type="button" value="api/account/blockstate" id="btnAdminBlockState" />
+            <br />
+            <br />
+            <h3>密码管理接口测试：</h3>
+            <h4>密码修改</h4>
+            <input type="button" value="api/password/modify" id="btnPasswordModfy" />
             <br />
             <br />
             <h3>角色功能管理接口测试：</h3>

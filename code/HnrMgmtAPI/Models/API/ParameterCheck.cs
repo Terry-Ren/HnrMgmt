@@ -20,8 +20,10 @@ namespace HnrMgmtAPI.Models.API
             ApiResult result = new ApiResult();
 
             PropertyInfo[] propertys = modelObj.GetType().GetProperties();
-            string typeName = modelObj.GetType().ToString();
+            string _typeName = modelObj.GetType().ToString();
 
+            //获取类名
+            string typeName = _typeName.Substring((_typeName.LastIndexOf(".") + 1), (_typeName.Length - 1 - _typeName.LastIndexOf(".")));
             Dictionary<string, string> errorFields = new Dictionary<string, string>();
 
             foreach (PropertyInfo p in propertys)
