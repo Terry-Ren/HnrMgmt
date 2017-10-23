@@ -8,6 +8,7 @@ import NotFoundComponent from '../views/404'
 import Hello from '@/components/Hello123'
 import ComAcclist from '../components/SystemData/ComAcclist'
 import Rolelist from '../components/SystemData/Rolelist'
+import ChangePass from '../components/SystemData/Passwoed'
 import text from '../components/BasicData/text.vue'
 // import AccTchlist from '../components/SystemData/AccTchlist.vue'
 
@@ -80,7 +81,7 @@ const routes = [
     children: [
       {path: '/system/Acclist', component: ComAcclist, name: 'ComAcclist', menuShow: true},
       {path: '/system/Role', component: Rolelist, name: 'Rolelist', menuShow: true},
-      {path: '/system/PassWord', component: text, name: 'text', menuShow: true}
+      {path: '/system/PassWord', component: ChangePass, name: 'ChangePass', menuShow: true}
     ]
 
   }

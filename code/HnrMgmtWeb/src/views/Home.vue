@@ -73,6 +73,9 @@
           <el-menu-item index="/system/PassWord">
             密码管理
           </el-menu-item>
+          <el-menu-item index="/system/Menu">
+            权限管理
+          </el-menu-item>
         </el-submenu>
         <!-- 基础数据 -->
         <el-submenu index="JcData">

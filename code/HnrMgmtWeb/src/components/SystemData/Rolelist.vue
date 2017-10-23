@@ -12,9 +12,9 @@
   <el-col :span="24" class="warp-main">
     <!-- 工具栏 -->
     <el-col :span="24" class="toolBar" >    
-      <el-form :inline="true" style="margin-bottom:15px">
+      <!-- <el-form :inline="true" style="margin-bottom:15px">
         <el-button type="primary" @click="addFormVisible = true" >新增角色</el-button>
-      </el-form>
+      </el-form> -->
     </el-col>
     <!-- 表格区 -->
     <el-col :span="24">
@@ -25,7 +25,7 @@
         <el-table-column label="操作" width="200" sortable align="center">
           <template scope="scope">
             <el-button  size="small" @click="showMgmtDialog(scope.$index,scope.row)"  >管理</el-button>
-            <el-button type="danger" size="small" >删除</el-button>
+            <!-- <el-button type="danger" size="small" >删除</el-button> -->
           </template>
         </el-table-column>
       </el-table>
@@ -33,7 +33,7 @@
   </el-col>
 
     <!-- 新增表单 -->
-    <el-dialog title="新增角色" :visible.sync="addFormVisible" v-loading="submitLoading" >
+    <!-- <el-dialog title="新增角色" :visible.sync="addFormVisible" v-loading="submitLoading" >
       <el-form :model="addFormBody" label-width="80px" ref="addForm"  auto>
         <el-form-item label="角色名" prop="Name">
           <el-input v-model="addFormBody.Name" placeholder="请输入账号"  ></el-input>
@@ -49,7 +49,7 @@
         <el-button @click.native=" addFormVisible = false">取消</el-button>
         <el-button type="primary"  >提交</el-button>
       </div>
-    </el-dialog>
+    </el-dialog> -->
 
     <!-- 管理表单 -->
     <el-dialog title="角色权限管理" :visible.sync="mgmtFormVisible" v-loading="mgmtLoading">
