@@ -16,13 +16,13 @@ import router from '../router/index'
 //   })
 
 // http response 拦截器
-axios.interceptors.response.use(
-    response => {
-      console.log(response)
-      return response
-    },
-    error => {
-       console.log(error)
+// axios.interceptors.response.use(
+//     response => {
+//       console.log(response)
+//       return response
+//     },
+//     error => {
+//        console.log(error)
       // if (error.response) {
       //   switch (error.response.status) {
       //     case 401:
@@ -40,8 +40,8 @@ axios.interceptors.response.use(
       //   path: '/login',
       //   query: {redirect: router.currentRoute.fullPath}
       // })
-      return Promise.reject(error.response.data)   // 返回接口返回的错误信息
-    })
+    //   return Promise.reject(error.response.data)   // 返回接口返回的错误信息
+    // })
 
 let base = 'http://localhost:59996/'
 
@@ -105,3 +105,16 @@ export const reqBlockAccAdm = params => { return axios.get(`${base}api/account/b
 export const reqGetRoleList = params => { return axios.get(`${base}api/role/getrole`, {params: params}) }
 // 获取角色权限
 export const reqGetRoleControl = params => { return axios.get(`${base}api/role/get`, {params: params}) }
+
+// 修改密码
+export const posModifyPass = params => { return axios.post(`${base}api/password/modify`, params) }
+
+// 获取已记录接口
+export const reqGetApiList = params => { return axios.get(`${base}api/role/getmenu`, {params: params}) }
+// 新增接口记录
+export const posAddApi = params => { return axios.post(`${base}api/role/addmenu`, params) }
+// 修改接口信息
+export const posModifyApi = params => { return axios.post(`${base}api/role/modmenu`, params) }
+// 删除所选接口
+export const reqDeleteApi = params => { return axios.get(`${base}api/role/delmenu`, {params: params}) }
+

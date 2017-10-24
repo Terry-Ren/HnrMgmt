@@ -6,16 +6,19 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import NotFoundComponent from '../views/404'
 import Hello from '@/components/Hello123'
-import ComAcclist from '../components/SystemData/ComAcclist'
-import Rolelist from '../components/SystemData/Rolelist'
-import ChangePass from '../components/SystemData/Passwoed'
-import text from '../components/BasicData/text.vue'
+// import text from '../components/BasicData/text.vue'
 // import AccTchlist from '../components/SystemData/AccTchlist.vue'
 
 // 将基础数据组件全部打包异步加载（webpack特殊的注释语法）
 const Hnrlist = () => import(/* webpackChunkName: "BasicData" */ '../components/BasicData/Hnrlist.vue')
 const Awdlist = () => import(/* webpackChunkName: "BasicData" */ '../components/BasicData/Awdlist.vue')
 const Orglist = () => import(/* webpackChunkName: "BasicData" */ '../components/BasicData/Orglist.vue')
+
+// 系统管理组件打包异步
+const ComAcclist = () => import(/* webpackChunkName: "SystemData" */ '../components/SystemData/ComAcclist')
+const Rolelist = () => import(/* webpackChunkName: "SystemData" */ '../components/SystemData/Rolelist')
+const ChangePass = () => import(/* webpackChunkName: "SystemData" */ '../components/SystemData/Passwoed')
+const Menulist = () => import(/* webpackChunkName: "SystemData" */ '../components/SystemData/Menulist')
 
 Vue.use(Router)
 
@@ -81,7 +84,8 @@ const routes = [
     children: [
       {path: '/system/Acclist', component: ComAcclist, name: 'ComAcclist', menuShow: true},
       {path: '/system/Role', component: Rolelist, name: 'Rolelist', menuShow: true},
-      {path: '/system/PassWord', component: ChangePass, name: 'ChangePass', menuShow: true}
+      {path: '/system/PassWord', component: ChangePass, name: 'ChangePass', menuShow: true},
+      { path: '/system/Menulist', component: Menulist, name: 'Menulist', menuShow: true }
     ]
 
   }

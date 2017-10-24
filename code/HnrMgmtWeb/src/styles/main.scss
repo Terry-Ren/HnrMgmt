@@ -53,13 +53,16 @@ body {
   }
 
   .main-from{
-    border: 1px solid #eaeefb;
-    border-radius: 4px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
     transition: .2s;
-    padding: 24px;
+    background-clip: padding-box;
+    margin: 100px auto;
+    padding: 35px 35px 15px 35px;
     width: 400px;
-    margin: auto ;
-    margin-top: 100px;
-    -moz-box-shadow:-8px 4px 10px rgba(51, 55, 68, 0.45);; -webkit-box-shadow:-8px 4px 10px rgba(51, 55, 68, 0.45);; box-shadow:-8px 4px 10px rgba(51, 55, 68, 0.45);
+    border: 1px solid #eaeaea;
+    box-shadow: 0 0 25px #cac6c6;
+
   }
   

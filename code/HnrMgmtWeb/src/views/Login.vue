@@ -78,7 +78,7 @@ import {posLogin} from '../api/api'
                         type: 'error',
                         message: resData.messages
                         })
-                      this.loginLoading=false             
+                        this.loginLoading=false             
                         }})
                   }})}
             }
