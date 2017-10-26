@@ -224,6 +224,7 @@
     <Compile Include="Controllers\API\Sys\AccountController.cs" />
     <Compile Include="Controllers\API\Sys\PasswordController.cs" />
     <Compile Include="Controllers\API\Sys\RoleController.cs" />
+    <Compile Include="Controllers\API\TB\RecordController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -252,6 +253,8 @@
     <Compile Include="Models\API\Sys\RoleMenuSet.cs" />
     <Compile Include="Models\API\Sys\TeacherAdd.cs" />
     <Compile Include="Models\API\Sys\TeacherModify.cs" />
+    <Compile Include="Models\API\TB\TB_AwdRecord.cs" />
+    <Compile Include="Models\API\TB\TB_HnrRecord.cs" />
     <Compile Include="Models\API\UserInfo.cs" />
     <Compile Include="Models\HnrMgmt.Context.cs">
       <AutoGen>True</AutoGen>
