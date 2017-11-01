@@ -42,13 +42,14 @@
           <Property Name="AwdRecID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="AwdID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="Year" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Time" Type="varchar" MaxLength="64" />
           <Property Name="Term" Type="varchar" MaxLength="64" />
           <Property Name="IsTeam" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="ProName" Type="varchar" MaxLength="64" />
           <Property Name="AwdeeID" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="OrgID" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Teacher" Type="varchar" MaxLength="128" Nullable="false" />
-          <Property Name="PicUrl" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="OrgID" Type="varchar" MaxLength="64" />
+          <Property Name="Teacher" Type="varchar" MaxLength="1024" />
+          <Property Name="FileUrl" Type="varchar" MaxLength="64" Nullable="false" />
         </EntityType>
         <EntityType Name="T_ExmRecord">
           <Key>
@@ -57,8 +58,8 @@
           <Property Name="RecordID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="ApplyID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="ApplyTime" Type="datetime" Nullable="false" />
-          <Property Name="ExmID" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="ExmTime" Type="datetime" Nullable="false" />
+          <Property Name="ExmID" Type="varchar" MaxLength="64" />
+          <Property Name="ExmTime" Type="datetime" />
           <Property Name="State" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="T_HnrRecord">
@@ -67,11 +68,12 @@
           </Key>
           <Property Name="HnrRecID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="HonorID" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="Annual" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Time" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="AwdeeID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="OrgID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="Branch" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="PicUrl" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="FileUrl" Type="varchar" MaxLength="64" Nullable="false" />
         </EntityType>
         <EntityType Name="T_Honor">
           <Key>
@@ -118,9 +120,9 @@
         </EntityType>
         <EntityType Name="T_Team">
           <Key>
-            <PropertyRef Name="OrderNum" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="OrderNum" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TeamID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="AwdeeID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="Rank" Type="varchar" MaxLength="64" Nullable="false" />
@@ -242,13 +244,14 @@
           <Property Name="AwdRecID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AwdID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Year" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Time" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="Term" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="IsTeam" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="ProName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="AwdeeID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="OrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Teacher" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PicUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Teacher" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="FileUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="T_ExmRecord">
           <Key>
@@ -257,8 +260,8 @@
           <Property Name="RecordID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ApplyID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ApplyTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ExmID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ExmTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExmID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ExmTime" Type="DateTime" Precision="3" />
           <Property Name="State" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="T_HnrRecord">
@@ -267,11 +270,12 @@
           </Key>
           <Property Name="HnrRecID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="HonorID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Annual" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Time" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AwdeeID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="OrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Branch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PicUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FileUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="T_Honor">
           <Key>
@@ -306,9 +310,9 @@
         </EntityType>
         <EntityType Name="T_Team">
           <Key>
-            <PropertyRef Name="OrderNum" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="OrderNum" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TeamID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AwdeeID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Rank" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
@@ -412,13 +416,14 @@
                 <ScalarProperty Name="AwdRecID" ColumnName="AwdRecID" />
                 <ScalarProperty Name="AwdID" ColumnName="AwdID" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="Term" ColumnName="Term" />
                 <ScalarProperty Name="IsTeam" ColumnName="IsTeam" />
                 <ScalarProperty Name="ProName" ColumnName="ProName" />
                 <ScalarProperty Name="AwdeeID" ColumnName="AwdeeID" />
                 <ScalarProperty Name="OrgID" ColumnName="OrgID" />
                 <ScalarProperty Name="Teacher" ColumnName="Teacher" />
-                <ScalarProperty Name="PicUrl" ColumnName="PicUrl" />
+                <ScalarProperty Name="FileUrl" ColumnName="FileUrl" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -439,11 +444,12 @@
               <MappingFragment StoreEntitySet="T_HnrRecord">
                 <ScalarProperty Name="HnrRecID" ColumnName="HnrRecID" />
                 <ScalarProperty Name="HonorID" ColumnName="HonorID" />
+                <ScalarProperty Name="Annual" ColumnName="Annual" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="AwdeeID" ColumnName="AwdeeID" />
                 <ScalarProperty Name="OrgID" ColumnName="OrgID" />
                 <ScalarProperty Name="Branch" ColumnName="Branch" />
-                <ScalarProperty Name="PicUrl" ColumnName="PicUrl" />
+                <ScalarProperty Name="FileUrl" ColumnName="FileUrl" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -485,7 +491,7 @@
           <EntitySetMapping Name="T_Team">
             <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.T_Team">
               <MappingFragment StoreEntitySet="T_Team">
-                <ScalarProperty Name="OrderNum" ColumnName="OrderNum" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="TeamID" ColumnName="TeamID" />
                 <ScalarProperty Name="AwdeeID" ColumnName="AwdeeID" />
                 <ScalarProperty Name="Rank" ColumnName="Rank" />

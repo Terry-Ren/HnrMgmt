@@ -14,7 +14,7 @@ namespace HnrMgmtAPI.Models
     
     public partial class T_Team
     {
-        public string OrderNum { get; set; }
+        public int ID { get; set; }
         public string TeamID { get; set; }
         public string AwdeeID { get; set; }
         public string Rank { get; set; }

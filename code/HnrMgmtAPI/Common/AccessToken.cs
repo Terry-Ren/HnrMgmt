@@ -152,5 +152,37 @@ namespace HnrMgmtAPI.Common
             }
             #endregion
         }
+
+        public static UserInfo GetUserInfo(string access_token)
+        {
+            #region 测试代码
+            //判断是否处于测试状态，1代表测试状态，其他代表非测试状态
+            if (System.Configuration.ConfigurationManager.AppSettings["IsTest"].ToString() == "1")
+            {
+                //返回测试信息  代表验证通过
+                UserInfo model = new UserInfo();
+                model.access_token = "";
+                model.userID = "0121403490106";
+                model.userName = "wangjianming";
+                model.userRoleID = "3";
+                model.userRoleName = "管理学院";
+                model.permissionList = null;
+                return model;
+            }
+            #endregion
+
+            #region 根据令牌获取用户信息
+            UserInfo userInfo = new UserInfo();
+            userInfo = (UserInfo)HttpRuntime.Cache.Get(access_token);
+            if (HttpRuntime.Cache.Get(access_token) != null)
+            {
+                return userInfo;
+            }
+            else
+            {
+                return null;
+            }
+            #endregion
+        }
     }
 }

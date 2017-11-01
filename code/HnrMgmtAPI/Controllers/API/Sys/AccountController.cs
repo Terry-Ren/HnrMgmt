@@ -4,6 +4,7 @@ using HnrMgmtAPI.Models.API;
 using HnrMgmtAPI.Models.API.Sys;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Http;
 
 namespace HnrMgmtAPI.Controllers.API.Sys
@@ -552,6 +553,12 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                 T_Account accountModel = db.T_Account.Find(accountID);
                 if (accountModel != null)
                 {
+                    //只有助理账号可以被冻结、此处判断冻结账号是否为助理的账号
+                    if (accountModel.RoleID != "2")
+                    {
+                        return Error("此账号不能冻结");
+                    }
+
                     try
                     {
                         accountModel.State = (accountModel.State == "1") ? "0" : "1";
