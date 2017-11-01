@@ -16,10 +16,11 @@ namespace HnrMgmtAPI.Models
     {
         public string HnrRecID { get; set; }
         public string HonorID { get; set; }
-        public System.DateTime Time { get; set; }
+        public string Annual { get; set; }
+        public string Time { get; set; }
         public string AwdeeID { get; set; }
         public string OrgID { get; set; }
         public string Branch { get; set; }
-        public string PicUrl { get; set; }
+        public string FileUrl { get; set; }
     }
 }

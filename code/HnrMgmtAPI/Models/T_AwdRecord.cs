@@ -17,12 +17,13 @@ namespace HnrMgmtAPI.Models
         public string AwdRecID { get; set; }
         public string AwdID { get; set; }
         public string Year { get; set; }
+        public string Time { get; set; }
         public string Term { get; set; }
         public string IsTeam { get; set; }
         public string ProName { get; set; }
         public string AwdeeID { get; set; }
         public string OrgID { get; set; }
         public string Teacher { get; set; }
-        public string PicUrl { get; set; }
+        public string FileUrl { get; set; }
     }
 }

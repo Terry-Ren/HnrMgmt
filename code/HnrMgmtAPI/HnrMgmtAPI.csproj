@@ -377,6 +377,7 @@
     <Content Include="Views\Home\Api_JC.cshtml" />
     <Content Include="Views\Home\Api_Sys.cshtml" />
     <Content Include="Views\Home\Api_Auth.cshtml" />
+    <Content Include="Views\Home\Api_Record.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,81 @@
+﻿@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <title>API接口测试</title>
+    <script>
+        const serverPath = 'http://localhost:59996/';
+        const access_token = '';
+
+        //模拟Get请求
+        function AjaxRequestGet(uri) {
+            var server = serverPath;
+            var url = server + uri;
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                dataType: 'json',
+                url: url,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function () {
+                    console.log('Ajax请求失败！');
+                }
+            });
+        }
+
+        //模拟Post请求
+        function AjaxRequestPost(uri, data) {
+            var server = serverPath;
+            var url = server + uri;
+            $.ajax({
+                type: 'POST',
+                //contentType: 'application/json',//此句话需要配合 json序列化方法使用
+                dataType: 'json',
+                data: data,
+                url: url,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (response) {
+                    console.log('Ajax请求失败！');
+                    console.log(response);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('#btnRecordHonor').click(function (e) {
+                var data = { 'access_token': '11', 'HonorID': '82fee293-1fd6-4c85-a058-e4365c26424a', 'Annual': '2017-2018', 'HnrYear': '2017', 'HnrMonth': '12', 'AwdeeID': '1', 'AwdeeName': '王健铭', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Branch': '信管1401团支部', 'FileName': '-1' }
+                AjaxRequestPost('api/record/honor', data);
+            });
+            //接口相关参数说明：
+            //HonorID 荣誉类型ID   Annual 获奖年度（格式为2016-2017）  HnrYear 获奖年份  HnrMonth 获奖月份
+            //AwdeeID 获奖人ID   AwdeeName 获奖人姓名   OrgID 获奖人所属组织ID   Branch 获奖人所属团支部
+            //FileName 上传文件名（若未上传文件，则赋值为-1）
+        });
+
+    </script>
+</head>
+<body>
+    <div>
+        <h1>API 接口测试：</h1>
+        <br />
+        <div style="margin-left:200px;">
+            <h3>填报接口测试：</h3>
+            <h4>荣誉奖项填报接口</h4>
+            <input type="button" value="api/record/honor" id="btnRecordHonor" />
+            <br />
+            <br />
+        </div>
+    </div>
+</body>
+</html>
