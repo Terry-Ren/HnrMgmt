@@ -158,7 +158,7 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 //验证荣誉类别ID是否正确
                 if (db.T_Award.Find(model.AwardID) == null)
                 {
-                    return Error("此荣誉奖项ID不存在");
+                    return Error("此竞赛奖项ID不存在");
                 }
 
                 //验证团队所属部门ID是否正确
@@ -227,6 +227,7 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 awdRecord.Term = (model.Term == null) ? null : model.Term;
                 awdRecord.IsTeam = model.IsTeam;
                 awdRecord.ProName = (model.ProjectName == null) ? null : model.ProjectName;
+                awdRecord.FileUrl = "";
                 if (model.IsTeam == "0")
                 {
                     //非团队获奖
