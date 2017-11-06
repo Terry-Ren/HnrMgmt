@@ -23,7 +23,7 @@
         <el-table-column type="index" width="65" label="序号" style="text-aligin:center" align="center"></el-table-column>
         <el-table-column prop="Name" label="单位名称" sortable align="center" ></el-table-column>
         <el-table-column label="操作" width="150">
-          <template scope="scope">
+          <template slot-scope>
             <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >编辑</el-button>
             <el-button type="danger" size="small"  @click="delectHornor(scope.$index,scope.row)" >删除</el-button>
           </template>

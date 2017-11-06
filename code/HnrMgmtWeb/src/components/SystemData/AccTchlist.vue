@@ -26,7 +26,7 @@
         <el-table-column prop="OrgName" label="所属单位" sortable align="center" ></el-table-column>
         <el-table-column prop="RoleName" label="角色" sortable align="center" ></el-table-column>
         <el-table-column label="操作" width="200">
-          <template scope="scope">
+          <template slot-scope>
             <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >编辑</el-button>
             <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重置</el-button>
             <el-button type="danger" size="small"  @click="delectAccTch(scope.$index,scope.row)" >删除</el-button>

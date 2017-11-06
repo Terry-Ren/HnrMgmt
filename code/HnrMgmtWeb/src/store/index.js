@@ -10,7 +10,9 @@ export default new Vuex.Store({
         access_token:'',
         RoleID:'',
         Name:'',
-        ID:''
+        ID:'',
+        uploadToken:'GfDe7p6rupDyEHYhvHfO-NhXvJ0KtxVOBSKxiKtU:8YY66l0VklPTy9JuIVUnX3bx3HM=:eyJzY29wZSI6Imhucm1nbXQiLCJkZWFkbGluZSI6MTAxNTA5OTY2OTY3fQ==',
+        uploadUrl:'http://oyzg731sy.bkt.clouddn.com/'
     },
     mutations:{
         // 登录时写入

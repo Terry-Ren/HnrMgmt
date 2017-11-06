@@ -3,7 +3,7 @@
 import Vue from 'vue'
 // 引用elementUI
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-default/index.css'
+import 'element-ui/lib/theme-chalk/index.css'
 // 引入vue全家桶
 import App from './App'
 import router from './router'

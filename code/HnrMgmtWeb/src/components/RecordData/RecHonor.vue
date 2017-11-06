@@ -26,7 +26,7 @@
         <el-table-column prop="OrgName" label="所属单位" sortable align="center" ></el-table-column>
         <el-table-column prop="RoleName" label="角色" sortable align="center" ></el-table-column>
         <el-table-column label="操作" width="280" align="center">
-          <template scope="scope">
+          <template slot-scope>
             <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >编辑</el-button>
             <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重置</el-button>
             <el-button type="primary" size="small"  @click="blockAccAdm(scope.$index,scope.row)" >冻结</el-button>
@@ -43,8 +43,8 @@
   </el-col>
 
     <!-- 新增表单 -->
-    <el-dialog title="新增荣誉记录" :visible.sync="addFormVisible" v-loading="submitLoading" style="top:-11%" >
-      <el-form :model="addFormBody" label-width="90px" ref="addForm" :rules="rules" auto  >
+    <el-dialog title="新增荣誉记录" :visible.sync="addFormVisible" v-loading="submitLoading" style="top:-11%">
+      <el-form :model="addFormBody" label-width="100px" ref="addForm" :rules="rules" auto class="hornor-add" >
         <el-form-item label="荣誉项目" prop="HonorID">
           <el-select v-model="addFormBody.HonorID" placeholder="请选择荣誉" style="width:300px">
             <el-option v-for="honor in HonorData" :key="honor.HonorID" :value="honor.HonorID" :label="honor.Name"></el-option>
@@ -56,7 +56,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="获奖日期" prop="HnrDate">
-          <el-date-picker v-model="addFormBody.HnrDate" type="month" placeholder="获得年月" style="width:300px"></el-date-picker>
+          <el-date-picker v-model="addFormBody.HnrDate"  placeholder="获得年月" style="width:300px" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
         </el-form-item>
         <el-form-item label="获奖人学号" prop="AwdeeID">
           <el-input v-model="addFormBody.AwdeeID" placeholder="请输入获奖人学号" style="width:300px" ></el-input>
@@ -73,7 +73,7 @@
           <el-input v-model="addFormBody.Branch" placeholder="请输入团支部" style="width:300px" ></el-input>
         </el-form-item>  
         <el-form-item label="上传图片" prop="FileName">
-          <el-upload action="http://localhost:59996/"  :on-preview="handlePreview">
+          <el-upload action="http://upload.qiniu.com/"  :data="postData" :on-success="successUpload" :before-upload="beforePicUpload" >
             <el-button size="small" type="primary">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
@@ -89,11 +89,27 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {reqGetHonorList,reqGetOrgList} from '../../api/api'
-import uptoken from '../../common/create_uptoken'
+import {reqGetHonorList,reqGetOrgList,posRecordHonor} from '../../api/api'
+// import uptoken from '../../common/create_uptoken'
  export default {
    data() {
+     // 获奖人学号验证规则
+     var validateAwdeeID =(rule, value, callback) => {
+       const RULES =/^\d{5,13}$/
+       if (value == null) {
+         callback(new Error('学号不能为空'))
+         } else if(!RULES.test(value)){
+           callback(new Error('必须为5-13位数字'))
+           }
+           else{
+             callback()
+           }
+      }
      return {
+       // 七牛云令牌
+       postData:{
+         token:this.$store.state.uploadToken
+       },
        // 填充荣明与数据
        HonorData:[],
        // 填充组织单位
@@ -112,18 +128,28 @@ import uptoken from '../../common/create_uptoken'
        submitLoading:false,       
        addFormVisible: false,
        addFormBody:{
-         HonorId:'',
+         HonorID:'',
          Annual:'',
          HnrDate:'',
          AwdeeName:'',
          AwdeeID:'',
          OrgID:'',
          Branch:'',
-         FileName:''
+         FileName:'-1',
+         PicUrl:''
        },
       // 表单验证规则
       rules:{
-
+        HonorID:{required:true , message:'请选择荣誉项目', trigger:'blur'},
+        Annual:{required:true , message:'请选择获得年度', trigger:'blur'},
+        HnrDate:{required:true , message:'请选择获得年月', trigger:'blur'},
+        AwdeeID:[
+          {required:true , message:'请输入学号', trigger:'blur'},
+          {validator:validateAwdeeID, tigger:'blure'},          
+        ],
+        AwdeeName:{required:true , message:'请输入获奖人姓名', trigger:'blur'},
+        OrgID:{required:true , message:'请选择单位学院', trigger:'blur'},
+        Branch:{required:true , message:'请输入所属团支部', trigger:'blur'}         
       },
       // 获奖年度选择
       annualOptions:[
@@ -147,7 +173,10 @@ import uptoken from '../../common/create_uptoken'
      this.getList();     
      this.getHonor();
      this.getOrg();
-     console.log(this.OrgData)
+   },
+   // 计算属性
+   computed(){
+
    },
    methods:{
      // 填充荣誉数据
@@ -159,7 +188,6 @@ import uptoken from '../../common/create_uptoken'
        reqGetHonorList(param).then((res)=>{
          this.listLoading=false
          this.HonorData=res.data.data.list
-                   console.log(this.HonorData)
        }).catch((res)=>{
          console.log(res)
          })       
@@ -181,10 +209,44 @@ import uptoken from '../../common/create_uptoken'
      getList(){
 
      },
-
-     // 上传图片成功钩子
-     handlePreview(file){
-       console.log(file)
+    //在图片提交前进行验证
+    beforePicUpload(file) {  
+      const isJPG = file.type === 'image/jpeg'
+      const isPNG = file.type === 'image/png'      
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isJPG&&!isPNG) {
+        this.$message.error('上传头像图片只能是 JPG/PNG 格式!')
+        return false
+      } else if (!isLt2M) {
+        this.$message.error('上传证明图片大小不能超过 2MB!')
+        return false
+      }
+      return true
+      },
+      // 上传成功钩子
+      successUpload(res, file, fileLis){
+        this.addFormBody.PicUrl=this.$store.state.uploadUrl+res.key
+        console.log(this.addFormBody.HnrDate )
+        console.log(this.addFormBody.HnrDate instanceof Date)
+      },
+     //新增荣誉记录
+     addSubmit(){
+       this.$refs['addForm'].validate((valid)=>{
+         if(valid){
+           this.submitLoading=true
+           //复制字符串
+           let para = Object.assign({}, this.addFormBody);
+           para.access_token='terry'
+           posRecordHonor(para).then((res)=>{
+              this.submitLoading=false
+            //公共提示方法，传入当前的vue以及res.data
+            PubMethod.statusinfo(this,res.data)
+              this.$refs['addForm'].resetFields();
+              this.addFormVisible = false;
+              this.getList();
+           })           
+         }
+       })
      },
     //更换每页数量
     SizeChangeEvent(val){
@@ -208,6 +270,9 @@ import uptoken from '../../common/create_uptoken'
 .left-main{
   border-radius: 5px;
   border: 2px;
+}
+.hornor-add{
+  margin-left: 120px
 }
 
 </style>

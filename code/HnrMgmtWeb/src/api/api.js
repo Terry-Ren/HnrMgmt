@@ -118,3 +118,5 @@ export const posModifyApi = params => { return axios.post(`${base}api/role/modme
 // 删除所选接口
 export const reqDeleteApi = params => { return axios.get(`${base}api/role/delmenu`, {params: params}) }
 
+// 申报荣誉记录
+export const posRecordHonor = params => { return axios.post(`${base}api/record/honor`, params) }
