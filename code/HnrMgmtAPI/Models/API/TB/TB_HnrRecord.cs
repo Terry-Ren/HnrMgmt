@@ -11,11 +11,8 @@
         //获奖年份 格式：2016-2017
         public string Annual { get; set; }
 
-        //获奖时间 年份
-        public int HnrYear { get; set; }
-
-        //获奖时间 月份
-        public int HnrMonth { get; set; }
+        //获奖时间 格式：2017-07
+        public string HnrTime { get; set; }
 
         //获奖人ID
         public string AwdeeID { get; set; }

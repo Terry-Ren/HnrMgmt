@@ -12,12 +12,9 @@ namespace HnrMgmtAPI.Models.API.TB
 
         //获奖年份 格式：2016
         public string Year { get; set; }
-
-        //获奖时间 年份  （指的是证书上的时间）
-        public int AwdYear { get; set; }
-
-        //获奖时间 月份  （指的是证书上的时间）
-        public int AwdMonth { get; set; }
+        
+        //获奖时间 格式：2017-07
+        public string AwdTime { get; set; }
 
         //获奖届数 （可空）
         public string Term { get; set; }
