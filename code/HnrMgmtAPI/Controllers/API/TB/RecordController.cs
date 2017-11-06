@@ -62,16 +62,14 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 }
 
                 #region 获奖记录
-                string hnrYear = model.HnrYear.ToString();
-                string hnrMonth = model.HnrMonth.ToString("00");
 
                 hnrRecord.HnrRecID = ID;
-                hnrRecord.HonorID = model.HonorID;
-                hnrRecord.Annual = model.Annual;
-                hnrRecord.Time = hnrYear + "-" + hnrMonth;
-                hnrRecord.AwdeeID = model.AwdeeID;
-                hnrRecord.OrgID = model.OrgID;
-                hnrRecord.Branch = model.Branch;
+                hnrRecord.HonorID = model.HonorID.ToString().Trim();
+                hnrRecord.Annual = model.Annual.ToString().Trim();
+                hnrRecord.Time = model.HnrTime.ToString().Trim();
+                hnrRecord.AwdeeID = model.AwdeeID.ToString().Trim();
+                hnrRecord.OrgID = model.OrgID.ToString().Trim();
+                hnrRecord.Branch = model.Branch.ToString().Trim();
                 hnrRecord.FileUrl = "";
 
                 if (model.FileName != "-1")
@@ -95,10 +93,10 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 {
                     //数据库中不存在此获奖学生信息 添加新纪录
                     T_Awardee awardeeModel = new T_Awardee();
-                    awardeeModel.AwdeeID = model.AwdeeID;
-                    awardeeModel.Name = model.AwdeeName;
-                    awardeeModel.OrgID = model.OrgID;
-                    awardeeModel.Branch = model.Branch;
+                    awardeeModel.AwdeeID = model.AwdeeID.ToString().Trim();
+                    awardeeModel.Name = model.AwdeeName.ToString().Trim();
+                    awardeeModel.OrgID = model.OrgID.ToString().Trim();
+                    awardeeModel.Branch = model.Branch.ToString().Trim();
                     //添加到数据库
                     db.T_Awardee.Add(awardeeModel);
                 }
@@ -217,14 +215,12 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 }
 
                 #region 加入记录信息
-                string awdYear = model.AwdYear.ToString();
-                string awdMonth = model.AwdMonth.ToString("00");
 
                 awdRecord.AwdRecID = RecordID;
-                awdRecord.AwdID = model.AwardID;
-                awdRecord.Year = model.Year;
-                awdRecord.Time = awdYear + "-" + awdMonth;
-                awdRecord.Term = (model.Term == null) ? null : model.Term;
+                awdRecord.AwdID = model.AwardID.ToString().Trim();
+                awdRecord.Year = model.Year.ToString().Trim();
+                awdRecord.Time = model.AwdTime.ToString().Trim();
+                awdRecord.Term = (model.Term == null) ? null : model.Term.ToString().Trim();
                 awdRecord.IsTeam = model.IsTeam;
                 awdRecord.ProName = (model.ProjectName == null) ? null : model.ProjectName;
                 awdRecord.FileUrl = "";

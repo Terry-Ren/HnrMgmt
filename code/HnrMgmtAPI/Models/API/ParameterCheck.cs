@@ -163,9 +163,12 @@ namespace HnrMgmtAPI.Models.API
                     break;
 
                 case "TB_HnrRecord":
-                    if (paramName == "HnrMonth" && (Convert.ToInt32(value) < 1 || Convert.ToInt32(value) > 12))
+                    if (paramName == "HnrTime")
                     {
-                        flag = true;
+                        if (value.ToString().Trim().Length != 7 || value.ToString().Trim().Substring(4, 1) != "-")
+                        {
+                            flag = true;
+                        }
                     }
                     if (paramName == "Annual")
                     {
@@ -176,9 +179,12 @@ namespace HnrMgmtAPI.Models.API
                     }
                     break;
                 case "TB_AwdRecord":
-                    if (paramName == "HnrMonth" && (Convert.ToInt32(value) < 1 || Convert.ToInt32(value) > 12))
+                    if (paramName == "AwdTime")
                     {
-                        flag = true;
+                        if (value.ToString().Trim().Length != 7 || value.ToString().Trim().Substring(4, 1) != "-")
+                        {
+                            flag = true;
+                        }
                     }
                     if (paramName == "IsTeam" && value.ToString() != "0" && value.ToString() != "1")
                     {
