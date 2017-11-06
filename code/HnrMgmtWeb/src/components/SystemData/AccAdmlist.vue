@@ -147,8 +147,8 @@ import PubMethod from '../../common/util'
          RoleID:'',
          OrgID:'',
          Tel:''
-
        },
+
        //编辑表单相关数据
        modifyFormVisible:false,
        modifyLoading:false,
@@ -184,7 +184,6 @@ import PubMethod from '../../common/util'
        }
        reqGetRoleList(param).then((res)=>{
          this.RoleData=res.data.data.list
-         console.log(this.RoleData)
          this.listLoading=false
          this.RoleData.splice(0,2)
        }).catch((res)=>{

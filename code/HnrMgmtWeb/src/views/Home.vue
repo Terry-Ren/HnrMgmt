@@ -59,15 +59,15 @@
           <span slot="title">首页</span>
         </el-menu-item>
         <!-- 项目管理 -->
-        <el-submenu index="">
+        <el-submenu index="recordData">
           <template slot="title">
             <i class="el-icon-plus"></i> 
             <span>项目填报</span>
           </template>
-          <el-menu-item index="">
+          <el-menu-item index="/record/honor">
             荣誉填报
           </el-menu-item>
-          <el-menu-item index="">
+          <el-menu-item index="/record/award">
             奖项填报
           </el-menu-item>
           <el-menu-item index="">
@@ -97,7 +97,7 @@
           </el-menu-item>
         </el-submenu>
         <!-- 基础数据 -->
-        <el-submenu index="JcData">
+        <el-submenu index="basicData">
           <template slot="title">
             <i class="el-icon-setting"></i>
             <span slot="title">基础数据</span>

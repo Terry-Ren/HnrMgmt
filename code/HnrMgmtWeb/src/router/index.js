@@ -6,6 +6,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import NotFoundComponent from '../views/404'
 import Hello from '@/components/Hello123'
+import RecHonor from '../components/RecordData/RecHonor'
 // import text from '../components/BasicData/text.vue'
 // import AccTchlist from '../components/SystemData/AccTchlist.vue'
 
@@ -17,7 +18,7 @@ const Orglist = () => import(/* webpackChunkName: "BasicData" */ '../components/
 // 系统管理组件打包异步
 const ComAcclist = () => import(/* webpackChunkName: "SystemData" */ '../components/SystemData/ComAcclist')
 const Rolelist = () => import(/* webpackChunkName: "SystemData" */ '../components/SystemData/Rolelist')
-const ChangePass = () => import(/* webpackChunkName: "SystemData" */ '../components/SystemData/Passwoed')
+const ChangePass = () => import(/* webpackChunkName: "SystemData" */ '../components/SystemData/Password')
 const Menulist = () => import(/* webpackChunkName: "SystemData" */ '../components/SystemData/Menulist')
 
 Vue.use(Router)
@@ -54,6 +55,19 @@ const routes = [
     redirect: '/index',
     children: [
       {path: '/index', component: Hello, name: 'index', menuShow: true}
+    ]
+  },
+  // 记录填报
+  {
+    path: '/',
+    component: Home,
+    name: 'RecordData',
+    meta: {
+      requireAuth: true
+    },
+    menuShow: true,
+    children: [
+      {path: '/record/honor', component: RecHonor, name: 'RecHonor', menuShow: true}
     ]
   },
   // 基础数据
