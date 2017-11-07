@@ -27,7 +27,7 @@
         <el-table-column prop="RoleName" label="角色" sortable align="center" ></el-table-column>
         <el-table-column prop="State" label="状态" sortable align="center" :formatter="transfState" ></el-table-column>
         <el-table-column label="操作" width="280" align="center">
-          <template slot-scope>
+          <template slot-scope="scope">
             <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >编辑</el-button>
             <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重置</el-button>
             <el-button type="primary" size="small"  @click="blockAccAdm(scope.$index,scope.row)" >冻结</el-button>

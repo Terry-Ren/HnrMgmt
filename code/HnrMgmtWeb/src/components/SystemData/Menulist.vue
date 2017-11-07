@@ -25,7 +25,7 @@
         <el-table-column prop="Url" label="Url" sortable align="center" ></el-table-column>
         <el-table-column prop="Priority" label="优先级" sortable align="center" ></el-table-column>
         <el-table-column label="操作" width="200" align="center">
-          <template slot-scope>
+          <template slot-scope="scope">
             <el-button  size="small"  >编辑</el-button>
             <el-button type="danger" size="small"   >删除</el-button>
           </template>

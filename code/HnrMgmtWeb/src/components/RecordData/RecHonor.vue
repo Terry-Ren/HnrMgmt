@@ -55,8 +55,8 @@
             <el-option v-for="options in annualOptions" :key="options.value" :label="options.label" :value="options.value"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="获奖日期" prop="HnrDate">
-          <el-date-picker v-model="addFormBody.HnrDate"  placeholder="获得年月" style="width:300px" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
+        <el-form-item label="获奖日期" prop="HnrTime">
+          <el-date-picker v-model="addFormBody.HnrTime"  placeholder="获得年月" style="width:300px" format="yyyy 年 MM 月" value-format="yyyy-MM"></el-date-picker>
         </el-form-item>
         <el-form-item label="获奖人学号" prop="AwdeeID">
           <el-input v-model="addFormBody.AwdeeID" placeholder="请输入获奖人学号" style="width:300px" ></el-input>
@@ -90,6 +90,7 @@
 
 <script type="text/ecmascript-6">
 import {reqGetHonorList,reqGetOrgList,posRecordHonor} from '../../api/api'
+import PubMethod from '../../common/util'
 // import uptoken from '../../common/create_uptoken'
  export default {
    data() {
@@ -130,19 +131,18 @@ import {reqGetHonorList,reqGetOrgList,posRecordHonor} from '../../api/api'
        addFormBody:{
          HonorID:'',
          Annual:'',
-         HnrDate:'',
+         HnrTime:'',
          AwdeeName:'',
          AwdeeID:'',
          OrgID:'',
          Branch:'',
-         FileName:'-1',
-         PicUrl:''
+         FileUrl:'-1'
        },
       // 表单验证规则
       rules:{
         HonorID:{required:true , message:'请选择荣誉项目', trigger:'blur'},
         Annual:{required:true , message:'请选择获得年度', trigger:'blur'},
-        HnrDate:{required:true , message:'请选择获得年月', trigger:'blur'},
+        HnrTime:{required:true , message:'请选择获得年月', trigger:'blur'},
         AwdeeID:[
           {required:true , message:'请输入学号', trigger:'blur'},
           {validator:validateAwdeeID, tigger:'blure'},          
@@ -173,10 +173,6 @@ import {reqGetHonorList,reqGetOrgList,posRecordHonor} from '../../api/api'
      this.getList();     
      this.getHonor();
      this.getOrg();
-   },
-   // 计算属性
-   computed(){
-
    },
    methods:{
      // 填充荣誉数据
@@ -225,9 +221,8 @@ import {reqGetHonorList,reqGetOrgList,posRecordHonor} from '../../api/api'
       },
       // 上传成功钩子
       successUpload(res, file, fileLis){
-        this.addFormBody.PicUrl=this.$store.state.uploadUrl+res.key
-        console.log(this.addFormBody.HnrDate )
-        console.log(this.addFormBody.HnrDate instanceof Date)
+        this.addFormBody.FileUrl=this.$store.state.uploadUrl+res.key
+        console.log(this.addFormBody)
       },
      //新增荣誉记录
      addSubmit(){
