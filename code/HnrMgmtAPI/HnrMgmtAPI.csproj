@@ -311,6 +311,15 @@
     <Compile Include="Models\vw_Account.cs">
       <DependentUpon>HnrMgmt.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_AwdRecord.cs">
+      <DependentUpon>HnrMgmt.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_AwdRecordTeam.cs">
+      <DependentUpon>HnrMgmt.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_HnrRecord.cs">
+      <DependentUpon>HnrMgmt.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_Role.cs">
       <DependentUpon>HnrMgmt.tt</DependentUpon>
     </Compile>
@@ -377,7 +386,8 @@
     <Content Include="Views\Home\Api_JC.cshtml" />
     <Content Include="Views\Home\Api_Sys.cshtml" />
     <Content Include="Views\Home\Api_Auth.cshtml" />
-    <Content Include="Views\Home\Api_Record.cshtml" />
+    <Content Include="Views\Home\Api_TB.cshtml" />
+    <Content Include="Views\Home\Api_CX.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

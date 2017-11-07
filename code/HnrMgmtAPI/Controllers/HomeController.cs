@@ -46,7 +46,7 @@ namespace HnrMgmtAPI.Controllers
         /// 登录填报 API 接口
         /// </summary>
         /// <returns></returns>
-        public ActionResult Api_Record()
+        public ActionResult Api_TB()
         {
             return View();
         }

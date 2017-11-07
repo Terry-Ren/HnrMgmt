@@ -12,7 +12,7 @@ namespace HnrMgmtAPI.Models.API.TB
 
         //获奖年份 格式：2016
         public string Year { get; set; }
-        
+
         //获奖时间 格式：2017-07
         public string AwdTime { get; set; }
 
@@ -35,7 +35,7 @@ namespace HnrMgmtAPI.Models.API.TB
         public List<Awardee> Members { get; set; }
 
         //证明材料 文件名 (若不上传文件，请赋值为 -1)
-        public string FileName { get; set; }
+        public string FileUrl { get; set; }
     }
 
     public class Awardee

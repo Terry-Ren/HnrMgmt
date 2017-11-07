@@ -27,6 +27,6 @@
         public string Branch { get; set; }
 
         //证明材料 文件名 (若不上传文件，请赋值为 -1)
-        public string FileName { get; set; }
+        public string FileUrl { get; set; }
     }
 }

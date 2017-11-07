@@ -44,7 +44,7 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 }
 
                 //暂未实现上传文件接口
-                if (model.FileName != "-1")
+                if (model.FileUrl != "-1")
                 {
                     return Error("暂不支持上传文件");
                 }
@@ -72,10 +72,10 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 hnrRecord.Branch = model.Branch.ToString().Trim();
                 hnrRecord.FileUrl = "";
 
-                if (model.FileName != "-1")
+                if (model.FileUrl != "-1")
                 {
                     //此处暂存上传文件名字
-                    hnrRecord.FileUrl = model.FileName;
+                    hnrRecord.FileUrl = model.FileUrl;
                 }
                 db.T_HnrRecord.Add(hnrRecord);
                 #endregion
@@ -197,7 +197,7 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 }
 
                 //暂未实现上传文件接口
-                if (model.FileName != "-1")
+                if (model.FileUrl != "-1")
                 {
                     return Error("暂不支持上传文件");
                 }
@@ -239,10 +239,10 @@ namespace HnrMgmtAPI.Controllers.API.TB
                         }
                     }
 
-                    if (model.FileName != "-1")
+                    if (model.FileUrl != "-1")
                     {
                         //此处暂存上传文件名字
-                        awdRecord.FileUrl = model.FileName;
+                        awdRecord.FileUrl = model.FileUrl;
                     }
 
                     db.T_AwdRecord.Add(awdRecord);
@@ -262,10 +262,10 @@ namespace HnrMgmtAPI.Controllers.API.TB
                         }
                     }
 
-                    if (model.FileName != "-1")
+                    if (model.FileUrl != "-1")
                     {
                         //此处暂存上传文件名字
-                        awdRecord.FileUrl = model.FileName;
+                        awdRecord.FileUrl = model.FileUrl;
                     }
 
                     db.T_AwdRecord.Add(awdRecord);
@@ -356,6 +356,106 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 #endregion
 
                 #endregion
+            }
+            return result;
+        }
+        #endregion
+
+        #region 记录查询
+        [HttpGet, Route("get")]
+        public ApiResult GetRecord(string access_token)
+        {
+            result = AccessToken.Check(access_token, "api/record/get");
+            if (result == null)
+            {
+                #region 参数验证
+                //无参数 无需验证
+                #endregion
+
+                #region 逻辑操作
+                int _page = -1;
+                int _limit = -1;
+                string _sortField = "";
+
+                return GetData(access_token, _page, _limit, _sortField);
+                #endregion
+            }
+            return result;
+        }
+
+        [HttpGet, Route("get")]
+        public ApiResult GetRecord(string access_token, int page, int limit)
+        {
+
+            result = AccessToken.Check(access_token, "api/record/get");
+            if (result == null)
+            {
+                #region 参数验证
+                if (page == 0 || limit == 0)
+                {
+                    return Error("参数存在错误");
+                }
+                #endregion
+
+                #region 逻辑操作
+                int _page = page;
+                int _limit = limit;
+                string _sortField = "";
+
+                return GetData(access_token, _page, _limit, _sortField);
+                #endregion
+            }
+            return result;
+        }
+
+        [HttpGet, Route("get")]
+        public ApiResult GetRecord(string access_token, int page, int limit, string sortField)
+        {
+            result = AccessToken.Check(access_token, "api/record/get");
+            if (result == null)
+            {
+                #region 参数验证
+                if (page == 0 || limit == 0 || sortField == null || sortField == "")
+                {
+                    return Error("参数存在错误");
+                }
+                #endregion
+
+                #region 逻辑操作
+                int _page = page;
+                int _limit = limit;
+                string _sortField = sortField;
+
+                return GetData(access_token, _page, _limit, _sortField);
+                #endregion
+            }
+            return result;
+        }
+        #endregion
+
+        #region 数据库搜索操作
+        private ApiResult GetData(string access_token, int page, int limit, string sortField)
+        {
+            UserInfo userInfo = AccessToken.GetUserInfo(access_token);
+            if (userInfo.userRoleID == "4")
+            {
+                //学生账号只能看到自己的账号记录
+                //此块学生模块暂时未做
+                return Error("对不起，当前系统不支持学生查询记录");
+            }
+            else if (userInfo.userRoleID == "3")
+            {
+                //学院账号可以看到所属学院的账号记录账号记录
+
+            }
+            else if (userInfo.userRoleID == "2" || userInfo.userRoleID == "1")
+            {
+                //校团委助理账号及校团委老师账号可以看到所有记录
+            }
+            else
+            {
+                //没有角色ID信息
+                return Error("发生未知错误。请联系系统维护人员");
             }
             return result;
         }

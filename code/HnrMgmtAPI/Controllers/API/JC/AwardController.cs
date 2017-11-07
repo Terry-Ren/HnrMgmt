@@ -81,7 +81,7 @@ namespace HnrMgmtAPI.Controllers.API.JC
                 if (awardList.Any())
                 {
                     returnData.count = awardList.Count();
-                    returnData.list = (List<T_Award>)(awardList.Skip((page - 1) * limit).Take(limit).ToList());
+                    returnData.list = awardList.Skip((page - 1) * limit).Take(limit).ToList();
                 }
                 else
                 {
