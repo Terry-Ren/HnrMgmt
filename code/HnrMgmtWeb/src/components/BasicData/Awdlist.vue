@@ -25,7 +25,7 @@
         <el-table-column prop="GradeName" label="奖项级别"  align="center" :formatter="transfGrandeName" sortable></el-table-column>
         <el-table-column prop="Grade" label="获奖等次" align="center" :formatter="transfGrande" sortable></el-table-column>
         <el-table-column label="操作" width="150">
-          <template slot-scope>
+          <template slot-scope="scope">
             <el-button  size="small" @click="showModifyDialog(scope.$index, scope.row)">编辑</el-button>
             <el-button type="danger" size="small" @click="delectAwd(scope.$index,scope.row)" >删除</el-button>
           </template>
