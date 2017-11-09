@@ -14,12 +14,14 @@ namespace HnrMgmtAPI.Models
     
     public partial class vw_AwdRecord
     {
+        public int ID { get; set; }
         public string AwdRecID { get; set; }
         public string AwardeeID { get; set; }
         public string AwardeeName { get; set; }
         public string AwardeeOrgID { get; set; }
         public string AwardeeOrgName { get; set; }
         public string AwardeeBranch { get; set; }
+        public string AwardeeRank { get; set; }
         public string AwdName { get; set; }
         public string AwdOrgID { get; set; }
         public string AwdOrgName { get; set; }
@@ -35,7 +37,7 @@ namespace HnrMgmtAPI.Models
         public string ApplyAccountName { get; set; }
         public string ApplyAccountOrg { get; set; }
         public string AppltAccountRole { get; set; }
-        public System.DateTime ApplyTime { get; set; }
+        public Nullable<System.DateTime> ApplyTime { get; set; }
         public string FileUrl { get; set; }
         public string State { get; set; }
     }
