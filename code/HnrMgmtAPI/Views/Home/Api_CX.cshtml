@@ -56,6 +56,12 @@
             $('#btnRecordGet').click(function (e) {
                 AjaxRequestGet('api/record/get?access_token=11');
             });
+            $('#btnRecordGetPage').click(function (e) {
+                AjaxRequestGet('api/record/get?access_token=11&page=1&limit=10');
+            });
+            $('#btnRecordGetPageSort').click(function (e) {
+                AjaxRequestGet('api/record/get?access_token=11&page=1&limit=10&sortDirection=ASC&sortField=ApplyTime');
+            });
         });
 
     </script>
@@ -68,6 +74,14 @@
             <h3>记录查询接口测试：</h3>
             <h4>普通查询</h4>
             <input type="button" value="api/record/get" id="btnRecordGet" />
+            <br />
+            <br />
+            <h4>分页查询</h4>
+            <input type="button" value="api/record/get" id="btnRecordGetPage" />
+            <br />
+            <br />
+            <h4>分页排序查询</h4>
+            <input type="button" value="api/record/get" id="btnRecordGetPageSort" />
             <br />
             <br />
         </div>
