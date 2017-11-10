@@ -39,8 +39,7 @@ namespace HnrMgmtAPI.Models
         public virtual DbSet<T_RoleRight> T_RoleRight { get; set; }
         public virtual DbSet<vw_Account> vw_Account { get; set; }
         public virtual DbSet<vw_Role> vw_Role { get; set; }
-        public virtual DbSet<vw_AwdRecord> vw_AwdRecord { get; set; }
-        public virtual DbSet<vw_AwdRecordTeam> vw_AwdRecordTeam { get; set; }
         public virtual DbSet<vw_HnrRecord> vw_HnrRecord { get; set; }
+        public virtual DbSet<vw_AwdRecord> vw_AwdRecord { get; set; }
     }
 }

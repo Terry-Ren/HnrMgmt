@@ -50,5 +50,14 @@ namespace HnrMgmtAPI.Controllers
         {
             return View();
         }
+
+        /// <summary>
+        /// 查询API接口
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Api_CX()
+        {
+            return View();
+        }
     }
 }

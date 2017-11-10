@@ -166,6 +166,8 @@ namespace HnrMgmtAPI.Common
                 model.userName = "wangjianming";
                 model.userRoleID = "3";
                 model.userRoleName = "管理学院";
+                model.userOrgID = "26c822fb-acb1-4e7a-a552-f514687f54ab";
+                model.userOrgName = "管理学院";
                 model.permissionList = null;
                 return model;
             }

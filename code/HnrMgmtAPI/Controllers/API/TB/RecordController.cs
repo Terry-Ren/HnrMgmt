@@ -5,6 +5,7 @@ using HnrMgmtAPI.Models.API.TB;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using System.Linq;
 using System.Web.Http;
 
 namespace HnrMgmtAPI.Controllers.API.TB
@@ -180,7 +181,7 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 {
                     if (model.Members.Count != 1)
                     {
-                        return Error("参数错误，非团队获奖时，项目成员只能为一人");
+                        return Error("参数错误，非团队获奖时，项目成员只能为1人");
                     }
                 }
 
@@ -227,7 +228,7 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 if (model.IsTeam == "0")
                 {
                     //非团队获奖
-                    awdRecord.AwdeeID = model.Members[0].AwdeeID;
+                    awdRecord.AwdeeID = TeamID;
                     awdRecord.OrgID = (model.OrgID == null) ? null : model.OrgID;
                     awdRecord.Teacher = "";
                     if (model.Teacher != null && model.Teacher.Count > 0)
@@ -296,6 +297,13 @@ namespace HnrMgmtAPI.Controllers.API.TB
                         //添加到数据库
                         db.T_Awardee.Add(awardeeModel);
                     }
+
+                    T_Team teamMember = new T_Team();
+                    teamMember.TeamID = TeamID;
+                    teamMember.AwdeeID = awardee.AwdeeID;
+                    teamMember.Rank = "0";
+                    db.T_Team.Add(teamMember);
+
                 }
                 else
                 {
@@ -375,9 +383,10 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 #region 逻辑操作
                 int _page = -1;
                 int _limit = -1;
+                string _sortDirection = "";
                 string _sortField = "";
 
-                return GetData(access_token, _page, _limit, _sortField);
+                return GetData(access_token, _page, _limit, _sortDirection, _sortField);
                 #endregion
             }
             return result;
@@ -391,7 +400,7 @@ namespace HnrMgmtAPI.Controllers.API.TB
             if (result == null)
             {
                 #region 参数验证
-                if (page == 0 || limit == 0)
+                if (page <= 0 || limit <= 0)
                 {
                     return Error("参数存在错误");
                 }
@@ -400,33 +409,48 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 #region 逻辑操作
                 int _page = page;
                 int _limit = limit;
+                string _sortDirection = "";
                 string _sortField = "";
 
-                return GetData(access_token, _page, _limit, _sortField);
+                return GetData(access_token, _page, _limit, _sortDirection, _sortField);
                 #endregion
             }
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="page"></param>
+        /// <param name="limit"></param>
+        /// <param name="sortDirection">ASC 或 DESC</param>
+        /// <param name="sortField"></param>
+        /// <returns></returns>
         [HttpGet, Route("get")]
-        public ApiResult GetRecord(string access_token, int page, int limit, string sortField)
+        public ApiResult GetRecord(string access_token, int page, int limit, string sortDirection, string sortField)
         {
             result = AccessToken.Check(access_token, "api/record/get");
             if (result == null)
             {
                 #region 参数验证
-                if (page == 0 || limit == 0 || sortField == null || sortField == "")
+                if (page <= 0 || limit <= 0 || sortDirection == null || sortDirection == "" || sortField == null || sortField == "")
                 {
                     return Error("参数存在错误");
+                }
+                if (sortDirection.ToUpper() != "ASC" && sortDirection.ToUpper() != "DESC")
+                {
+                    return Error("参数 sortDirection 格式错误");
                 }
                 #endregion
 
                 #region 逻辑操作
                 int _page = page;
                 int _limit = limit;
+                string _sortDirection = sortDirection;
                 string _sortField = sortField;
 
-                return GetData(access_token, _page, _limit, _sortField);
+                return GetData(access_token, _page, _limit, _sortDirection, _sortField);
                 #endregion
             }
             return result;
@@ -434,9 +458,18 @@ namespace HnrMgmtAPI.Controllers.API.TB
         #endregion
 
         #region 数据库搜索操作
-        private ApiResult GetData(string access_token, int page, int limit, string sortField)
+        private ApiResult GetData(string access_token, int page, int limit, string sortDirection, string sortField)
         {
+            #region
             UserInfo userInfo = AccessToken.GetUserInfo(access_token);
+
+            List<vw_HnrRecord> hnrRecordList = new List<vw_HnrRecord>();
+            List<vw_AwdRecord> awdRecordList = new List<vw_AwdRecord>();
+
+            var hnrRecord = from vw_HnrRecord in db.vw_HnrRecord orderby vw_HnrRecord.ApplyTime descending select vw_HnrRecord;
+            var awdRecord = from vw_AwdRecord in db.vw_AwdRecord orderby vw_AwdRecord.ApplyTime descending select vw_AwdRecord;
+            #endregion
+
             if (userInfo.userRoleID == "4")
             {
                 //学生账号只能看到自己的账号记录
@@ -446,7 +479,8 @@ namespace HnrMgmtAPI.Controllers.API.TB
             else if (userInfo.userRoleID == "3")
             {
                 //学院账号可以看到所属学院的账号记录账号记录
-
+                hnrRecord = from vw_HnrRecord in db.vw_HnrRecord where (vw_HnrRecord.AwardeeOrgID == userInfo.userOrgID) orderby vw_HnrRecord.ApplyTime descending select vw_HnrRecord;
+                awdRecord = from vw_AwdRecord in db.vw_AwdRecord where (vw_AwdRecord.AwardeeOrgID == userInfo.userOrgID || vw_AwdRecord.AwdOrgID == userInfo.userOrgID) orderby vw_AwdRecord.ApplyTime descending select vw_AwdRecord;
             }
             else if (userInfo.userRoleID == "2" || userInfo.userRoleID == "1")
             {
@@ -457,7 +491,65 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 //没有角色ID信息
                 return Error("发生未知错误。请联系系统维护人员");
             }
-            return result;
+
+            hnrRecordList = GetList(hnrRecord, page, limit, sortDirection, sortField);
+            awdRecordList = GetList(awdRecord, page, limit, sortDirection, sortField);
+
+            #region 数据处理
+            RecordList data = new RecordList();
+            data.hnrListNum = hnrRecord.Count();
+            data.awdListNum = awdRecord.Count();
+            data.hnrList = new List<returnHnrRecord>();
+            data.awdList = new List<returnAwdRecord>();
+
+            foreach (vw_HnrRecord item in hnrRecordList)
+            {
+                returnHnrRecord model = new returnHnrRecord();
+                model.AwardeeName = item.AwardeeName;
+                model.AwardeeOrgName = item.AwardeeOrgName;
+                model.AwardeeBranch = item.AwardeeBranch;
+                model.HnrName = item.HnrName;
+                model.HnrGradeName = item.HnrGradeName;
+                model.HnrAnnual = item.HnrAnnual;
+                model.HnrTime = item.HnrTime;
+                model.ApplyAccountName = item.ApplyAccountName;
+                model.ApplyAccountOrg = item.ApplyAccountOrg;
+                model.ApplyAccountRole = item.ApplyAccountRole;
+                model.ApplyTime = item.ApplyTime;
+                model.FileUrl = item.FileUrl;
+                model.State = item.State;
+
+                data.hnrList.Add(model);
+            }
+            foreach (vw_AwdRecord item in awdRecordList)
+            {
+                returnAwdRecord model = new returnAwdRecord();
+                model.AwardeeName = item.AwardeeName;
+                model.AwardeeOrgName = item.AwardeeOrgName;
+                model.AwardeeBranch = item.AwardeeBranch;
+                model.AwardeeRank = item.AwardeeRank;
+                model.AwdName = item.AwdName;
+                model.AwdOrgName = item.AwdOrgName;
+                model.AwdProName = item.AwdProName;
+                model.AwdGrade = item.AwdGrade;
+                model.AwdGradeName = item.AwdGradeName;
+                model.AwdYear = item.AwdYear;
+                model.AwdTerm = item.AwdTerm;
+                model.AwdTime = item.AwdTime;
+                model.IsTeam = item.IsTeam;
+                model.Teacher = item.Teacher;
+                model.ApplyAccountName = item.ApplyAccountName;
+                model.ApplyAccountOrg = item.ApplyAccountOrg;
+                model.AppltAccountRole = item.AppltAccountRole;
+                model.ApplyTime = item.ApplyTime;
+                model.FileUrl = item.FileUrl;
+                model.State = item.State;
+
+                data.awdList.Add(model);
+            }
+            #endregion
+
+            return Success("获取数据成功", data);
         }
         #endregion
     }

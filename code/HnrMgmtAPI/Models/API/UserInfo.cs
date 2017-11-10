@@ -28,6 +28,16 @@ namespace HnrMgmtAPI.Models.API
         public string userRoleName { get; set; }
 
         /// <summary>
+        /// 用户所属组织ID
+        /// </summary>
+        public string userOrgID { get; set; }
+
+        /// <summary>
+        /// 用户所属组织名称
+        /// </summary>
+        public string userOrgName { get; set; }
+
+        /// <summary>
         /// 授权令牌
         /// </summary>
         public string access_token { get; set; }

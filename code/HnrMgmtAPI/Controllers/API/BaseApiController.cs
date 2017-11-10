@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using HnrMgmtAPI.Models;
 using HnrMgmtAPI.Models.API;
+using System.Linq.Expressions;
 
 namespace HnrMgmtAPI.Controllers.API
 {
@@ -87,6 +88,116 @@ namespace HnrMgmtAPI.Controllers.API
             result.messages = message;
             result.data = data;
             return result;
+        }
+
+        /// <summary>
+        /// 排序 分页
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="returnList"></param>
+        /// <param name="page"></param>
+        /// <param name="limit"></param>
+        /// <param name="sortDirection"></param>
+        /// <param name="sortField"></param>
+        /// <returns></returns>
+        public static List<T> GetList<T>(IQueryable<T> returnList, int page, int limit, string sortDirection, string sortField)
+        {
+            if (sortDirection != null && sortField != null && (sortDirection == "ASC" || sortDirection == "DESC"))
+            {
+                if (typeof(T).GetProperty(sortField) != null)
+                {
+                    #region 动态排序
+
+                    var property = typeof(T).GetProperty(sortField);
+                    var parameter = Expression.Parameter(typeof(T), "p");
+                    var propertyAccess = Expression.MakeMemberAccess(parameter, property);
+                    var orderByExp = Expression.Lambda(propertyAccess, parameter);
+
+                    if (sortDirection == "ASC")//正序
+                    {
+                        MethodCallExpression resultExp = Expression.Call(typeof(Queryable), "OrderBy", new Type[] { typeof(T), property.PropertyType }, returnList.Expression, Expression.Quote(orderByExp));
+                        returnList = (IOrderedQueryable<T>)returnList.Provider.CreateQuery<T>(resultExp);
+                    }
+                    if (sortDirection == "DESC")//倒序
+                    {
+                        MethodCallExpression resultExp = Expression.Call(typeof(Queryable), "OrderByDescending", new Type[] { typeof(T), property.PropertyType }, returnList.Expression, Expression.Quote(orderByExp));
+                        returnList = (IOrderedQueryable<T>)returnList.Provider.CreateQuery<T>(resultExp);
+                    }
+
+                    #endregion
+                }
+            }
+
+            if (page > 0 && limit > 0)
+            {
+                return returnList.Skip((page - 1) * limit).Take(limit).ToList();
+            }
+            else
+            {
+                return returnList.ToList();
+            }
+        }
+
+        public static string Change(string type,string parm)
+        {
+            string value = "Error";
+
+            if(type == "HnrGradeName" || type == "AwdOrgName")
+            {
+                if(parm == "0")
+                {
+                    value = "院级";
+                }
+                if(parm == "1")
+                {
+                    value = "校级";
+                }
+                if(parm == "2")
+                {
+                    value = "省级";
+                }
+                if(parm == "3")
+                {
+                    value = "国家级";
+                }
+            }
+            if(type == "AwdGrade")
+            {
+                if(parm == "0")
+                {
+                    value = "三等奖（铜奖）";
+                }
+                if(parm == "1")
+                {
+                    value = "二等奖（银奖）";
+                }
+                if(parm == "2")
+                {
+                    value = "一等奖（金奖）";
+                }
+                if(parm == "3")
+                {
+                    value = "特等奖";
+                }
+            }
+
+            if(type == "State")
+            {
+                if(parm =="0")
+                {
+                    value = "待审核";
+                }
+                if(parm =="0")
+                {
+
+                }
+                if(parm =="0")
+                {
+
+                }
+            }
+
+            return value;
         }
     }
 }

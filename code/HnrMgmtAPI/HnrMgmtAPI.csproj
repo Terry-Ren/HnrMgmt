@@ -253,6 +253,7 @@
     <Compile Include="Models\API\Sys\RoleMenuSet.cs" />
     <Compile Include="Models\API\Sys\TeacherAdd.cs" />
     <Compile Include="Models\API\Sys\TeacherModify.cs" />
+    <Compile Include="Models\API\TB\RecordList.cs" />
     <Compile Include="Models\API\TB\TB_AwdRecord.cs" />
     <Compile Include="Models\API\TB\TB_HnrRecord.cs" />
     <Compile Include="Models\API\UserInfo.cs" />
@@ -312,9 +313,6 @@
       <DependentUpon>HnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_AwdRecord.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vw_AwdRecordTeam.cs">
       <DependentUpon>HnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_HnrRecord.cs">
