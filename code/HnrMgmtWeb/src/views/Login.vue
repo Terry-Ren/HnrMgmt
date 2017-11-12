@@ -104,7 +104,7 @@ import {posLogin} from '../api/api'
     border-radius: 5px;
     -moz-border-radius: 5px;
     background-clip: padding-box;
-    margin: 200px auto;
+    margin: 200px auto 0px;
     width: 350px;
     padding: 35px 35px 15px 35px;
     background: rgba(255, 255, 255, 0.5);

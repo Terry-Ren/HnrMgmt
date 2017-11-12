@@ -17,19 +17,22 @@
       </el-form>
     </el-col>
     <!-- 表格区 -->
+    <el-card>
     <el-col :span="24">
-      <el-table  :data="HnrData" border style="width:100%" v-loading="listLoading" > 
-        <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column type="index" width="65" label="序号" style="text-aligin:center" align="center"></el-table-column>
-        <el-table-column prop="AccountID" label="账号" sortable align="center" ></el-table-column>
-        <el-table-column prop="AccountName" label="姓名" sortable align="center" ></el-table-column>
-        <el-table-column prop="OrgName" label="所属单位" sortable align="center" ></el-table-column>
-        <el-table-column prop="RoleName" label="角色" sortable align="center" ></el-table-column>
+      <el-table  :data="AwdData"  style="width:100%" v-loading="listLoading" > 
+        <el-table-column type="selection"></el-table-column>
+        <el-table-column type="index"  label="序号" style="text-aligin:center" align="center"></el-table-column>
+        <el-table-column prop="AwdName" label="奖项名称" sortable align="center" ></el-table-column>
+        <el-table-column prop="AwdYear" label="获得年度" sortable align="center" ></el-table-column>
+        <el-table-column prop="AwdGrade" label="级别" sortable align="center" :formatter="transfGrande"></el-table-column>
+        <el-table-column prop="AwdProName" label="项目名称" sortable align="center" ></el-table-column>        
+        <el-table-column prop="AwdOrgName" label="所属学院" sortable align="center" ></el-table-column>
+        <el-table-column prop="AwardeeName" label="主要学生" sortable align="center" ></el-table-column>
+        <el-table-column prop="State" label="审核状态" sortable align="center" :formatter="transfRecordState" ></el-table-column>               
         <el-table-column label="操作" width="280" align="center">
           <template slot-scope="scope">
-            <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >编辑</el-button>
-            <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重置</el-button>
-            <el-button type="primary" size="small"  @click="blockAccAdm(scope.$index,scope.row)" >冻结</el-button>
+            <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >详情</el-button>
+            <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重填</el-button>
             <el-button type="danger" size="small"  @click="delectAccTch(scope.$index,scope.row)" >删除</el-button>
           </template>
         </el-table-column>
@@ -40,18 +43,19 @@
       <el-pagination layout="total, prev, pager, next, sizes, jumper" @size-change="SizeChangeEvent" @current-change="CurrentChangeEvent" :page-size="size" :page-sizes="[10,15,20,25,30]":total="totalNum">
       </el-pagination>
     </el-col>
+    </el-card>
   </el-col>
 
     <!-- 新增表单 -->
     <el-dialog title="新增荣誉记录" :visible.sync="addFormVisible" v-loading="submitLoading" style="top:-11%">
       <el-form :model="addFormBody" label-width="110px" ref="addForm" :rules="rules" auto class="hornor-add" >
-        <el-form-item label="荣誉项目" prop="AwdID">
-          <el-select v-model="addFormBody.AwdID" placeholder="请选择奖项" style="width:300px">
+        <el-form-item label="荣誉项目" prop="AwardID">
+          <el-select v-model="addFormBody.AwardID" placeholder="请选择奖项" style="width:300px">
             <el-option v-for="honor in AwardData" :key="honor.AwdID" :value="honor.AwdID" :label="honor.Name+honor.Grade"></el-option>
           </el-select>
         </el-form-item>  
         <el-form-item label="获奖年度" prop="Year" >
-          <el-date-picker v-model="addFormBody.Year"     type="year" placeholder="获得年度" style="width:300px" format="yyyy 年 " value-format="yyyy"></el-date-picker>
+          <el-date-picker v-model="addFormBody.Year"  type="year" placeholder="获得年度" style="width:300px" format="yyyy 年 " value-format="yyyy"></el-date-picker>
         </el-form-item>
         <el-form-item label="获奖届数" prop="Term">
           <el-input v-model="addFormBody.Term" placeholder="请输入获奖届数（可空）" style="width:300px" ></el-input>
@@ -69,17 +73,30 @@
         </el-form-item> 
         <el-form-item label="是否属于团队" prop="IsTeam">
             <el-radio-group v-model="addFormBody.IsTeam" size="medium">
-                <el-radio border label="1">是</el-radio>
-                <el-radio border label="0">否</el-radio>
+                <el-radio border label="0">是</el-radio> 
+                <el-radio border label="1">否</el-radio>
             </el-radio-group>
+        </el-form-item>
+        <el-form-item label="新增人员">
+            <el-button type="infor" @click="addMember" round  >新增成员</el-button>
+            <el-button type="infor" @click="addTeacher" round  >新增教师</el-button>
+        </el-form-item>
+        <el-form-item v-for="(member,index) in addFormBody.Members" :key="member.AwdeeID" :label="'成员'+'【'+index+'】'">
+          <el-input v-model="member.AwdeeID" placeholder="请输入学号" style="width:300px; margin-bottom:10px"></el-input>          
+          <el-input v-model="member.AwdeeName" placeholder="请输入姓名" style="width:300px; margin-bottom:10px"></el-input>
+          <el-select v-model="member.OrgID" placeholder="请选择学院" style="width:300px">
+            <el-option v-for="org in OrgData" :key="org.OrgID" :value="org.OrgID" :label="org.Name"></el-option>
+          </el-select>
+          <el-input v-model="member.Branch" placeholder="请输入团支部" style="width:300px" >
+            <template slot="append">团支部</template>
+          </el-input>
+          <el-button type="danger" @click.prevent="removeMember(member)">删除成员</el-button>
         </el-form-item>          
-        <el-form-item v-for="(teacher,index) in addFormBody.Teacher" :key="teacher.key" label="'指导教师'+index" prop="AwdeeName">
-          <el-input v-model="addFormBody.AwdeeName" placeholder="请输入获奖人姓名" style="width:300px" ></el-input>
+        <el-form-item v-for="(teacher,index) in addFormBody.Teacher" :key="teacher.key" :label="'指导教师'+'【'+index+'】'">
+          <el-input v-model="teacher.TchName" placeholder="请输入指导教师" style="width:300px" ></el-input>
+          <el-button type="danger" @click.prevent="removeTeacher(teacher)">删除教师</el-button>
         </el-form-item> 
-        <el-form-item label="所属团支部" prop="Branch">
-          <el-input v-model="addFormBody.Branch" placeholder="请输入团支部" style="width:300px" ></el-input>
-        </el-form-item>  
-        <el-form-item label="上传图片" prop="FileName">
+        <el-form-item label="上传图片" prop="FileUrl">
           <el-upload action="http://upload.qiniu.com/"  :data="postData" :on-success="successUpload" :before-upload="beforePicUpload" >
             <el-button size="small" type="primary">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -96,7 +113,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {reqGetAwdList,reqGetOrgList,posRecordHonor,posRecordAward} from '../../api/api'
+import {reqGetAwdList,reqGetOrgList,posRecordAward,reqGetRecord} from '../../api/api'
 import PubMethod from '../../common/util'
 // import uptoken from '../../common/create_uptoken'
  export default {
@@ -125,7 +142,7 @@ import PubMethod from '../../common/util'
        // 用户令牌
        access_token:'',
        // 表格数据
-       HnrData: [],
+       AwdData: [],
        listLoading:false,
 
        selectRowIndex:'',
@@ -136,22 +153,21 @@ import PubMethod from '../../common/util'
        submitLoading:false,       
        addFormVisible: false,
        addFormBody:{
-         AwdID:'',
+         AwardID:'',
          Year:'',
          Term:'',
          AwdTime:'',
          ProjectName:'',
          IsTeam:'',
          Teacher:[],
-         AwdeeName:'',
-         AwdeeID:'',
+         Members:[],
          OrgID:'',
          Branch:'',
          FileUrl:'-1'
        },
       // 表单验证规则
       rules:{
-        AwdID:{required:true , message:'请选择荣誉项目', trigger:'blur'},
+        AwardID:{required:true , message:'请选择荣誉项目', trigger:'blur'},
         Year:{required:true , message:'请选择获得年度', trigger:'blur'},
         AwdTime:{required:true , message:'请选择获得年月', trigger:'blur'},
         AwdeeID:[
@@ -192,14 +208,15 @@ import PubMethod from '../../common/util'
        reqGetAwdList(param).then((res)=>{
          this.listLoading=false
          this.AwardData=res.data.data.list
-              this.transfGrande()
+              this.transfOptionGrande()
        }).catch((res)=>{
          console.log(res)
          })       
      },
-     // 转换获奖级别
-     transfGrande(){
+     // 转换新增选项中的获奖级别
+     transfOptionGrande(){
          this.AwardData.forEach((award)=>{
+           console.log(award)
              award.Grade=PubMethod.transfGrande(award)
          })
 
@@ -217,9 +234,30 @@ import PubMethod from '../../common/util'
          console.log(res)
          })       
      },
+     // 转换表格中获奖级别
+     transfGrande(row){
+       return PubMethod.transfGrande(row)
+     },
+     // 审核状态转换
+     transfRecordState(row){
+       return PubMethod.transfRecordState(row)
+     },     
      // 获取列表
      getList(){
-
+       this.listLoading=true
+       let param={
+         page : this.page,
+         limit : this.size,
+         access_token:"11"
+       }
+       reqGetRecord(param).then((res)=>{
+          this.AwdData = res.data.data.awdList
+          this.totalNum = res.data.data.awdListNum;
+          //console.log(this.AwdData)
+          this.listLoading=false
+       }).catch((res)=>{
+         console.log(res)
+       })
      },
     //在图片提交前进行验证
     beforePicUpload(file) {  
@@ -240,15 +278,45 @@ import PubMethod from '../../common/util'
         this.addFormBody.FileUrl=this.$store.state.uploadUrl+res.key
         console.log(this.addFormBody)
       },
+      // 新增成员
+      addMember(){
+        this.addFormBody.Members.push({
+          AwdeeID:'',
+          AwdeeName:'',
+          OrgID:'',
+          Branch:''
+        })
+      },
+      // 删除成员
+      removeMember(member){
+        var index =this.addFormBody.Members.indexOf(member)
+        if(index!== -1){
+          this.addFormBody.Members.splice(index,1)
+        }
+      },
+      // 新增教师
+      addTeacher(){
+        this.addFormBody.Teacher.push({
+          TchName:''
+        })
+      },
+      // 删除教师
+      removeTeacher(teacher){
+        var index =this.addFormBody.Teacher.indexOf(teacher)
+        if(index !== -1){
+          this.addFormBody.Teacher.splice(index,1)
+        }
+      },
      //新增荣誉记录
      addSubmit(){
+       console.log(this.addFormBody)
        this.$refs['addForm'].validate((valid)=>{
          if(valid){
            this.submitLoading=true
            //复制字符串
            let para = Object.assign({}, this.addFormBody);
            para.access_token='terry'
-           posRecordHonor(para).then((res)=>{
+           posRecordAward(para).then((res)=>{
               this.submitLoading=false
             //公共提示方法，传入当前的vue以及res.data
             PubMethod.statusinfo(this,res.data)

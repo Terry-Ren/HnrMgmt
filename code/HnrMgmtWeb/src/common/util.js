@@ -11,9 +11,13 @@ export default {
      transfGrande(row){
         return row.Grade == '0' ? '三等奖' : row.Grade == '1' ? '二等奖' : row.Grade == '2' ? '一等奖': '特等奖';
       },
-     // 进行状态转换
+     // 账号状态转换
      transfState(row){
        return row.State=='0' ? '冻结' : '正常';
+     },
+     // 审核状态转换
+     transfRecordState(row){
+       return row.State=='0' ? '待审核' : row.State == '1' ? '院审通过' : row.State == '2' ? '校核通过' : '已驳回';
      },
       //公共提示方法，传入当前的vue以及res.data。 返回状态判断并给出提示
       statusinfo(vue,data){

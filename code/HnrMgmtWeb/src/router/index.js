@@ -7,7 +7,7 @@ import Login from '../views/Login.vue'
 import NotFoundComponent from '../views/404'
 import Hello from '@/components/Hello123'
 import RecHonor from '../components/RecordData/RecHonor'
-import RecArard from '../components/RecordData/RecArard'
+import RecAward from '../components/RecordData/RecAward'
 
 // import text from '../components/BasicData/text.vue'
 // import AccTchlist from '../components/SystemData/AccTchlist.vue'
@@ -70,7 +70,7 @@ const routes = [
     menuShow: true,
     children: [
       { path: '/record/honor', component: RecHonor, name: 'RecHonor', menuShow: true },
-      { path: '/record/award', component: RecArard, name: 'RecArard', menuShow: true }      
+      { path: '/record/award', component: RecAward, name: 'RecAward', menuShow: true }      
     ]
   },
   // 基础数据

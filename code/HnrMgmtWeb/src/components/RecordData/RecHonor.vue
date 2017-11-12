@@ -17,19 +17,21 @@
       </el-form>
     </el-col>
     <!-- 表格区 -->
+      <el-card >    
     <el-col :span="24">
-      <el-table  :data="HnrData" border style="width:100%" v-loading="listLoading" > 
-        <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column type="index" width="65" label="序号" style="text-aligin:center" align="center"></el-table-column>
-        <el-table-column prop="AccountID" label="账号" sortable align="center" ></el-table-column>
-        <el-table-column prop="AccountName" label="姓名" sortable align="center" ></el-table-column>
-        <el-table-column prop="OrgName" label="所属单位" sortable align="center" ></el-table-column>
-        <el-table-column prop="RoleName" label="角色" sortable align="center" ></el-table-column>
+      <el-table  :data="HnrData"  style="width:100%" v-loading="listLoading"  max-height="535" > 
+        <el-table-column type="selection" ></el-table-column>
+        <el-table-column type="index"  label="序号" style="text-aligin:center" align="center"></el-table-column>
+        <el-table-column prop="HnrName" label="荣誉名称" sortable align="center" ></el-table-column>
+        <el-table-column prop="HnrAnnual" label="获得年度" sortable align="center" ></el-table-column>
+        <el-table-column prop="HnrGradeName" label="级别" sortable align="center" :formatter="transfGrandeName" ></el-table-column>
+        <el-table-column prop="AwardeeName" label="姓名" sortable align="center" ></el-table-column>
+        <el-table-column prop="AwardeeOrgName" label="单位学院" sortable align="center" ></el-table-column>
+        <el-table-column prop="State" label="审核状态" sortable align="center" :formatter="transfRecordState" ></el-table-column>        
         <el-table-column label="操作" width="280" align="center">
-          <template slot-scope="scope">
-            <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >编辑</el-button>
-            <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重置</el-button>
-            <el-button type="primary" size="small"  @click="blockAccAdm(scope.$index,scope.row)" >冻结</el-button>
+          <template slot-scope="scope" >
+            <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >详情</el-button>
+            <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重填</el-button>
             <el-button type="danger" size="small"  @click="delectAccTch(scope.$index,scope.row)" >删除</el-button>
           </template>
         </el-table-column>
@@ -40,6 +42,7 @@
       <el-pagination layout="total, prev, pager, next, sizes, jumper" @size-change="SizeChangeEvent" @current-change="CurrentChangeEvent" :page-size="size" :page-sizes="[10,15,20,25,30]":total="totalNum">
       </el-pagination>
     </el-col>
+    </el-card>
   </el-col>
 
     <!-- 新增表单 -->
@@ -74,7 +77,7 @@
             <template slot="append">团支部</template>
           </el-input>
         </el-form-item>  
-        <el-form-item label="上传图片" prop="FileName">
+        <el-form-item label="上传图片" prop="FileUrl">
           <el-upload action="http://upload.qiniu.com/"  :data="postData" :on-success="successUpload" :before-upload="beforePicUpload" >
             <el-button size="small" type="primary">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -91,7 +94,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {reqGetHonorList,reqGetOrgList,posRecordHonor} from '../../api/api'
+import {reqGetHonorList,reqGetOrgList,posRecordHonor,reqGetRecord} from '../../api/api'
 import PubMethod from '../../common/util'
 // import uptoken from '../../common/create_uptoken'
  export default {
@@ -122,7 +125,7 @@ import PubMethod from '../../common/util'
        // 表格数据
        HnrData: [],
        listLoading:false,
-
+       // 分页信息
        selectRowIndex:'',
        totalNum:0,
        page:1,
@@ -205,7 +208,28 @@ import PubMethod from '../../common/util'
      },
      // 获取列表
      getList(){
-
+       this.listLoading=true
+       let param={
+         page : this.page,
+         limit : this.size,
+         access_token:"11"
+       }
+       reqGetRecord(param).then((res)=>{
+          this.HnrData = res.data.data.hnrList
+          this.totalNum = res.data.data.hnrListNum;
+          //console.log(this.HnrData)
+          this.listLoading=false
+       }).catch((res)=>{
+         console.log(res)
+       })
+     },
+     // 荣誉级别转换
+     transfGrandeName(row){
+       return PubMethod.transfGrandeName(row) 
+     },
+     // 审核状态转换
+     transfRecordState(row){
+       return PubMethod.transfRecordState(row)
      },
     //在图片提交前进行验证
     beforePicUpload(file) {  
@@ -267,7 +291,6 @@ import PubMethod from '../../common/util'
 <style scoped lang="scss">
 .left-main{
   border-radius: 5px;
-  border: 2px;
 }
 .hornor-add{
   margin-left: 120px
