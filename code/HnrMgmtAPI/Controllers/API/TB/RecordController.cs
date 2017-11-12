@@ -370,6 +370,12 @@ namespace HnrMgmtAPI.Controllers.API.TB
         #endregion
 
         #region 记录查询
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="type">数据类型 0代表全部 1代表荣誉记录 2代表竞赛获奖记录</param>
+        /// <returns></returns>
         [HttpGet, Route("get")]
         public ApiResult GetRecord(string access_token)
         {
@@ -509,7 +515,7 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 model.AwardeeOrgName = item.AwardeeOrgName;
                 model.AwardeeBranch = item.AwardeeBranch;
                 model.HnrName = item.HnrName;
-                model.HnrGradeName = item.HnrGradeName;
+                model.GradeName = item.HnrGradeName;
                 model.HnrAnnual = item.HnrAnnual;
                 model.HnrTime = item.HnrTime;
                 model.ApplyAccountName = item.ApplyAccountName;
@@ -531,8 +537,8 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 model.AwdName = item.AwdName;
                 model.AwdOrgName = item.AwdOrgName;
                 model.AwdProName = item.AwdProName;
-                model.AwdGrade = item.AwdGrade;
-                model.AwdGradeName = item.AwdGradeName;
+                model.Grade = item.AwdGrade;
+                model.GradeName = item.AwdGradeName;
                 model.AwdYear = item.AwdYear;
                 model.AwdTerm = item.AwdTerm;
                 model.AwdTime = item.AwdTime;

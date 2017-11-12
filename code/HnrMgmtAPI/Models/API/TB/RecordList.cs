@@ -24,7 +24,7 @@ namespace HnrMgmtAPI.Models.API.TB
         public string AwardeeOrgName { get; set; }
         public string AwardeeBranch { get; set; }
         public string HnrName { get; set; }
-        public string HnrGradeName { get; set; }
+        public string GradeName { get; set; }
         public string HnrAnnual { get; set; }
         public string HnrTime { get; set; }
         public string ApplyAccountName { get; set; }
@@ -44,8 +44,8 @@ namespace HnrMgmtAPI.Models.API.TB
         public string AwdName { get; set; }
         public string AwdOrgName { get; set; }
         public string AwdProName { get; set; }
-        public string AwdGrade { get; set; }
-        public string AwdGradeName { get; set; }
+        public string Grade { get; set; }
+        public string GradeName { get; set; }
         public string AwdYear { get; set; }
         public string AwdTerm { get; set; }
         public string AwdTime { get; set; }
