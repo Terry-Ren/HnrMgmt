@@ -212,6 +212,7 @@ import PubMethod from '../../common/util'
        let param={
          page : this.page,
          limit : this.size,
+         type:1,
          access_token:"11"
        }
        reqGetRecord(param).then((res)=>{
