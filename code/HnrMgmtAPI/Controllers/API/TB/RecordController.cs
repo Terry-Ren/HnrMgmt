@@ -300,7 +300,7 @@ namespace HnrMgmtAPI.Controllers.API.TB
 
                     T_Team teamMember = new T_Team();
                     teamMember.TeamID = TeamID;
-                    teamMember.AwdeeID = awardee.AwdeeID;
+                    teamMember.AwdeeID = model.Members[0].AwdeeID;
                     teamMember.Rank = "0";
                     db.T_Team.Add(teamMember);
 
@@ -374,16 +374,19 @@ namespace HnrMgmtAPI.Controllers.API.TB
         /// 
         /// </summary>
         /// <param name="access_token">授权令牌</param>
-        /// <param name="type">数据类型 0代表全部 1代表荣誉记录 2代表竞赛获奖记录</param>
+        /// <param name="type">记录数据类型 0代表全部 1代表荣誉记录 2代表竞赛获奖记录</param>
         /// <returns></returns>
         [HttpGet, Route("get")]
-        public ApiResult GetRecord(string access_token)
+        public ApiResult GetRecord(string access_token, string type)
         {
             result = AccessToken.Check(access_token, "api/record/get");
             if (result == null)
             {
                 #region 参数验证
-                //无参数 无需验证
+                if (type != "0" && type != "1" && type != "2")
+                {
+                    return Error("type参数存在错误");
+                }
                 #endregion
 
                 #region 逻辑操作
@@ -392,14 +395,22 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 string _sortDirection = "";
                 string _sortField = "";
 
-                return GetData(access_token, _page, _limit, _sortDirection, _sortField);
+                return GetData(access_token, type, _page, _limit, _sortDirection, _sortField);
                 #endregion
             }
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="type">记录数据类型 0代表全部 1代表荣誉记录 2代表竞赛获奖记录</param>
+        /// <param name="page">页码</param>
+        /// <param name="limit">每页条数</param>
+        /// <returns></returns>
         [HttpGet, Route("get")]
-        public ApiResult GetRecord(string access_token, int page, int limit)
+        public ApiResult GetRecord(string access_token, string type, int page, int limit)
         {
 
             result = AccessToken.Check(access_token, "api/record/get");
@@ -410,6 +421,10 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 {
                     return Error("参数存在错误");
                 }
+                if (type != "0" && type != "1" && type != "2")
+                {
+                    return Error("type参数存在错误");
+                }
                 #endregion
 
                 #region 逻辑操作
@@ -418,7 +433,7 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 string _sortDirection = "";
                 string _sortField = "";
 
-                return GetData(access_token, _page, _limit, _sortDirection, _sortField);
+                return GetData(access_token, type, _page, _limit, _sortDirection, _sortField);
                 #endregion
             }
             return result;
@@ -427,14 +442,15 @@ namespace HnrMgmtAPI.Controllers.API.TB
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="access_token"></param>
-        /// <param name="page"></param>
-        /// <param name="limit"></param>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="type">记录数据类型 0代表全部 1代表荣誉记录 2代表竞赛获奖记录</param>
+        /// <param name="page">页码</param>
+        /// <param name="limit">每页条数</param>
         /// <param name="sortDirection">ASC 或 DESC</param>
-        /// <param name="sortField"></param>
+        /// <param name="sortField">排序字段名称</param>
         /// <returns></returns>
         [HttpGet, Route("get")]
-        public ApiResult GetRecord(string access_token, int page, int limit, string sortDirection, string sortField)
+        public ApiResult GetRecord(string access_token, string type, int page, int limit, string sortDirection, string sortField)
         {
             result = AccessToken.Check(access_token, "api/record/get");
             if (result == null)
@@ -448,6 +464,10 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 {
                     return Error("参数 sortDirection 格式错误");
                 }
+                if (type != "0" && type != "1" && type != "2")
+                {
+                    return Error("type参数存在错误");
+                }
                 #endregion
 
                 #region 逻辑操作
@@ -456,7 +476,7 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 string _sortDirection = sortDirection;
                 string _sortField = sortField;
 
-                return GetData(access_token, _page, _limit, _sortDirection, _sortField);
+                return GetData(access_token, type, _page, _limit, _sortDirection, _sortField);
                 #endregion
             }
             return result;
@@ -464,7 +484,7 @@ namespace HnrMgmtAPI.Controllers.API.TB
         #endregion
 
         #region 数据库搜索操作
-        private ApiResult GetData(string access_token, int page, int limit, string sortDirection, string sortField)
+        private ApiResult GetData(string access_token, string type, int page, int limit, string sortDirection, string sortField)
         {
             #region
             UserInfo userInfo = AccessToken.GetUserInfo(access_token);
@@ -552,6 +572,21 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 model.State = item.State;
 
                 data.awdList.Add(model);
+            }
+
+            if (type == "1")
+            {
+                data.awdList = null;
+                data.awdListNum = 0;
+            }
+            else if (type == "2")
+            {
+                data.hnrList = null;
+                data.hnrListNum = 0;
+            }
+            else
+            {
+                return Error("type字段赋值错误");
             }
             #endregion
 

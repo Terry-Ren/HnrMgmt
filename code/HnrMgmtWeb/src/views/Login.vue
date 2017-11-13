@@ -1,4 +1,5 @@
 <template >
+<div class="login">
   <el-form :model="loginForm" v-loading="loginLoading" ref="loginForm1" label-position="left" label-width="0px" class=" login-container">
     <h3 class="title">荣誉管理信息系统登录</h3>
     <el-form-item prop="AccountID">
@@ -18,6 +19,7 @@
       <!--<el-button @click.native.prevent="handleReset2">重置</el-button>-->
     </el-form-item>
   </el-form>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -86,16 +88,26 @@ import {posLogin} from '../api/api'
 </script>
 
 <style scoped lang="scss">
+.login{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background:  url(../assets/loginBg.jpg)   ;
+  background-position:center;
+  background-size:100% 100%;
+}
   .login-container {
     /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
     -webkit-border-radius: 5px;
     border-radius: 5px;
     -moz-border-radius: 5px;
     background-clip: padding-box;
-    margin: 100px auto;
+    margin: 200px auto 0px;
     width: 350px;
     padding: 35px 35px 15px 35px;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.5);
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
 

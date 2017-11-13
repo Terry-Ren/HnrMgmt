@@ -5,7 +5,7 @@
     <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
         <el-breadcrumb-item>项目填报</el-breadcrumb-item>
-        <el-breadcrumb-item>荣誉填报</el-breadcrumb-item>
+        <el-breadcrumb-item>奖项填报</el-breadcrumb-item>
       </el-breadcrumb>
   </el-col>
  <!-- 下方主内容 -->
@@ -13,23 +13,24 @@
     <!-- 工具栏 -->
     <el-col :span="24" class="toolBar" >    
       <el-form :inline="true" style="margin-bottom:15px">
-        <el-button type="primary" @click="addFormVisible = true" >新增荣誉</el-button>
+        <el-button type="primary" @click="addFormVisible = true" >新增奖项</el-button>
       </el-form>
     </el-col>
     <!-- 表格区 -->
-      <el-card >    
+    <el-card>
     <el-col :span="24">
-      <el-table  :data="HnrData"  style="width:100%" v-loading="listLoading"  max-height="535" > 
-        <el-table-column type="selection" ></el-table-column>
+      <el-table  :data="AwdData"  style="width:100%" v-loading="listLoading" > 
+        <el-table-column type="selection"></el-table-column>
         <el-table-column type="index"  label="序号" style="text-aligin:center" align="center"></el-table-column>
-        <el-table-column prop="HnrName" label="荣誉名称" sortable align="center" ></el-table-column>
-        <el-table-column prop="HnrAnnual" label="获得年度" sortable align="center" ></el-table-column>
-        <el-table-column prop="HnrGradeName" label="级别" sortable align="center" :formatter="transfGrandeName" ></el-table-column>
-        <el-table-column prop="AwardeeName" label="姓名" sortable align="center" ></el-table-column>
-        <el-table-column prop="AwardeeOrgName" label="单位学院" sortable align="center" ></el-table-column>
-        <el-table-column prop="State" label="审核状态" sortable align="center" :formatter="transfRecordState" ></el-table-column>        
+        <el-table-column prop="AwdName" label="奖项名称" sortable align="center" ></el-table-column>
+        <el-table-column prop="AwdYear" label="获得年度" sortable align="center" ></el-table-column>
+        <el-table-column prop="AwdGrade" label="级别" sortable align="center" :formatter="transfGrande"></el-table-column>
+        <el-table-column prop="AwdProName" label="项目名称" sortable align="center" ></el-table-column>        
+        <el-table-column prop="AwdOrgName" label="所属学院" sortable align="center" ></el-table-column>
+        <el-table-column prop="AwardeeName" label="主要学生" sortable align="center" ></el-table-column>
+        <el-table-column prop="State" label="审核状态" sortable align="center" :formatter="transfRecordState" ></el-table-column>               
         <el-table-column label="操作" width="280" align="center">
-          <template slot-scope="scope" >
+          <template slot-scope="scope">
             <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >详情</el-button>
             <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重填</el-button>
             <el-button type="danger" size="small"  @click="delectAccTch(scope.$index,scope.row)" >删除</el-button>
@@ -47,36 +48,54 @@
 
     <!-- 新增表单 -->
     <el-dialog title="新增荣誉记录" :visible.sync="addFormVisible" v-loading="submitLoading" style="top:-11%">
-      <el-form :model="addFormBody" label-width="100px" ref="addForm" :rules="rules" auto class="hornor-add" >
-        <el-form-item label="荣誉项目" prop="HonorID">
-          <el-select v-model="addFormBody.HonorID" placeholder="请选择荣誉" style="width:300px">
-            <el-option v-for="honor in HonorData" :key="honor.HonorID" :value="honor.HonorID" :label="honor.Name"></el-option>
+      <el-form :model="addFormBody" label-width="110px" ref="addForm" :rules="rules" auto class="hornor-add" >
+        <el-form-item label="荣誉项目" prop="AwardID">
+          <el-select v-model="addFormBody.AwardID" placeholder="请选择奖项" style="width:300px">
+            <el-option v-for="honor in AwardData" :key="honor.AwdID" :value="honor.AwdID" :label="honor.Name+honor.Grade"></el-option>
           </el-select>
         </el-form-item>  
-        <el-form-item label="获奖年度" prop="Annual" >
-          <el-select v-model="addFormBody.Annual"  placeholder="请选择年度" style="width:300px">
-            <el-option v-for="options in annualOptions" :key="options.value" :label="options.label" :value="options.value"></el-option>
-          </el-select>
+        <el-form-item label="获奖年度" prop="Year" >
+          <el-date-picker v-model="addFormBody.Year"  type="year" placeholder="获得年度" style="width:300px" format="yyyy 年 " value-format="yyyy"></el-date-picker>
         </el-form-item>
-        <el-form-item label="获奖日期" prop="HnrTime">
-          <el-date-picker v-model="addFormBody.HnrTime"  placeholder="获得年月" style="width:300px" format="yyyy 年 MM 月" value-format="yyyy-MM"></el-date-picker>
+        <el-form-item label="获奖届数" prop="Term">
+          <el-input v-model="addFormBody.Term" placeholder="请输入获奖届数（可空）" style="width:300px" ></el-input>
         </el-form-item>
-        <el-form-item label="获奖人学号" prop="AwdeeID">
-          <el-input v-model="addFormBody.AwdeeID" placeholder="请输入获奖人学号" style="width:300px" ></el-input>
-        </el-form-item>          
-        <el-form-item label="获奖人姓名" prop="AwdeeName">
-          <el-input v-model="addFormBody.AwdeeName" placeholder="请输入获奖人姓名" style="width:300px" ></el-input>
-        </el-form-item> 
-        <el-form-item label="单位学院" prop="OrgID">
+        <el-form-item label="获奖日期" prop="AwdTime">
+          <el-date-picker v-model="addFormBody.AwdTime"  placeholder="获得年月" style="width:300px" format="yyyy 年 MM 月" value-format="yyyy-MM"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="项目名称" prop="ProjectName">
+          <el-input v-model="addFormBody.ProjectName" placeholder="请输入获奖项目名" style="width:300px" ></el-input>
+        </el-form-item>
+        <el-form-item label="项目所属学院" prop="OrgID">
           <el-select v-model="addFormBody.OrgID" placeholder="请选择所属学院" style="width:300px">
             <el-option v-for="org in OrgData" :key="org.OrgID" :value="org.OrgID" :label="org.Name"></el-option>
           </el-select>
         </el-form-item> 
-        <el-form-item label="所属团支部" prop="Branch">
-          <el-input v-model="addFormBody.Branch" placeholder="请输入团支部" style="width:300px" >
+        <el-form-item label="是否属于团队" prop="IsTeam">
+            <el-radio-group v-model="addFormBody.IsTeam" size="medium">
+                <el-radio border label="0">是</el-radio> 
+                <el-radio border label="1">否</el-radio>
+            </el-radio-group>
+        </el-form-item>
+        <el-form-item label="新增人员">
+            <el-button type="infor" @click="addMember" round  >新增成员</el-button>
+            <el-button type="infor" @click="addTeacher" round  >新增教师</el-button>
+        </el-form-item>
+        <el-form-item v-for="(member,index) in addFormBody.Members" :key="member.AwdeeID" :label="'成员'+'【'+index+'】'">
+          <el-input v-model="member.AwdeeID" placeholder="请输入学号" style="width:300px; margin-bottom:10px"></el-input>          
+          <el-input v-model="member.AwdeeName" placeholder="请输入姓名" style="width:300px; margin-bottom:10px"></el-input>
+          <el-select v-model="member.OrgID" placeholder="请选择学院" style="width:300px">
+            <el-option v-for="org in OrgData" :key="org.OrgID" :value="org.OrgID" :label="org.Name"></el-option>
+          </el-select>
+          <el-input v-model="member.Branch" placeholder="请输入团支部" style="width:300px" >
             <template slot="append">团支部</template>
           </el-input>
-        </el-form-item>  
+          <el-button type="danger" @click.prevent="removeMember(member)">删除成员</el-button>
+        </el-form-item>          
+        <el-form-item v-for="(teacher,index) in addFormBody.Teacher" :key="teacher.key" :label="'指导教师'+'【'+index+'】'">
+          <el-input v-model="teacher.TchName" placeholder="请输入指导教师" style="width:300px" ></el-input>
+          <el-button type="danger" @click.prevent="removeTeacher(teacher)">删除教师</el-button>
+        </el-form-item> 
         <el-form-item label="上传图片" prop="FileUrl">
           <el-upload action="http://upload.qiniu.com/"  :data="postData" :on-success="successUpload" :before-upload="beforePicUpload" >
             <el-button size="small" type="primary">点击上传</el-button>
@@ -94,7 +113,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {reqGetHonorList,reqGetOrgList,posRecordHonor,reqGetRecord} from '../../api/api'
+import {reqGetAwdList,reqGetOrgList,posRecordAward,reqGetRecord} from '../../api/api'
 import PubMethod from '../../common/util'
 // import uptoken from '../../common/create_uptoken'
  export default {
@@ -117,15 +136,15 @@ import PubMethod from '../../common/util'
          token:this.$store.state.uploadToken
        },
        // 填充荣明与数据
-       HonorData:[],
+       AwardData:[],
        // 填充组织单位
        OrgData:[],
        // 用户令牌
        access_token:'',
        // 表格数据
-       HnrData: [],
+       AwdData: [],
        listLoading:false,
-       // 分页信息
+
        selectRowIndex:'',
        totalNum:0,
        page:1,
@@ -134,20 +153,23 @@ import PubMethod from '../../common/util'
        submitLoading:false,       
        addFormVisible: false,
        addFormBody:{
-         HonorID:'',
-         Annual:'',
-         HnrTime:'',
-         AwdeeName:'',
-         AwdeeID:'',
+         AwardID:'',
+         Year:'',
+         Term:'',
+         AwdTime:'',
+         ProjectName:'',
+         IsTeam:'',
+         Teacher:[],
+         Members:[],
          OrgID:'',
          Branch:'',
          FileUrl:'-1'
        },
       // 表单验证规则
       rules:{
-        HonorID:{required:true , message:'请选择荣誉项目', trigger:'blur'},
-        Annual:{required:true , message:'请选择获得年度', trigger:'blur'},
-        HnrTime:{required:true , message:'请选择获得年月', trigger:'blur'},
+        AwardID:{required:true , message:'请选择荣誉项目', trigger:'blur'},
+        Year:{required:true , message:'请选择获得年度', trigger:'blur'},
+        AwdTime:{required:true , message:'请选择获得年月', trigger:'blur'},
         AwdeeID:[
           {required:true , message:'请输入学号', trigger:'blur'},
           {validator:validateAwdeeID, tigger:'blure'},          
@@ -156,23 +178,20 @@ import PubMethod from '../../common/util'
         OrgID:{required:true , message:'请选择单位学院', trigger:'blur'},
         Branch:{required:true , message:'请输入所属团支部', trigger:'blur'}         
       },
-      // 获奖年度选择
-      annualOptions:[
-        {
-          value:'2013-2014',
-          label:'2013-2014'
-        },
-        {
-          value:'2014-2015',
-          label:'2014-2015'
-        },
-        {
-          value:'2015-2016',
-          label:'2015-2016'
-        },                
-      ]
      }    
    },
+//    // 计算属性
+//    computed:{
+//        Branch(){
+//            return this.addFormBody.Branch
+//        }
+//    },
+//    // 观察着
+//    watch:{
+//        Branch(newVal){
+//            this.addFormBody.Branch=newVal+'团支部'
+//        }
+//    },
    //声明周期调用
    mounted(){
      this.getList();     
@@ -186,12 +205,21 @@ import PubMethod from '../../common/util'
        let param={
          access_token:"11"
        }
-       reqGetHonorList(param).then((res)=>{
+       reqGetAwdList(param).then((res)=>{
          this.listLoading=false
-         this.HonorData=res.data.data.list
+         this.AwardData=res.data.data.list
+              this.transfOptionGrande()
        }).catch((res)=>{
          console.log(res)
          })       
+     },
+     // 转换新增选项中的获奖级别
+     transfOptionGrande(){
+         this.AwardData.forEach((award)=>{
+           console.log(award)
+             award.Grade=PubMethod.transfGrande(award)
+         })
+
      },
     // 填充单位数据
      getOrg(){
@@ -206,6 +234,14 @@ import PubMethod from '../../common/util'
          console.log(res)
          })       
      },
+     // 转换表格中获奖级别
+     transfGrande(row){
+       return PubMethod.transfGrande(row)
+     },
+     // 审核状态转换
+     transfRecordState(row){
+       return PubMethod.transfRecordState(row)
+     },     
      // 获取列表
      getList(){
        this.listLoading=true
@@ -215,21 +251,13 @@ import PubMethod from '../../common/util'
          access_token:"11"
        }
        reqGetRecord(param).then((res)=>{
-          this.HnrData = res.data.data.hnrList
-          this.totalNum = res.data.data.hnrListNum;
-          //console.log(this.HnrData)
+          this.AwdData = res.data.data.awdList
+          this.totalNum = res.data.data.awdListNum;
+          //console.log(this.AwdData)
           this.listLoading=false
        }).catch((res)=>{
          console.log(res)
        })
-     },
-     // 荣誉级别转换
-     transfGrandeName(row){
-       return PubMethod.transfGrandeName(row) 
-     },
-     // 审核状态转换
-     transfRecordState(row){
-       return PubMethod.transfRecordState(row)
      },
     //在图片提交前进行验证
     beforePicUpload(file) {  
@@ -250,16 +278,45 @@ import PubMethod from '../../common/util'
         this.addFormBody.FileUrl=this.$store.state.uploadUrl+res.key
         console.log(this.addFormBody)
       },
+      // 新增成员
+      addMember(){
+        this.addFormBody.Members.push({
+          AwdeeID:'',
+          AwdeeName:'',
+          OrgID:'',
+          Branch:''
+        })
+      },
+      // 删除成员
+      removeMember(member){
+        var index =this.addFormBody.Members.indexOf(member)
+        if(index!== -1){
+          this.addFormBody.Members.splice(index,1)
+        }
+      },
+      // 新增教师
+      addTeacher(){
+        this.addFormBody.Teacher.push({
+          TchName:''
+        })
+      },
+      // 删除教师
+      removeTeacher(teacher){
+        var index =this.addFormBody.Teacher.indexOf(teacher)
+        if(index !== -1){
+          this.addFormBody.Teacher.splice(index,1)
+        }
+      },
      //新增荣誉记录
      addSubmit(){
+       console.log(this.addFormBody)
        this.$refs['addForm'].validate((valid)=>{
          if(valid){
            this.submitLoading=true
            //复制字符串
            let para = Object.assign({}, this.addFormBody);
-           para.Branch=para.Branch+'团支部'
            para.access_token='terry'
-           posRecordHonor(para).then((res)=>{
+           posRecordAward(para).then((res)=>{
               this.submitLoading=false
             //公共提示方法，传入当前的vue以及res.data
             PubMethod.statusinfo(this,res.data)
@@ -291,6 +348,7 @@ import PubMethod from '../../common/util'
 <style scoped lang="scss">
 .left-main{
   border-radius: 5px;
+  border: 2px;
 }
 .hornor-add{
   margin-left: 120px

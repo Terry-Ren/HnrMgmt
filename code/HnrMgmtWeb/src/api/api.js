@@ -120,3 +120,9 @@ export const reqDeleteApi = params => { return axios.get(`${base}api/role/delmen
 
 // 申报荣誉记录
 export const posRecordHonor = params => { return axios.post(`${base}api/record/honor`, params) }
+// 获取荣誉记录
+export const reqGetRecord = params => { return axios.get(`${base}api/record/get`, { params: params }) }
+
+// 申报奖项记录
+export const posRecordAward = params => { return axios.post(`${base}api/record/award`, params) }
+
