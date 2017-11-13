@@ -10,14 +10,14 @@
   </el-col>
   <!-- 下方主内容 -->
   <el-col :span="24" class="warp-main left-main">
-    <el-card class="addFrom">
+    <el-card class="addFrom" v-loading="submitLoading">
         <div slot="header" class="clearfix">
-            <span>新增荣誉项</span>
+            <span>新增奖项</span>
             <el-button style="float: right; padding: 3px 0" type="text" @click="backToMain">返回</el-button>
             </div>
     <!-- 新增表单 -->
-      <el-form :model="addFormBody" label-width="110px" ref="addForm" :rules="rules" auto style="    padding-left: 10%;" >
-        <el-form-item label="荣誉项目" prop="AwardID">
+      <el-form :model="addFormBody" label-width="110px" ref="addForm" :rules="rules" auto style="padding-left: 10%;" >
+        <el-form-item label="奖项名称" prop="AwardID">
           <el-select v-model="addFormBody.AwardID" placeholder="请选择奖项" style="width:300px">
             <el-option v-for="honor in AwardData" :key="honor.AwdID" :value="honor.AwdID" :label="honor.Name+honor.Grade"></el-option>
           </el-select>
@@ -72,6 +72,7 @@
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
         </el-form-item>
+        <!-- 提交工具条 -->
         <el-form-item label="">
             <el-button type="primary" @click.native="addSubmit" >提交</el-button>            
         </el-form-item>          
@@ -153,7 +154,7 @@ import PubMethod from '../../common/util'
 //    },
    //声明周期调用
    mounted(){ 
-     this.getHonor();
+     this.getAward();
      this.getOrg();
    },
    methods:{
@@ -164,7 +165,7 @@ import PubMethod from '../../common/util'
        })
      },
      // 填充荣誉数据
-     getHonor(){
+     getAward(){
        this.listLoading=true
        let param={
          access_token:"11"
@@ -197,18 +198,10 @@ import PubMethod from '../../common/util'
          console.log(res)
          })       
      },
-     // 转换表格中获奖等次
+     // 转换获奖等次
      transfGrande(row){
        return PubMethod.transfGrande(row)
-     },
-     // 转换表格中的获奖级别
-     transfGrandeName(row){
-       return PubMethod.transfGrandeName(row) 
-     },
-     // 审核状态转换
-     transfRecordState(row){
-       return PubMethod.transfRecordState(row)
-     },     
+     },   
     //在图片提交前进行验证
     beforePicUpload(file) {  
       const isJPG = file.type === 'image/jpeg'
@@ -257,7 +250,7 @@ import PubMethod from '../../common/util'
           this.addFormBody.Teacher.splice(index,1)
         }
       },
-     //新增荣誉记录
+     //新增获奖记录
      addSubmit(){
        //console.log(this.addFormBody)
        this.$refs['addForm'].validate((valid)=>{
@@ -271,7 +264,7 @@ import PubMethod from '../../common/util'
             //公共提示方法，传入当前的vue以及res.data
             PubMethod.statusinfo(this,res.data)
               this.$refs['addForm'].resetFields();
-              this.addFormVisible = false;
+              this.backToMain()
            })           
          }
        })

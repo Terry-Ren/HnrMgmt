@@ -9,6 +9,8 @@ import Hello from '@/components/Hello123'
 import RecHonor from '../components/RecordData/RecHonor'
 import RecAward from '../components/RecordData/RecAward'
 import AddAward from '../components/RecordData/AddAward'
+import AddHonor from '../components/RecordData/AddHonor'
+
 
 // import text from '../components/BasicData/text.vue'
 // import AccTchlist from '../components/SystemData/AccTchlist.vue'
@@ -72,7 +74,8 @@ const routes = [
     children: [
       { path: '/record/honor', component: RecHonor, name: 'RecHonor', menuShow: true },
       { path: '/record/award', component: RecAward, name: 'RecAward', menuShow: true },
-      { path: '/record/addaward',component: AddAward, name:'AddAward',menuShow:true}      
+      { path: '/record/addaward', component: AddAward, name: 'AddAward', menuShow: true },     
+      { path: '/record/addhonor', component: AddHonor, name:'AddHonor',menuShow:true}      
     ]
   },
   // 基础数据
