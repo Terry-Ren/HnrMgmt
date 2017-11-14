@@ -119,8 +119,15 @@
     <section class="main-containers">
       <div>
         <el-col :span="24" class="main-warp">
+          <!-- 需要长时间存活的 -->          
         <transition name="fade" model="out-in" >
-          <router-view></router-view>
+          <keep-alive>
+            <router-view v-if="$route.meta.keepAlive"></router-view>
+          </keep-alive>
+        </transition  name="fade" model="out-in"> 
+          <!-- 不需要长时间保存的 -->
+        <transition>
+          <router-view v-if="!$route.meta.keepAlive"></router-view>          
         </transition>
         </el-col>
       </div>     
