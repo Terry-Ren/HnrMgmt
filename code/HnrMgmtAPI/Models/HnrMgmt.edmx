@@ -180,6 +180,53 @@
           <Property Name="State" Type="char" MaxLength="1" />
         </EntityType>
         <!--生成过程中发现错误:
+警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.vw_AwdRecord_Rec”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="vw_AwdRecord_Rec">
+          <Key>
+            <PropertyRef Name="AwdRecID" />
+            <PropertyRef Name="AwdID" />
+            <PropertyRef Name="AwdName" />
+            <PropertyRef Name="AwdGradeName" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="IsTeam" />
+            <PropertyRef Name="OrgID" />
+            <PropertyRef Name="OrgName" />
+            <PropertyRef Name="ApplyTime" />
+            <PropertyRef Name="ApplyAccountID" />
+            <PropertyRef Name="ApplyAccountName" />
+            <PropertyRef Name="FileUrl" />
+            <PropertyRef Name="State" />
+          </Key>
+          <Property Name="AwdRecID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="AwdID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="AwdName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="AwdGradeName" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="AwdGrade" Type="char" MaxLength="1" />
+          <Property Name="Year" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Time" Type="varchar" MaxLength="64" />
+          <Property Name="Term" Type="varchar" MaxLength="64" />
+          <Property Name="IsTeam" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ProName" Type="varchar" MaxLength="64" />
+          <Property Name="Teacher" Type="varchar" MaxLength="1024" />
+          <Property Name="OrgID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="OrgName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="TeamID" Type="varchar" MaxLength="64" />
+          <Property Name="TeamAwdeeID" Type="varchar" MaxLength="64" />
+          <Property Name="TeamAwdeeName" Type="varchar" MaxLength="64" />
+          <Property Name="TeamAwdeeOrgID" Type="varchar" MaxLength="64" />
+          <Property Name="TeamAwdeeOrgName" Type="varchar" MaxLength="64" />
+          <Property Name="TeamAwdeeBranch" Type="varchar" MaxLength="64" />
+          <Property Name="ApplyTime" Type="datetime" Nullable="false" />
+          <Property Name="ApplyAccountID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="ApplyAccountName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="ApplyAccountOrgID" Type="varchar" MaxLength="64" />
+          <Property Name="ApplyAccountOrgName" Type="varchar" MaxLength="64" />
+          <Property Name="ApplyAccountRoleID" Type="varchar" MaxLength="64" />
+          <Property Name="ApplyAccountRoleName" Type="varchar" MaxLength="64" />
+          <Property Name="FileUrl" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="State" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
 警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.vw_HnrRecord”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="vw_HnrRecord">
           <Key>
@@ -230,6 +277,46 @@
           <Property Name="MenuName" Type="varchar" MaxLength="64" />
           <Property Name="Url" Type="varchar" MaxLength="64" />
           <Property Name="Priority" Type="int" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.vw_Team”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="vw_Team">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="TeamID" />
+            <PropertyRef Name="AwdeeID" />
+            <PropertyRef Name="AwdeeName" />
+            <PropertyRef Name="OrgID" />
+            <PropertyRef Name="OrgName" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="TeamID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="AwdeeID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="AwdeeName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="OrgID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="OrgName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Branch" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.vw_TeamMembers”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="vw_TeamMembers">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="TeamID" />
+            <PropertyRef Name="AwdeeID" />
+            <PropertyRef Name="AwdeeName" />
+            <PropertyRef Name="AwdeeOrgID" />
+            <PropertyRef Name="AwdeeOrgName" />
+            <PropertyRef Name="AwdeeRank" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="TeamID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="AwdeeID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="AwdeeName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="AwdeeOrgID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="AwdeeOrgName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="AwdeeBranch" Type="varchar" MaxLength="64" />
+          <Property Name="AwdeeRank" Type="varchar" MaxLength="64" Nullable="false" />
         </EntityType>
         <EntityContainer Name="DB_whut_HnrMgmtModelStoreContainer">
           <EntitySet Name="T_Account" EntityType="Self.T_Account" Schema="dbo" store:Type="Tables" />
@@ -292,6 +379,38 @@
     [vw_AwdRecord].[State] AS [State]
     FROM [dbo].[vw_AwdRecord] AS [vw_AwdRecord]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_AwdRecord_Rec" EntityType="Self.vw_AwdRecord_Rec" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_AwdRecord_Rec].[AwdRecID] AS [AwdRecID], 
+    [vw_AwdRecord_Rec].[AwdID] AS [AwdID], 
+    [vw_AwdRecord_Rec].[AwdName] AS [AwdName], 
+    [vw_AwdRecord_Rec].[AwdGradeName] AS [AwdGradeName], 
+    [vw_AwdRecord_Rec].[AwdGrade] AS [AwdGrade], 
+    [vw_AwdRecord_Rec].[Year] AS [Year], 
+    [vw_AwdRecord_Rec].[Time] AS [Time], 
+    [vw_AwdRecord_Rec].[Term] AS [Term], 
+    [vw_AwdRecord_Rec].[IsTeam] AS [IsTeam], 
+    [vw_AwdRecord_Rec].[ProName] AS [ProName], 
+    [vw_AwdRecord_Rec].[Teacher] AS [Teacher], 
+    [vw_AwdRecord_Rec].[OrgID] AS [OrgID], 
+    [vw_AwdRecord_Rec].[OrgName] AS [OrgName], 
+    [vw_AwdRecord_Rec].[TeamID] AS [TeamID], 
+    [vw_AwdRecord_Rec].[TeamAwdeeID] AS [TeamAwdeeID], 
+    [vw_AwdRecord_Rec].[TeamAwdeeName] AS [TeamAwdeeName], 
+    [vw_AwdRecord_Rec].[TeamAwdeeOrgID] AS [TeamAwdeeOrgID], 
+    [vw_AwdRecord_Rec].[TeamAwdeeOrgName] AS [TeamAwdeeOrgName], 
+    [vw_AwdRecord_Rec].[TeamAwdeeBranch] AS [TeamAwdeeBranch], 
+    [vw_AwdRecord_Rec].[ApplyTime] AS [ApplyTime], 
+    [vw_AwdRecord_Rec].[ApplyAccountID] AS [ApplyAccountID], 
+    [vw_AwdRecord_Rec].[ApplyAccountName] AS [ApplyAccountName], 
+    [vw_AwdRecord_Rec].[ApplyAccountOrgID] AS [ApplyAccountOrgID], 
+    [vw_AwdRecord_Rec].[ApplyAccountOrgName] AS [ApplyAccountOrgName], 
+    [vw_AwdRecord_Rec].[ApplyAccountRoleID] AS [ApplyAccountRoleID], 
+    [vw_AwdRecord_Rec].[ApplyAccountRoleName] AS [ApplyAccountRoleName], 
+    [vw_AwdRecord_Rec].[FileUrl] AS [FileUrl], 
+    [vw_AwdRecord_Rec].[State] AS [State]
+    FROM [dbo].[vw_AwdRecord_Rec] AS [vw_AwdRecord_Rec]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_HnrRecord" EntityType="Self.vw_HnrRecord" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_HnrRecord].[HnrRecID] AS [HnrRecID], 
@@ -323,6 +442,29 @@
     [vw_Role].[Url] AS [Url], 
     [vw_Role].[Priority] AS [Priority]
     FROM [dbo].[vw_Role] AS [vw_Role]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_Team" EntityType="Self.vw_Team" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Team].[ID] AS [ID], 
+    [vw_Team].[TeamID] AS [TeamID], 
+    [vw_Team].[AwdeeID] AS [AwdeeID], 
+    [vw_Team].[AwdeeName] AS [AwdeeName], 
+    [vw_Team].[OrgID] AS [OrgID], 
+    [vw_Team].[OrgName] AS [OrgName], 
+    [vw_Team].[Branch] AS [Branch]
+    FROM [dbo].[vw_Team] AS [vw_Team]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_TeamMembers" EntityType="Self.vw_TeamMembers" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_TeamMembers].[ID] AS [ID], 
+    [vw_TeamMembers].[TeamID] AS [TeamID], 
+    [vw_TeamMembers].[AwdeeID] AS [AwdeeID], 
+    [vw_TeamMembers].[AwdeeName] AS [AwdeeName], 
+    [vw_TeamMembers].[AwdeeOrgID] AS [AwdeeOrgID], 
+    [vw_TeamMembers].[AwdeeOrgName] AS [AwdeeOrgName], 
+    [vw_TeamMembers].[AwdeeBranch] AS [AwdeeBranch], 
+    [vw_TeamMembers].[AwdeeRank] AS [AwdeeRank]
+    FROM [dbo].[vw_TeamMembers] AS [vw_TeamMembers]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -465,72 +607,6 @@
           <Property Name="Tel" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <EntityType Name="vw_Role">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="RoleName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="MenuID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="MenuName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Url" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Priority" Type="Int32" />
-        </EntityType>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="T_Account" EntityType="Self.T_Account" />
-          <EntitySet Name="T_Award" EntityType="Self.T_Award" />
-          <EntitySet Name="T_Awardee" EntityType="Self.T_Awardee" />
-          <EntitySet Name="T_AwdRecord" EntityType="Self.T_AwdRecord" />
-          <EntitySet Name="T_ExmRecord" EntityType="Self.T_ExmRecord" />
-          <EntitySet Name="T_HnrRecord" EntityType="Self.T_HnrRecord" />
-          <EntitySet Name="T_Honor" EntityType="Self.T_Honor" />
-          <EntitySet Name="T_Organization" EntityType="Self.T_Organization" />
-          <EntitySet Name="T_Right" EntityType="Self.T_Right" />
-          <EntitySet Name="T_Role" EntityType="Self.T_Role" />
-          <EntitySet Name="T_Team" EntityType="Self.T_Team" />
-          <EntitySet Name="T_RoleRight" EntityType="Self.T_RoleRight" />
-          <EntitySet Name="vw_Account" EntityType="Self.vw_Account" />
-          <EntitySet Name="vw_Role" EntityType="Self.vw_Role" />
-          <EntitySet Name="vw_HnrRecord" EntityType="DB_whut_HnrMgmtModel.vw_HnrRecord" />
-          <EntitySet Name="vw_AwdRecord" EntityType="DB_whut_HnrMgmtModel.vw_AwdRecord" />
-        </EntityContainer>
-        <EntityType Name="vw_HnrRecord">
-          <Key>
-            <PropertyRef Name="HnrRecID" />
-            <PropertyRef Name="AwardeeID" />
-            <PropertyRef Name="AwardeeName" />
-            <PropertyRef Name="AwardeeOrgID" />
-            <PropertyRef Name="AwardeeOrgName" />
-            <PropertyRef Name="AwardeeBranch" />
-            <PropertyRef Name="HnrName" />
-            <PropertyRef Name="HnrGradeName" />
-            <PropertyRef Name="HnrAnnual" />
-            <PropertyRef Name="HnrTime" />
-            <PropertyRef Name="ApplyAccountID" />
-            <PropertyRef Name="ApplyAccountName" />
-            <PropertyRef Name="ApplyTime" />
-            <PropertyRef Name="FileUrl" />
-            <PropertyRef Name="State" />
-          </Key>
-          <Property Name="HnrRecID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="AwardeeID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="AwardeeName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="AwardeeOrgID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="AwardeeOrgName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="AwardeeBranch" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="HnrName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="HnrGradeName" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="HnrAnnual" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="HnrTime" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="ApplyAccountID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="ApplyAccountName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="ApplyAccountOrg" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="ApplyAccountRole" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="ApplyTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="FileUrl" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="State" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
         <EntityType Name="vw_AwdRecord">
           <Key>
             <PropertyRef Name="ID" />
@@ -543,7 +619,7 @@
           <Property Name="AwardeeOrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="AwardeeOrgName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="AwardeeBranch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="AwardeeRank" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="AwardeeRank" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AwdName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="AwdOrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="AwdOrgName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
@@ -562,6 +638,156 @@
           <Property Name="ApplyTime" Type="DateTime" Precision="3" />
           <Property Name="FileUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="State" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_HnrRecord">
+          <Key>
+            <PropertyRef Name="HnrRecID" />
+            <PropertyRef Name="AwardeeID" />
+            <PropertyRef Name="AwardeeName" />
+            <PropertyRef Name="AwardeeOrgID" />
+            <PropertyRef Name="AwardeeOrgName" />
+            <PropertyRef Name="AwardeeBranch" />
+            <PropertyRef Name="HnrName" />
+            <PropertyRef Name="HnrGradeName" />
+            <PropertyRef Name="HnrAnnual" />
+            <PropertyRef Name="HnrTime" />
+            <PropertyRef Name="ApplyAccountID" />
+            <PropertyRef Name="ApplyAccountName" />
+            <PropertyRef Name="ApplyTime" />
+            <PropertyRef Name="FileUrl" />
+            <PropertyRef Name="State" />
+          </Key>
+          <Property Name="HnrRecID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AwardeeID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AwardeeName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AwardeeOrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AwardeeOrgName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AwardeeBranch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HnrName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HnrGradeName" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="HnrAnnual" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HnrTime" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApplyAccountID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApplyAccountName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApplyAccountOrg" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ApplyAccountRole" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ApplyTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FileUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vw_Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="RoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="RoleName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="MenuID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="MenuName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Priority" Type="Int32" />
+        </EntityType>
+        <EntityType Name="vw_Team">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="TeamID" />
+            <PropertyRef Name="AwdeeID" />
+            <PropertyRef Name="AwdeeName" />
+            <PropertyRef Name="OrgID" />
+            <PropertyRef Name="OrgName" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="TeamID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AwdeeID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AwdeeName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrgName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Branch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="T_Account" EntityType="Self.T_Account" />
+          <EntitySet Name="T_Award" EntityType="Self.T_Award" />
+          <EntitySet Name="T_Awardee" EntityType="Self.T_Awardee" />
+          <EntitySet Name="T_AwdRecord" EntityType="Self.T_AwdRecord" />
+          <EntitySet Name="T_ExmRecord" EntityType="Self.T_ExmRecord" />
+          <EntitySet Name="T_HnrRecord" EntityType="Self.T_HnrRecord" />
+          <EntitySet Name="T_Honor" EntityType="Self.T_Honor" />
+          <EntitySet Name="T_Organization" EntityType="Self.T_Organization" />
+          <EntitySet Name="T_Right" EntityType="Self.T_Right" />
+          <EntitySet Name="T_Role" EntityType="Self.T_Role" />
+          <EntitySet Name="T_Team" EntityType="Self.T_Team" />
+          <EntitySet Name="T_RoleRight" EntityType="Self.T_RoleRight" />
+          <EntitySet Name="vw_Account" EntityType="Self.vw_Account" />
+          <EntitySet Name="vw_AwdRecord" EntityType="Self.vw_AwdRecord" />
+          <EntitySet Name="vw_HnrRecord" EntityType="Self.vw_HnrRecord" />
+          <EntitySet Name="vw_Role" EntityType="Self.vw_Role" />
+          <EntitySet Name="vw_Team" EntityType="Self.vw_Team" />
+          <EntitySet Name="vw_AwdRecord_Rec" EntityType="DB_whut_HnrMgmtModel.vw_AwdRecord_Rec" />
+          <EntitySet Name="vw_TeamMembers" EntityType="DB_whut_HnrMgmtModel.vw_TeamMembers" />
+        </EntityContainer>
+        <EntityType Name="vw_AwdRecord_Rec">
+          <Key>
+            <PropertyRef Name="AwdRecID" />
+            <PropertyRef Name="AwdID" />
+            <PropertyRef Name="AwdName" />
+            <PropertyRef Name="AwdGradeName" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="IsTeam" />
+            <PropertyRef Name="OrgID" />
+            <PropertyRef Name="OrgName" />
+            <PropertyRef Name="ApplyTime" />
+            <PropertyRef Name="ApplyAccountID" />
+            <PropertyRef Name="ApplyAccountName" />
+            <PropertyRef Name="FileUrl" />
+            <PropertyRef Name="State" />
+          </Key>
+          <Property Name="AwdRecID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="AwdID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="AwdName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="AwdGradeName" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="AwdGrade" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Year" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Time" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Term" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="IsTeam" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ProName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Teacher" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="OrgID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="OrgName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="TeamID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="TeamAwdeeID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="TeamAwdeeName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="TeamAwdeeOrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="TeamAwdeeOrgName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="TeamAwdeeBranch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ApplyTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ApplyAccountID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ApplyAccountName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ApplyAccountOrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ApplyAccountOrgName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ApplyAccountRoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ApplyAccountRoleName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="FileUrl" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_TeamMembers">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="TeamID" />
+            <PropertyRef Name="AwdeeID" />
+            <PropertyRef Name="AwdeeName" />
+            <PropertyRef Name="AwdeeOrgID" />
+            <PropertyRef Name="AwdeeOrgName" />
+            <PropertyRef Name="AwdeeRank" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="TeamID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="AwdeeID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="AwdeeName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="AwdeeOrgID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="AwdeeOrgName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="AwdeeBranch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="AwdeeRank" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -713,6 +939,61 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vw_AwdRecord">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.vw_AwdRecord">
+              <MappingFragment StoreEntitySet="vw_AwdRecord">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AwdRecID" ColumnName="AwdRecID" />
+                <ScalarProperty Name="AwardeeID" ColumnName="AwardeeID" />
+                <ScalarProperty Name="AwardeeName" ColumnName="AwardeeName" />
+                <ScalarProperty Name="AwardeeOrgID" ColumnName="AwardeeOrgID" />
+                <ScalarProperty Name="AwardeeOrgName" ColumnName="AwardeeOrgName" />
+                <ScalarProperty Name="AwardeeBranch" ColumnName="AwardeeBranch" />
+                <ScalarProperty Name="AwardeeRank" ColumnName="AwardeeRank" />
+                <ScalarProperty Name="AwdName" ColumnName="AwdName" />
+                <ScalarProperty Name="AwdOrgID" ColumnName="AwdOrgID" />
+                <ScalarProperty Name="AwdOrgName" ColumnName="AwdOrgName" />
+                <ScalarProperty Name="AwdProName" ColumnName="AwdProName" />
+                <ScalarProperty Name="AwdGrade" ColumnName="AwdGrade" />
+                <ScalarProperty Name="AwdGradeName" ColumnName="AwdGradeName" />
+                <ScalarProperty Name="AwdYear" ColumnName="AwdYear" />
+                <ScalarProperty Name="AwdTerm" ColumnName="AwdTerm" />
+                <ScalarProperty Name="AwdTime" ColumnName="AwdTime" />
+                <ScalarProperty Name="IsTeam" ColumnName="IsTeam" />
+                <ScalarProperty Name="Teacher" ColumnName="Teacher" />
+                <ScalarProperty Name="ApplyAccountID" ColumnName="ApplyAccountID" />
+                <ScalarProperty Name="ApplyAccountName" ColumnName="ApplyAccountName" />
+                <ScalarProperty Name="ApplyAccountOrg" ColumnName="ApplyAccountOrg" />
+                <ScalarProperty Name="AppltAccountRole" ColumnName="AppltAccountRole" />
+                <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
+                <ScalarProperty Name="FileUrl" ColumnName="FileUrl" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_HnrRecord">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.vw_HnrRecord">
+              <MappingFragment StoreEntitySet="vw_HnrRecord">
+                <ScalarProperty Name="HnrRecID" ColumnName="HnrRecID" />
+                <ScalarProperty Name="AwardeeID" ColumnName="AwardeeID" />
+                <ScalarProperty Name="AwardeeName" ColumnName="AwardeeName" />
+                <ScalarProperty Name="AwardeeOrgID" ColumnName="AwardeeOrgID" />
+                <ScalarProperty Name="AwardeeOrgName" ColumnName="AwardeeOrgName" />
+                <ScalarProperty Name="AwardeeBranch" ColumnName="AwardeeBranch" />
+                <ScalarProperty Name="HnrName" ColumnName="HnrName" />
+                <ScalarProperty Name="HnrGradeName" ColumnName="HnrGradeName" />
+                <ScalarProperty Name="HnrAnnual" ColumnName="HnrAnnual" />
+                <ScalarProperty Name="HnrTime" ColumnName="HnrTime" />
+                <ScalarProperty Name="ApplyAccountID" ColumnName="ApplyAccountID" />
+                <ScalarProperty Name="ApplyAccountName" ColumnName="ApplyAccountName" />
+                <ScalarProperty Name="ApplyAccountOrg" ColumnName="ApplyAccountOrg" />
+                <ScalarProperty Name="ApplyAccountRole" ColumnName="ApplyAccountRole" />
+                <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
+                <ScalarProperty Name="FileUrl" ColumnName="FileUrl" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vw_Role">
             <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.vw_Role">
               <MappingFragment StoreEntitySet="vw_Role">
@@ -726,62 +1007,68 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vw_HnrRecord">
-            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.vw_HnrRecord">
-              <MappingFragment StoreEntitySet="vw_HnrRecord">
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="FileUrl" ColumnName="FileUrl" />
-                <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
-                <ScalarProperty Name="ApplyAccountRole" ColumnName="ApplyAccountRole" />
-                <ScalarProperty Name="ApplyAccountOrg" ColumnName="ApplyAccountOrg" />
-                <ScalarProperty Name="ApplyAccountName" ColumnName="ApplyAccountName" />
-                <ScalarProperty Name="ApplyAccountID" ColumnName="ApplyAccountID" />
-                <ScalarProperty Name="HnrTime" ColumnName="HnrTime" />
-                <ScalarProperty Name="HnrAnnual" ColumnName="HnrAnnual" />
-                <ScalarProperty Name="HnrGradeName" ColumnName="HnrGradeName" />
-                <ScalarProperty Name="HnrName" ColumnName="HnrName" />
-                <ScalarProperty Name="AwardeeBranch" ColumnName="AwardeeBranch" />
-                <ScalarProperty Name="AwardeeOrgName" ColumnName="AwardeeOrgName" />
-                <ScalarProperty Name="AwardeeOrgID" ColumnName="AwardeeOrgID" />
-                <ScalarProperty Name="AwardeeName" ColumnName="AwardeeName" />
-                <ScalarProperty Name="AwardeeID" ColumnName="AwardeeID" />
-                <ScalarProperty Name="HnrRecID" ColumnName="HnrRecID" />
+          <EntitySetMapping Name="vw_Team">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.vw_Team">
+              <MappingFragment StoreEntitySet="vw_Team">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="AwdeeID" ColumnName="AwdeeID" />
+                <ScalarProperty Name="AwdeeName" ColumnName="AwdeeName" />
+                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+                <ScalarProperty Name="OrgName" ColumnName="OrgName" />
+                <ScalarProperty Name="Branch" ColumnName="Branch" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vw_AwdRecord">
-            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.vw_AwdRecord">
-              <MappingFragment StoreEntitySet="vw_AwdRecord">
+          <EntitySetMapping Name="vw_AwdRecord_Rec">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.vw_AwdRecord_Rec">
+              <MappingFragment StoreEntitySet="vw_AwdRecord_Rec">
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="FileUrl" ColumnName="FileUrl" />
-                <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
-                <ScalarProperty Name="AppltAccountRole" ColumnName="AppltAccountRole" />
-                <ScalarProperty Name="ApplyAccountOrg" ColumnName="ApplyAccountOrg" />
+                <ScalarProperty Name="ApplyAccountRoleName" ColumnName="ApplyAccountRoleName" />
+                <ScalarProperty Name="ApplyAccountRoleID" ColumnName="ApplyAccountRoleID" />
+                <ScalarProperty Name="ApplyAccountOrgName" ColumnName="ApplyAccountOrgName" />
+                <ScalarProperty Name="ApplyAccountOrgID" ColumnName="ApplyAccountOrgID" />
                 <ScalarProperty Name="ApplyAccountName" ColumnName="ApplyAccountName" />
                 <ScalarProperty Name="ApplyAccountID" ColumnName="ApplyAccountID" />
+                <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
+                <ScalarProperty Name="TeamAwdeeBranch" ColumnName="TeamAwdeeBranch" />
+                <ScalarProperty Name="TeamAwdeeOrgName" ColumnName="TeamAwdeeOrgName" />
+                <ScalarProperty Name="TeamAwdeeOrgID" ColumnName="TeamAwdeeOrgID" />
+                <ScalarProperty Name="TeamAwdeeName" ColumnName="TeamAwdeeName" />
+                <ScalarProperty Name="TeamAwdeeID" ColumnName="TeamAwdeeID" />
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="OrgName" ColumnName="OrgName" />
+                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
                 <ScalarProperty Name="Teacher" ColumnName="Teacher" />
+                <ScalarProperty Name="ProName" ColumnName="ProName" />
                 <ScalarProperty Name="IsTeam" ColumnName="IsTeam" />
-                <ScalarProperty Name="AwdTime" ColumnName="AwdTime" />
-                <ScalarProperty Name="AwdTerm" ColumnName="AwdTerm" />
-                <ScalarProperty Name="AwdYear" ColumnName="AwdYear" />
-                <ScalarProperty Name="AwdGradeName" ColumnName="AwdGradeName" />
+                <ScalarProperty Name="Term" ColumnName="Term" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="AwdGrade" ColumnName="AwdGrade" />
-                <ScalarProperty Name="AwdProName" ColumnName="AwdProName" />
-                <ScalarProperty Name="AwdOrgName" ColumnName="AwdOrgName" />
-                <ScalarProperty Name="AwdOrgID" ColumnName="AwdOrgID" />
+                <ScalarProperty Name="AwdGradeName" ColumnName="AwdGradeName" />
                 <ScalarProperty Name="AwdName" ColumnName="AwdName" />
-                <ScalarProperty Name="AwardeeRank" ColumnName="AwardeeRank" />
-                <ScalarProperty Name="AwardeeBranch" ColumnName="AwardeeBranch" />
-                <ScalarProperty Name="AwardeeOrgName" ColumnName="AwardeeOrgName" />
-                <ScalarProperty Name="AwardeeOrgID" ColumnName="AwardeeOrgID" />
-                <ScalarProperty Name="AwardeeName" ColumnName="AwardeeName" />
-                <ScalarProperty Name="AwardeeID" ColumnName="AwardeeID" />
+                <ScalarProperty Name="AwdID" ColumnName="AwdID" />
                 <ScalarProperty Name="AwdRecID" ColumnName="AwdRecID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_TeamMembers">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.vw_TeamMembers">
+              <MappingFragment StoreEntitySet="vw_TeamMembers">
+                <ScalarProperty Name="AwdeeRank" ColumnName="AwdeeRank" />
+                <ScalarProperty Name="AwdeeBranch" ColumnName="AwdeeBranch" />
+                <ScalarProperty Name="AwdeeOrgName" ColumnName="AwdeeOrgName" />
+                <ScalarProperty Name="AwdeeOrgID" ColumnName="AwdeeOrgID" />
+                <ScalarProperty Name="AwdeeName" ColumnName="AwdeeName" />
+                <ScalarProperty Name="AwdeeID" ColumnName="AwdeeID" />
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

@@ -369,7 +369,7 @@ namespace HnrMgmtAPI.Controllers.API.TB
         }
         #endregion
 
-        #region 记录查询
+        #region 记录查询功能
         /// <summary>
         /// 
         /// </summary>
@@ -481,6 +481,67 @@ namespace HnrMgmtAPI.Controllers.API.TB
             }
             return result;
         }
+
+        /// <summary>
+        /// 获取竞赛获奖团队信息 接口返回数据模型参考TeamInfo
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="AwdRecordID">记录ID</param>
+        /// <returns></returns>
+        [HttpGet, Route("teaminfo")]
+        public ApiResult GetTeamInfo(string access_token, string AwdRecordID)
+        {
+            result = AccessToken.Check(access_token, "api/record/teaminfo");
+            if (result == null)
+            {
+                #region 参数验证
+                if (AwdRecordID == "" || AwdRecordID == null)
+                {
+                    return Error("AwdRecordID字段不能为空");
+                }
+                #endregion
+
+                #region 逻辑操作
+                //vw_AwdRecord_Rec awdRecord = db.vw_AwdRecord_Rec.Find();
+                var awdRecord = from vw_AwdRecord_Rec in db.vw_AwdRecord_Rec where (vw_AwdRecord_Rec.AwdRecID == AwdRecordID) select vw_AwdRecord_Rec.TeamID;
+                if (awdRecord.Any())
+                {
+                    string teamID = awdRecord.ToList().First();
+                    var teamMember = from vw_TeamMembers in db.vw_TeamMembers where (vw_TeamMembers.TeamID == teamID) orderby vw_TeamMembers.AwdeeRank select vw_TeamMembers;
+                    if (teamMember.Any())
+                    {
+                        TeamInfo data = new TeamInfo();
+                        data.Num = teamMember.Count();
+                        data.Members = new List<Member>();
+
+                        foreach (vw_TeamMembers item in teamMember.ToList())
+                        {
+                            Member model = new Member();
+
+                            model.MemberID = item.AwdeeID;
+                            model.MemberName = item.AwdeeName;
+                            model.MemberOrgName = item.AwdeeOrgName;
+                            model.MemberBranch = item.AwdeeBranch;
+                            model.Rank = item.AwdeeRank;
+
+                            data.Members.Add(model);
+                        }
+
+                        return Success("获取团队成员数据成功", data);
+                    }
+                    else
+                    {
+                        return Error("团队成员信息不存在");
+                    }
+                }
+                else
+                {
+                    return Error("此竞赛获奖记录ID不存在");
+                }
+                #endregion
+            }
+            return null;
+        }
         #endregion
 
         #region 数据库搜索操作
@@ -490,10 +551,10 @@ namespace HnrMgmtAPI.Controllers.API.TB
             UserInfo userInfo = AccessToken.GetUserInfo(access_token);
 
             List<vw_HnrRecord> hnrRecordList = new List<vw_HnrRecord>();
-            List<vw_AwdRecord> awdRecordList = new List<vw_AwdRecord>();
+            List<vw_AwdRecord_Rec> awdRecordList = new List<vw_AwdRecord_Rec>();
 
             var hnrRecord = from vw_HnrRecord in db.vw_HnrRecord orderby vw_HnrRecord.ApplyTime descending select vw_HnrRecord;
-            var awdRecord = from vw_AwdRecord in db.vw_AwdRecord orderby vw_AwdRecord.ApplyTime descending select vw_AwdRecord;
+            var awdRecord = from vw_AwdRecord_Rec in db.vw_AwdRecord_Rec orderby vw_AwdRecord_Rec.ApplyTime descending select vw_AwdRecord_Rec;
             #endregion
 
             if (userInfo.userRoleID == "4")
@@ -506,7 +567,7 @@ namespace HnrMgmtAPI.Controllers.API.TB
             {
                 //学院账号可以看到所属学院的账号记录账号记录
                 hnrRecord = from vw_HnrRecord in db.vw_HnrRecord where (vw_HnrRecord.AwardeeOrgID == userInfo.userOrgID) orderby vw_HnrRecord.ApplyTime descending select vw_HnrRecord;
-                awdRecord = from vw_AwdRecord in db.vw_AwdRecord where (vw_AwdRecord.AwardeeOrgID == userInfo.userOrgID || vw_AwdRecord.AwdOrgID == userInfo.userOrgID) orderby vw_AwdRecord.ApplyTime descending select vw_AwdRecord;
+                awdRecord = from vw_AwdRecord_Rec in db.vw_AwdRecord_Rec where (vw_AwdRecord_Rec.OrgID == userInfo.userOrgID) orderby vw_AwdRecord_Rec.ApplyTime descending select vw_AwdRecord_Rec;
             }
             else if (userInfo.userRoleID == "2" || userInfo.userRoleID == "1")
             {
@@ -531,6 +592,7 @@ namespace HnrMgmtAPI.Controllers.API.TB
             foreach (vw_HnrRecord item in hnrRecordList)
             {
                 returnHnrRecord model = new returnHnrRecord();
+                model.HnrRecordID = item.HnrRecID;
                 model.AwardeeName = item.AwardeeName;
                 model.AwardeeOrgName = item.AwardeeOrgName;
                 model.AwardeeBranch = item.AwardeeBranch;
@@ -547,26 +609,27 @@ namespace HnrMgmtAPI.Controllers.API.TB
 
                 data.hnrList.Add(model);
             }
-            foreach (vw_AwdRecord item in awdRecordList)
+
+            foreach (vw_AwdRecord_Rec item in awdRecordList)
             {
                 returnAwdRecord model = new returnAwdRecord();
-                model.AwardeeName = item.AwardeeName;
-                model.AwardeeOrgName = item.AwardeeOrgName;
-                model.AwardeeBranch = item.AwardeeBranch;
-                model.AwardeeRank = item.AwardeeRank;
+                model.AwdRecordID = item.AwdRecID;
+                model.AwardeeName = item.TeamAwdeeName;
+                model.AwardeeOrgName = item.TeamAwdeeOrgName;
+                model.AwardeeBranch = item.TeamAwdeeBranch;
                 model.AwdName = item.AwdName;
-                model.AwdOrgName = item.AwdOrgName;
-                model.AwdProName = item.AwdProName;
+                model.AwdOrgName = item.OrgName;
+                model.AwdProName = item.ProName;
                 model.Grade = item.AwdGrade;
                 model.GradeName = item.AwdGradeName;
-                model.AwdYear = item.AwdYear;
-                model.AwdTerm = item.AwdTerm;
-                model.AwdTime = item.AwdTime;
+                model.AwdYear = item.Year;
+                model.AwdTerm = item.Term;
+                model.AwdTime = item.Time;
                 model.IsTeam = item.IsTeam;
                 model.Teacher = item.Teacher;
                 model.ApplyAccountName = item.ApplyAccountName;
-                model.ApplyAccountOrg = item.ApplyAccountOrg;
-                model.AppltAccountRole = item.AppltAccountRole;
+                model.ApplyAccountOrg = item.ApplyAccountOrgName;
+                model.AppltAccountRole = item.ApplyAccountRoleName;
                 model.ApplyTime = item.ApplyTime;
                 model.FileUrl = item.FileUrl;
                 model.State = item.State;
@@ -592,6 +655,14 @@ namespace HnrMgmtAPI.Controllers.API.TB
 
             return Success("获取数据成功", data);
         }
+        #endregion
+
+        #region 编辑功能
+
+        #endregion
+
+        #region 删除功能
+
         #endregion
     }
 }

@@ -60,7 +60,10 @@
                 AjaxRequestGet('api/record/get?access_token=11&type=1&pages=1&limit=10');
             });
             $('#btnRecordGetPageSort').click(function (e) {
-                AjaxRequestGet('api/record/get?access_token=11&type=1&page=1&limit=10&sortDirection=ASC&sortField=ApplyTime');
+                AjaxRequestGet('api/record/get?access_token=11&type=2&page=1&limit=10&sortDirection=ASC&sortField=ApplyTime');
+            });
+            $('#btnRecordGetTeamInfo').click(function (e) {
+                AjaxRequestGet('api/record/teaminfo?access_token=11&AwdRecordID=245543ed-6a6d-4678-8a55-296886fb4d7d');
             });
         });
 
@@ -82,6 +85,10 @@
             <br />
             <h4>分页排序查询</h4>
             <input type="button" value="api/record/get" id="btnRecordGetPageSort" />
+            <br />
+            <br />
+            <h4>竞赛团队信息查询</h4>
+            <input type="button" value="api/record/teaminfo" id="btnRecordGetTeamInfo" />
             <br />
             <br />
         </div>

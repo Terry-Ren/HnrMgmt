@@ -256,6 +256,7 @@
     <Compile Include="Models\API\TB\RecordList.cs" />
     <Compile Include="Models\API\TB\TB_AwdRecord.cs" />
     <Compile Include="Models\API\TB\TB_HnrRecord.cs" />
+    <Compile Include="Models\API\TB\TeamInfo.cs" />
     <Compile Include="Models\API\UserInfo.cs" />
     <Compile Include="Models\HnrMgmt.Context.cs">
       <AutoGen>True</AutoGen>
@@ -315,10 +316,19 @@
     <Compile Include="Models\vw_AwdRecord.cs">
       <DependentUpon>HnrMgmt.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_AwdRecord_Rec.cs">
+      <DependentUpon>HnrMgmt.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_HnrRecord.cs">
       <DependentUpon>HnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_Role.cs">
+      <DependentUpon>HnrMgmt.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_Team.cs">
+      <DependentUpon>HnrMgmt.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_TeamMembers.cs">
       <DependentUpon>HnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
