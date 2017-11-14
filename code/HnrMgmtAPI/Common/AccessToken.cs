@@ -164,7 +164,7 @@ namespace HnrMgmtAPI.Common
                 model.access_token = "";
                 model.userID = "0121403490106";
                 model.userName = "wangjianming";
-                model.userRoleID = "3";
+                model.userRoleID = "2";
                 model.userRoleName = "管理学院";
                 model.userOrgID = "26c822fb-acb1-4e7a-a552-f514687f54ab";
                 model.userOrgName = "管理学院";

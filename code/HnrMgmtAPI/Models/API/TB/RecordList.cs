@@ -20,6 +20,7 @@ namespace HnrMgmtAPI.Models.API.TB
 
     public class returnHnrRecord
     {
+        public string HnrRecordID { get; set; }
         public string AwardeeName { get; set; }
         public string AwardeeOrgName { get; set; }
         public string AwardeeBranch { get; set; }
@@ -37,10 +38,10 @@ namespace HnrMgmtAPI.Models.API.TB
 
     public class returnAwdRecord
     {
+        public string AwdRecordID { get; set; }
         public string AwardeeName { get; set; }
         public string AwardeeOrgName { get; set; }
         public string AwardeeBranch { get; set; }
-        public string AwardeeRank { get; set; }
         public string AwdName { get; set; }
         public string AwdOrgName { get; set; }
         public string AwdProName { get; set; }
