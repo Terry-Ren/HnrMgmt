@@ -160,16 +160,8 @@ namespace HnrMgmtAPI.Common
             if (System.Configuration.ConfigurationManager.AppSettings["IsTest"].ToString() == "1")
             {
                 //返回测试信息  代表验证通过
-                UserInfo model = new UserInfo();
-                model.access_token = "";
-                model.userID = "0121403490106";
-                model.userName = "wangjianming";
-                model.userRoleID = "2";
-                model.userRoleName = "管理学院";
-                model.userOrgID = "26c822fb-acb1-4e7a-a552-f514687f54ab";
-                model.userOrgName = "管理学院";
-                model.permissionList = null;
-                return model;
+                UserInfo _userInfo = (UserInfo)HttpRuntime.Cache.Get(access_token);
+                return _userInfo;
             }
             #endregion
 

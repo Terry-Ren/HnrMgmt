@@ -62,6 +62,23 @@ namespace HnrMgmtAPI.Controllers.API.TB
                     return Error("access_token已过期，请重新登录！");
                 }
 
+                #region 信息检查 主要面向学院账号和学生账号
+                if (userInfo.userRoleID == "3")
+                {
+                    if (model.OrgID != userInfo.userOrgID)
+                    {
+                        return Error("荣誉信息填报申请需由本人账号、或本人所属单位账号、或校级账号填写");
+                    }
+                }
+                if (userInfo.userRoleID == "4")
+                {
+                    if (model.AwdeeID != userInfo.userID)
+                    {
+                        return Error("荣誉信息填报申请需由本人账号、或本人所属单位账号、或校级账号填写");
+                    }
+                }
+                #endregion
+
                 #region 获奖记录
 
                 hnrRecord.HnrRecID = ID;
@@ -214,6 +231,23 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 {
                     return Error("access_token已过期，请重新登录！");
                 }
+
+                #region 信息检查 主要面向学院账号和学生账号
+                if (userInfo.userRoleID == "3")
+                {
+                    if (model.OrgID != userInfo.userOrgID)
+                    {
+                        return Error("竞赛获奖信息填报申请需由该项目所属单位账号、或项目负责人账号、或校级账号填写");
+                    }
+                }
+                if (userInfo.userRoleID == "4")
+                {
+                    if (model.Members.ToList().First().AwdeeID != userInfo.userID)
+                    {
+                        return Error("竞赛获奖信息填报申请需由该项目所属单位账号、或项目负责人账号、或校级账号填写");
+                    }
+                }
+                #endregion
 
                 #region 加入记录信息
 
@@ -497,7 +531,7 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 #region 参数验证
                 if (AwdRecordID == "" || AwdRecordID == null)
                 {
-                    return Error("AwdRecordID字段不能为空");
+                    return Error("AwdRecordID参数不能为空");
                 }
                 #endregion
 
@@ -553,8 +587,8 @@ namespace HnrMgmtAPI.Controllers.API.TB
             List<vw_HnrRecord> hnrRecordList = new List<vw_HnrRecord>();
             List<vw_AwdRecord_Rec> awdRecordList = new List<vw_AwdRecord_Rec>();
 
-            var hnrRecord = from vw_HnrRecord in db.vw_HnrRecord orderby vw_HnrRecord.ApplyTime descending select vw_HnrRecord;
-            var awdRecord = from vw_AwdRecord_Rec in db.vw_AwdRecord_Rec orderby vw_AwdRecord_Rec.ApplyTime descending select vw_AwdRecord_Rec;
+            var hnrRecord = from vw_HnrRecord in db.vw_HnrRecord where (vw_HnrRecord.State != "-1" && vw_HnrRecord.State != "-2") orderby vw_HnrRecord.ApplyTime descending select vw_HnrRecord;
+            var awdRecord = from vw_AwdRecord_Rec in db.vw_AwdRecord_Rec where (vw_AwdRecord_Rec.State != "-1" && vw_AwdRecord_Rec.State != "-2") orderby vw_AwdRecord_Rec.ApplyTime descending select vw_AwdRecord_Rec;
             #endregion
 
             if (userInfo.userRoleID == "4")
@@ -566,8 +600,8 @@ namespace HnrMgmtAPI.Controllers.API.TB
             else if (userInfo.userRoleID == "3")
             {
                 //学院账号可以看到所属学院的账号记录账号记录
-                hnrRecord = from vw_HnrRecord in db.vw_HnrRecord where (vw_HnrRecord.AwardeeOrgID == userInfo.userOrgID) orderby vw_HnrRecord.ApplyTime descending select vw_HnrRecord;
-                awdRecord = from vw_AwdRecord_Rec in db.vw_AwdRecord_Rec where (vw_AwdRecord_Rec.OrgID == userInfo.userOrgID) orderby vw_AwdRecord_Rec.ApplyTime descending select vw_AwdRecord_Rec;
+                hnrRecord = from vw_HnrRecord in db.vw_HnrRecord where (vw_HnrRecord.AwardeeOrgID == userInfo.userOrgID && vw_HnrRecord.State != "-1" && vw_HnrRecord.State != "-2") orderby vw_HnrRecord.ApplyTime descending select vw_HnrRecord;
+                awdRecord = from vw_AwdRecord_Rec in db.vw_AwdRecord_Rec where (vw_AwdRecord_Rec.OrgID == userInfo.userOrgID && vw_AwdRecord_Rec.State != "-1" && vw_AwdRecord_Rec.State != "-2") orderby vw_AwdRecord_Rec.ApplyTime descending select vw_AwdRecord_Rec;
             }
             else if (userInfo.userRoleID == "2" || userInfo.userRoleID == "1")
             {
@@ -601,8 +635,8 @@ namespace HnrMgmtAPI.Controllers.API.TB
                 model.HnrAnnual = item.HnrAnnual;
                 model.HnrTime = item.HnrTime;
                 model.ApplyAccountName = item.ApplyAccountName;
-                model.ApplyAccountOrg = item.ApplyAccountOrg;
-                model.ApplyAccountRole = item.ApplyAccountRole;
+                model.ApplyAccountOrg = item.ApplyAccountOrgName;
+                model.ApplyAccountRole = item.ApplyAccountRoleName;
                 model.ApplyTime = item.ApplyTime;
                 model.FileUrl = item.FileUrl;
                 model.State = item.State;
@@ -662,7 +696,403 @@ namespace HnrMgmtAPI.Controllers.API.TB
         #endregion
 
         #region 删除功能
+        /// <summary>
+        /// 删除荣誉获奖填报记录
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="HnrRecordID"></param>
+        /// <returns></returns>
+        [HttpGet, Route("delete")]
+        public ApiResult DeleteHnrRecord(string access_token, string HnrRecordID)
+        {
+            result = AccessToken.Check(access_token, "api/record/delete");
+            if (result == null)
+            {
+                #region 参数验证
+                if (HnrRecordID == "" || HnrRecordID == null)
+                {
+                    return Error("HnrRecordID参数不能为空");
+                }
+                #endregion
 
+                #region 逻辑操作
+                var recordList = from vw_HnrRecord in db.vw_HnrRecord where (vw_HnrRecord.HnrRecID == HnrRecordID) select vw_HnrRecord;//此处 State == -1 代表记录已被删除
+
+                if (recordList.Any())
+                {
+                    vw_HnrRecord recordModel = recordList.ToList().First();
+                    if (recordModel.State != "0")
+                    {
+                        return Error("该记录已审核，不能执行删除操作");
+                    }
+                    UserInfo userInfo = AccessToken.GetUserInfo(access_token);
+                    if (userInfo != null)
+                    {
+                        if (userInfo.userRoleID == "4")
+                        {
+                            #region 删除操作
+                            if (recordModel.ApplyAccountID == userInfo.userID)
+                            {
+                                //可删除
+                                T_ExmRecord exmRecord = db.T_ExmRecord.Find(recordModel.HnrRecID);
+                                if (exmRecord != null)
+                                {
+                                    exmRecord.State = "-1";
+                                    exmRecord.ExmID = userInfo.userID;
+                                    exmRecord.ExmTime = DateTime.Now;
+                                    try
+                                    {
+                                        db.SaveChanges();
+                                        return Success("删除成功");
+                                    }
+                                    catch
+                                    {
+                                        return Error("删除失败");
+                                    }
+                                }
+                                else
+                                {
+                                    return Error("出现未知错误，请联系管理员");
+                                }
+                            }
+                            else
+                            {
+                                //不可删除
+                                return Error("您不具备删除该记录权限，学生账号只能删除本人申请记录");
+                            }
+                            #endregion
+                        }
+                        else if (userInfo.userRoleID == "3")
+                        {
+                            #region 删除操作
+                            if (recordModel.ApplyAccountOrgID == userInfo.userOrgID)
+                            {
+                                //可删除
+                                T_ExmRecord exmRecord = db.T_ExmRecord.Find(recordModel.HnrRecID);
+                                if (exmRecord != null)
+                                {
+                                    exmRecord.State = "-1";
+                                    exmRecord.ExmID = userInfo.userID;
+                                    exmRecord.ExmTime = DateTime.Now;
+                                    try
+                                    {
+                                        db.SaveChanges();
+                                        return Success("删除成功");
+                                    }
+                                    catch
+                                    {
+                                        return Error("删除失败");
+                                    }
+                                }
+                                else
+                                {
+                                    return Error("出现未知错误，请联系管理员");
+                                }
+                            }
+                            else
+                            {
+                                return Error("您不具备删除该记录权限，学院账号只能删除本院学生申请记录");
+                            }
+                            #endregion
+                        }
+                        else if (userInfo.userRoleID == "2" || userInfo.userRoleID == "1")
+                        {
+                            #region 删除操作
+                            //可删除
+                            T_ExmRecord exmRecord = db.T_ExmRecord.Find(recordModel.HnrRecID);
+                            if (exmRecord != null)
+                            {
+                                exmRecord.State = "-1";
+                                exmRecord.ExmID = userInfo.userID;
+                                exmRecord.ExmTime = DateTime.Now;
+                                try
+                                {
+                                    db.SaveChanges();
+                                    return Success("删除成功");
+                                }
+                                catch
+                                {
+                                    return Error("删除失败");
+                                }
+                            }
+                            else
+                            {
+                                return Error("出现未知错误，请联系管理员");
+                            }
+                            #endregion
+                        }
+                        else
+                        {
+                            return Error("此账号不具备删除数据库记录权限");
+                        }
+                    }
+                    else
+                    {
+                        return Error("令牌已过期，请重新登录");
+                    }
+                }
+                else
+                {
+                    return Error("此记录ID不存在！");
+                }
+                #endregion
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 删除竞赛获奖填报记录
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="AwdRecordID"></param>
+        /// <returns></returns>
+        [HttpGet, Route("delete")]
+        public ApiResult DeleteAwdRecord(string access_token, string AwdRecordID)
+        {
+            result = AccessToken.Check(access_token, "api/record/delete");
+            if (result == null)
+            {
+                #region 参数验证
+                if (AwdRecordID == "" || AwdRecordID == null)
+                {
+                    return Error("HnrRecordID参数不能为空");
+                }
+                #endregion
+
+                #region 逻辑操作
+                var recordList = from vw_AwdRecord_Rec in db.vw_AwdRecord_Rec where (vw_AwdRecord_Rec.AwdRecID == AwdRecordID) select vw_AwdRecord_Rec;//此处 State == -1 代表记录已被删除
+
+                if (recordList.Any())
+                {
+                    vw_AwdRecord_Rec recordModel = recordList.ToList().First();
+                    if (recordModel.State != "0")
+                    {
+                        return Error("该记录已审核，不能执行删除操作");
+                    }
+                    UserInfo userInfo = AccessToken.GetUserInfo(access_token);
+                    if (userInfo != null)
+                    {
+                        if (userInfo.userRoleID == "4")
+                        {
+                            #region 删除操作
+                            if (recordModel.ApplyAccountID == userInfo.userID)
+                            {
+                                //可删除
+                                T_ExmRecord exmRecord = db.T_ExmRecord.Find(recordModel.AwdRecID);
+                                if (exmRecord != null)
+                                {
+                                    exmRecord.State = "-1";
+                                    exmRecord.ExmID = userInfo.userID;
+                                    exmRecord.ExmTime = DateTime.Now;
+                                    try
+                                    {
+                                        db.SaveChanges();
+                                        return Success("删除成功");
+                                    }
+                                    catch
+                                    {
+                                        return Error("删除失败");
+                                    }
+                                }
+                                else
+                                {
+                                    return Error("出现未知错误，请联系管理员");
+                                }
+                            }
+                            else
+                            {
+                                //不可删除
+                                return Error("您不具备删除该记录权限，学生账号只能删除本人申请记录");
+                            }
+                            #endregion
+                        }
+                        else if (userInfo.userRoleID == "3")
+                        {
+                            #region 删除操作
+                            if (recordModel.ApplyAccountOrgID == userInfo.userOrgID)
+                            {
+                                //可删除
+                                T_ExmRecord exmRecord = db.T_ExmRecord.Find(recordModel.AwdRecID);
+                                if (exmRecord != null)
+                                {
+                                    exmRecord.State = "-1";
+                                    exmRecord.ExmID = userInfo.userID;
+                                    exmRecord.ExmTime = DateTime.Now;
+                                    try
+                                    {
+                                        db.SaveChanges();
+                                        return Success("删除成功");
+                                    }
+                                    catch
+                                    {
+                                        return Error("删除失败");
+                                    }
+                                }
+                                else
+                                {
+                                    return Error("出现未知错误，请联系管理员");
+                                }
+                            }
+                            else
+                            {
+                                return Error("您不具备删除该记录权限，学院账号只能删除本院学生申请记录");
+                            }
+                            #endregion
+                        }
+                        else if (userInfo.userRoleID == "2" || userInfo.userRoleID == "1")
+                        {
+                            #region 删除操作
+                            //可删除
+                            T_ExmRecord exmRecord = db.T_ExmRecord.Find(recordModel.AwdRecID);
+                            if (exmRecord != null)
+                            {
+                                exmRecord.State = "-1";
+                                exmRecord.ExmID = userInfo.userID;
+                                exmRecord.ExmTime = DateTime.Now;
+                                try
+                                {
+                                    db.SaveChanges();
+                                    return Success("删除成功");
+                                }
+                                catch
+                                {
+                                    return Error("删除失败");
+                                }
+                            }
+                            else
+                            {
+                                return Error("出现未知错误，请联系管理员");
+                            }
+                            #endregion
+                        }
+                        else
+                        {
+                            return Error("此账号不具备删除数据库记录权限");
+                        }
+                    }
+                    else
+                    {
+                        return Error("令牌已过期，请重新登录");
+                    }
+                }
+                else
+                {
+                    return Error("此记录ID不存在！");
+                }
+                #endregion
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 强制删除荣誉获奖填报记录
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="RecordID"></param>
+        /// <returns></returns>
+        [HttpGet, Route("forcedelete")]
+        public ApiResult ForceDeleteHnrRecord(string access_token, string HnrRecordID)
+        {
+            result = AccessToken.Check(access_token, "api/record/forcedelete");
+            if (result == null)
+            {
+                #region 参数验证
+                if (HnrRecordID == "" || HnrRecordID == null)
+                {
+                    return Error("HnrRecordID参数不能为空");
+                }
+                #endregion
+
+                #region 逻辑操作
+                var recordList = from vw_HnrRecord in db.vw_HnrRecord where (vw_HnrRecord.HnrRecID == HnrRecordID) select vw_HnrRecord;//此处 State == -1 代表记录已被删除
+                if (recordList.Any())
+                {
+                    vw_HnrRecord recordModel = recordList.ToList().First();
+                    UserInfo userInfo = AccessToken.GetUserInfo(access_token);
+                    T_ExmRecord exmRecord = db.T_ExmRecord.Find(recordModel.HnrRecID);
+                    if (exmRecord != null)
+                    {
+                        exmRecord.State = "-2";//此处代表强制删除
+                        exmRecord.ExmID = userInfo.userID;
+                        exmRecord.ExmTime = DateTime.Now;
+                        try
+                        {
+                            db.SaveChanges();
+                            return Success("删除成功");
+                        }
+                        catch
+                        {
+                            return Error("删除失败");
+                        }
+                    }
+                    else
+                    {
+                        return Error("出现未知错误，请联系管理员");
+                    }
+                }
+                else
+                {
+                    return Error("此记录ID不存在！");
+                }
+                #endregion
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 强制删除竞赛获奖填报记录
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="AwdRecordID"></param>
+        /// <returns></returns>
+        [HttpGet, Route("forcedelete")]
+        public ApiResult ForceDeleteAwdRecord(string access_token, string AwdRecordID)
+        {
+            result = AccessToken.Check(access_token, "api/record/forcedelete");
+            if (result == null)
+            {
+                #region 参数验证
+                if (AwdRecordID == "" || AwdRecordID == null)
+                {
+                    return Error("AwdRecordID参数不能为空");
+                }
+                #endregion
+
+                #region 逻辑操作
+                var recordList = from vw_AwdRecord_Rec in db.vw_AwdRecord_Rec where (vw_AwdRecord_Rec.AwdRecID == AwdRecordID) select vw_AwdRecord_Rec;//此处 State == -1 代表记录已被删除
+                if (recordList.Any())
+                {
+                    vw_AwdRecord_Rec recordModel = recordList.ToList().First();
+                    UserInfo userInfo = AccessToken.GetUserInfo(access_token);
+                    T_ExmRecord exmRecord = db.T_ExmRecord.Find(recordModel.AwdRecID);
+                    if (exmRecord != null)
+                    {
+                        exmRecord.State = "-2";//此处代表强制删除
+                        exmRecord.ExmID = userInfo.userID;
+                        exmRecord.ExmTime = DateTime.Now;
+                        try
+                        {
+                            db.SaveChanges();
+                            return Success("删除成功");
+                        }
+                        catch
+                        {
+                            return Error("删除失败");
+                        }
+                    }
+                    else
+                    {
+                        return Error("出现未知错误，请联系管理员");
+                    }
+                }
+                else
+                {
+                    return Error("此记录ID不存在！");
+                }
+                #endregion
+            }
+            return result;
+        }
         #endregion
     }
 }

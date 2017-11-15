@@ -57,6 +57,10 @@
                 var data = { "id": "1214001", "password": "214001", "roleID": "1" }
                 AjaxRequestPost('api/auth/login', data);
             });
+
+            $('#btnGetuserinfofromcache').click(function (e) {
+                AjaxRequestGet('api/auth/getuserinfofromcache?access_token=11');
+            });
         });
 
     </script>
@@ -68,6 +72,9 @@
         <div style="margin-left:200px;">
             <h3>登录接口测试：</h3>
             <input type="button" value="api/auth/login" id="btnLogin" />
+            <br />
+            <br />
+            <input type="button" value="api/auth/getuserinfofromcache" id="btnGetuserinfofromcache" />
             <br />
             <br />
         </div>

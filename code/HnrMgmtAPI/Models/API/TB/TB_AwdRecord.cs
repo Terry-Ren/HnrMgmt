@@ -22,7 +22,7 @@ namespace HnrMgmtAPI.Models.API.TB
         //获奖项目名称
         public string ProjectName { get; set; }
 
-        //团队所属部门 （可空）
+        //项目所属部门 （可空）
         public string OrgID { get; set; }
 
         //项目指导老师 可为多人 （可空）

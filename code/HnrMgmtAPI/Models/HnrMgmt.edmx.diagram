@@ -18,12 +18,12 @@
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.T_Team" Width="1.5" PointX="6.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.T_RoleRight" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_Account" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_AwdRecord" Width="1.5" PointX="8.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_HnrRecord" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_Role" Width="1.5" PointX="2.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_Team" Width="1.5" PointX="4.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_AwdRecord_Rec" Width="1.5" PointX="11.375" PointY="0.75" />
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_TeamMembers" Width="1.5" PointX="11.375" PointY="7.75" />
+        <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_AwdRecord" Width="1.5" PointX="7.375" PointY="10.75" />
+        <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_HnrRecord" Width="1.5" PointX="9.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
