@@ -55,7 +55,8 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: {
-      requireAuth: true
+      requireAuth: true,  
+      keepAlive:false
     },
     redirect: '/index',
     children: [
@@ -68,12 +69,13 @@ const routes = [
     component: Home,
     name: 'RecordData',
     meta: {
-      requireAuth: true
+      requireAuth: true,
+      keepAlive:true,
     },
     menuShow: true,
     children: [
-      { path: '/record/honor', component: RecHonor, name: 'RecHonor', menuShow: true },
-      { path: '/record/award', component: RecAward, name: 'RecAward', menuShow: true },
+      { path: '/record/honor', component: RecHonor, name: 'RecHonor',meta:{keepAlive:true}, menuShow: true },
+      { path: '/record/award', component: RecAward, name: 'RecAward', meta: { keepAlive: true }, menuShow: true },
       { path: '/record/addaward', component: AddAward, name: 'AddAward', menuShow: true },     
       { path: '/record/addhonor', component: AddHonor, name:'AddHonor',menuShow:true}      
     ]
@@ -84,7 +86,8 @@ const routes = [
     component: Home,
     name: 'BasicData',
     meta: {
-      requireAuth: true
+      requireAuth: true,
+      keepAlive: false
     },
     menuShow: true,
     // iconCls: 'iconfont icon-users', // 图标样式class
@@ -100,7 +103,9 @@ const routes = [
     component: Home,
     name: 'SystemData',
     meta: {
-      requireAuth: true
+      requireAuth: true,
+      keepAlive: false
+      
     },
     menuShow: true,
     children: [

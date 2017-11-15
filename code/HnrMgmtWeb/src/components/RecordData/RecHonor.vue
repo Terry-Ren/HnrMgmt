@@ -30,7 +30,7 @@
         <el-table-column prop="State" label="审核状态" sortable align="center" :formatter="transfRecordState" ></el-table-column>        
         <el-table-column label="操作" width="280" align="center">
           <template slot-scope="scope" >
-            <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >详情</el-button>
+            <el-button  size="small" @click="showDetialDialog(scope.$index,scope.row)" >详情</el-button>
             <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重填</el-button>
             <el-button type="danger" size="small"  @click="delectAccTch(scope.$index,scope.row)" >删除</el-button>
           </template>
@@ -44,7 +44,17 @@
     </el-col>
     </el-card>
   </el-col>
-
+    <!-- 详情表单 -->
+    <el-dialog title="荣誉记录查看" :visible.sync="detailFormVisible" v-loading="detailLoading" width="70%" >
+      <el-form :inline="true" :model="detailFormBody" label-width="100px" ref="addForm" :rules="rules" auto class="hornor-add" style="padding-left: 5%;" >
+        <el-form-item label="荣誉名称" prop="HnrName">
+          <el-input v-model="detailFormBody.HnrName"  style="width:300px" ></el-input>
+        </el-form-item>
+        <el-form-item label="获奖人学号" prop="HnrAnnual">
+          <el-input v-model="detailFormBody.HnrAnnual"  style="width:300px" ></el-input>
+        </el-form-item>                                     
+      </el-form>  
+    </el-dialog>
 </el-row>
 
 </template>
@@ -82,11 +92,26 @@ import PubMethod from '../../common/util'
        HnrData: [],
        listLoading:false,
        // 分页信息
-       selectRowIndex:'',
        totalNum:0,
        page:1,
        size:10,
- 
+      // 详情表单内容
+      detailLoading:false,
+      detailFormVisible:false,
+      detailFormBody:{
+        HnrName:'',
+        HnrAnnual:'',
+        HnrTime:'',
+        AwardeeName:'',
+        AwardeeOrgName:'',
+        AwardeeName:'',
+        GradeName:'',
+        FileUrl:'',
+        ApplyAccountName:'',
+        ApplyAccountOrg:'',
+        ApplyAccountRole:'',
+        ApplyTime:'',     
+      } 
      }    
    },
    //声明周期调用
@@ -126,6 +151,13 @@ import PubMethod from '../../common/util'
      transfRecordState(row){
        return PubMethod.transfRecordState(row)
      },
+     //  显示详情页面
+     showDetialDialog (index,row) {
+      // console.log(row)
+       this.detailFormVisible=true
+       this.detailFormBody= Object.assign({},row)
+       console.log(this.detailFormBody)
+       },     
     //更换每页数量
     SizeChangeEvent(val){
         this.loading=true;

@@ -32,7 +32,7 @@
         <el-table-column prop="State" label="审核状态" sortable align="center" :formatter="transfRecordState" ></el-table-column>               
         <el-table-column label="操作" width="280" align="center">
           <template slot-scope="scope">
-            <el-button  size="small" @click="showModifyDialog(scope.$index,scope.row)" >详情</el-button>
+            <el-button  size="small" @click="showDetialDialog(scope.$index,scope.row)" >详情</el-button>
             <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重填</el-button>
             <el-button type="danger" size="small"  @click="delectAccTch(scope.$index,scope.row)" >删除</el-button>
           </template>
@@ -46,6 +46,18 @@
     </el-col>
     </el-card>
   </el-col>
+    <!-- 详情表单 -->
+    <el-dialog title="荣誉记录查看" :visible.sync="detailFormVisible" v-loading="detailLoading" width="70%" >
+      <el-form :model="detailFormBody" label-width="80px" ref="detailFrom" :rules="rules" >
+        <el-form-item label="项目名称" prop="ProjectName"  >
+          <el-input v-model="detailFormBody.ProjectName" placeholder="请输入项目名称"  ></el-input>
+        </el-form-item>    
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native=" detailFormVisible = false">取消</el-button>
+        <el-button type="primary" @click.native="detailSubmit" >提交</el-button>
+      </div>     
+    </el-dialog>
 </el-row>
 
 </template>
@@ -100,6 +112,21 @@ import PubMethod from '../../common/util'
         OrgID:{required:true , message:'请选择单位学院', trigger:'blur'},
         Branch:{required:true , message:'请输入所属团支部', trigger:'blur'}         
       },
+      // 详情表单内容
+      detailLoading:false,
+      detailFormVisible:false,
+      detailFormBody:{
+         AwardID:'',
+         Year:'',
+         Term:'',
+         AwdTime:'',
+         ProjectName:'',
+         IsTeam:'',
+         Teacher:[],
+         Members:[],
+         OrgID:'',
+         FileUrl:'-1'      
+      }
      }    
    },
 //    // 计算属性
@@ -192,6 +219,13 @@ import PubMethod from '../../common/util'
          console.log(res)
        })
      },
+     //  显示详情页面
+     showDetialDialog (index,row) {
+       this.detailFormVisible=true
+       this.detailFromBody= Object.assign({},row)
+       this.selectRowIndex=index
+       //console.log(this.selectRowIndex)
+       },
     //更换每页数量
     SizeChangeEvent(val){
         this.loading=true;
