@@ -26,8 +26,10 @@ namespace HnrMgmtAPI.Models
         public string HnrTime { get; set; }
         public string ApplyAccountID { get; set; }
         public string ApplyAccountName { get; set; }
-        public string ApplyAccountOrg { get; set; }
-        public string ApplyAccountRole { get; set; }
+        public string ApplyAccountOrgID { get; set; }
+        public string ApplyAccountOrgName { get; set; }
+        public string ApplyAccountRoleID { get; set; }
+        public string ApplyAccountRoleName { get; set; }
         public System.DateTime ApplyTime { get; set; }
         public string FileUrl { get; set; }
         public string State { get; set; }

@@ -4,6 +4,7 @@ using HnrMgmtAPI.Models.API.Auth;
 using System;
 using System.Configuration;
 using System.Linq;
+using System.Web;
 using System.Web.Http;
 
 namespace HnrMgmtAPI.Controllers.API.Auth
@@ -67,12 +68,11 @@ namespace HnrMgmtAPI.Controllers.API.Auth
                         return Error("该账户处于冻结状态！");
                     }
 
-                    #region 提取用户信息、生成加密令牌、权限写入缓存，现只实现了前两个，尚未写入缓存
-                    #endregion
-
                     AccountInfo accountInfo = new AccountInfo();
 
-                    string accessToken = Guid.NewGuid().ToString();
+                    //string accessToken = Guid.NewGuid().ToString();
+                    string accessToken = "11";
+
                     accountInfo.access_token = accessToken;
                     accountInfo.ID = accountModel.AccountID;
                     accountInfo.Name = accountModel.AccountName;
@@ -80,12 +80,45 @@ namespace HnrMgmtAPI.Controllers.API.Auth
                     accountInfo.RoleID = accountModel.RoleID;
                     accountInfo.RoleName = accountModel.RoleName;
 
+                    #region 提取用户信息、生成加密令牌、权限写入缓存 -- 权限尚未写入缓存
+                    UserInfo model = new UserInfo();
+                    model.access_token = accessToken;
+                    model.userID = accountModel.AccountID;
+                    model.userName = accountModel.AccountName;
+                    model.userOrgID = accountModel.OrgID;
+                    model.userOrgName = accountModel.OrgName;
+                    model.userRoleID = accountModel.RoleID;
+                    model.userRoleName = accountModel.RoleName;
+                    model.permissionList = null;
+
+                    HttpRuntime.Cache.Insert(accessToken, model, null, DateTime.MaxValue, TimeSpan.FromMinutes(Convert.ToInt32(ConfigurationManager.AppSettings["CacheSpanTime"].ToString())));
+                    #endregion
+
                     return Success("登陆成功", accountInfo);
                 }
             }
             #endregion
 
             return Error("登录失败，账号或密码错误！");
+        }
+
+        /// <summary>
+        /// 根据access_token从Cache中获取信息
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <returns></returns>
+        [HttpGet, Route("getuserinfofromcache")]
+        public ApiResult GetUserInfoFromCache(string access_token)
+        {
+            UserInfo userInfo = (UserInfo)HttpRuntime.Cache.Get(access_token);
+            if (userInfo != null)
+            {
+                return Success(DateTime.Now.ToString() + "缓存中存在此令牌信息", userInfo);
+            }
+            else
+            {
+                return Error(DateTime.Now.ToString() + "缓存中不存在此令牌信息");
+            }
         }
     }
 }
