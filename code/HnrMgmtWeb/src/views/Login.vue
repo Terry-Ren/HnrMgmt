@@ -1,13 +1,9 @@
 <template >
 <div class="login">
-  <el-row type="flex" justify="end" class="main-container">
-    <el-col :span="12">
       <div class="main-tittle"> 
         <h1>学生荣誉管理信息系统</h1>
         <h1>武汉理工大学团委</h1>
       </div>
-    </el-col>
-    <el-col :span="9" :offset="3" >
       <el-form :model="loginForm" v-loading="loginLoading" ref="loginForm1" label-position="left" label-width="0px" class=" login-container">
         <h3 class="title">荣誉管理信息系统登录</h3>
         <el-form-item prop="AccountID">
@@ -27,8 +23,6 @@
           <!--<el-button @click.native.prevent="handleReset2">重置</el-button>-->
          </el-form-item>
       </el-form>
-    </el-col>
-  </el-row>
 
   </div>
 </template>
@@ -100,6 +94,9 @@ import {posLogin} from '../api/api'
 
 <style scoped lang="scss">
 .login{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -119,14 +116,16 @@ import {posLogin} from '../api/api'
   }
 }
   .login-container {
-    // position: absolute;
-    // bottom: 250px;
-    // right: 200px;
-    /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
+    // position: fixed;
+    // right: 20%;
+    // margin: auto;
+    // top: 0;
+    // bottom: 0;
     -webkit-border-radius: 5px;
     border-radius: 5px;
     -moz-border-radius: 5px;
     width: 350px;
+    // height:350px;
     padding: 35px 35px 15px 35px;
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid #eaeaea;
