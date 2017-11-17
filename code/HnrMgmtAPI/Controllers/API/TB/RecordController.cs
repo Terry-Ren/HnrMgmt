@@ -583,6 +583,10 @@ namespace HnrMgmtAPI.Controllers.API.TB
         {
             #region
             UserInfo userInfo = AccessToken.GetUserInfo(access_token);
+            if (userInfo == null)
+            {
+                return Error("令牌已过期，请重新登录");
+            }
 
             List<vw_HnrRecord> hnrRecordList = new List<vw_HnrRecord>();
             List<vw_AwdRecord_Rec> awdRecordList = new List<vw_AwdRecord_Rec>();
