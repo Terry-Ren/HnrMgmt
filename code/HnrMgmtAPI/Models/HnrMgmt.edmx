@@ -60,6 +60,7 @@
           <Property Name="ApplyTime" Type="datetime" Nullable="false" />
           <Property Name="ExmID" Type="varchar" MaxLength="64" />
           <Property Name="ExmTime" Type="datetime" />
+          <Property Name="Reason" Type="varchar" MaxLength="1024" />
           <Property Name="State" Type="varchar" MaxLength="2" Nullable="false" />
         </EntityType>
         <EntityType Name="T_HnrRecord">
@@ -178,8 +179,9 @@
           <Property Name="AppltAccountRoleID" Type="varchar" MaxLength="64" />
           <Property Name="AppltAccountRoleName" Type="varchar" MaxLength="64" />
           <Property Name="ApplyTime" Type="datetime" />
+          <Property Name="Reason" Type="varchar" MaxLength="1024" />
           <Property Name="FileUrl" Type="varchar" MaxLength="64" />
-          <Property Name="State" Type="char" MaxLength="1" />
+          <Property Name="State" Type="varchar" MaxLength="2" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.vw_AwdRecord_Rec”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -225,8 +227,9 @@
           <Property Name="ApplyAccountOrgName" Type="varchar" MaxLength="64" />
           <Property Name="ApplyAccountRoleID" Type="varchar" MaxLength="64" />
           <Property Name="ApplyAccountRoleName" Type="varchar" MaxLength="64" />
+          <Property Name="Reason" Type="varchar" MaxLength="1024" />
           <Property Name="FileUrl" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="State" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="State" Type="varchar" MaxLength="2" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.vw_HnrRecord”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -265,8 +268,9 @@
           <Property Name="ApplyAccountRoleID" Type="varchar" MaxLength="64" />
           <Property Name="ApplyAccountRoleName" Type="varchar" MaxLength="64" />
           <Property Name="ApplyTime" Type="datetime" Nullable="false" />
+          <Property Name="Reason" Type="varchar" MaxLength="1024" />
           <Property Name="FileUrl" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="State" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="State" Type="varchar" MaxLength="2" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.vw_Role”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -381,6 +385,7 @@
     [vw_AwdRecord].[AppltAccountRoleID] AS [AppltAccountRoleID], 
     [vw_AwdRecord].[AppltAccountRoleName] AS [AppltAccountRoleName], 
     [vw_AwdRecord].[ApplyTime] AS [ApplyTime], 
+    [vw_AwdRecord].[Reason] AS [Reason], 
     [vw_AwdRecord].[FileUrl] AS [FileUrl], 
     [vw_AwdRecord].[State] AS [State]
     FROM [dbo].[vw_AwdRecord] AS [vw_AwdRecord]</DefiningQuery>
@@ -413,6 +418,7 @@
     [vw_AwdRecord_Rec].[ApplyAccountOrgName] AS [ApplyAccountOrgName], 
     [vw_AwdRecord_Rec].[ApplyAccountRoleID] AS [ApplyAccountRoleID], 
     [vw_AwdRecord_Rec].[ApplyAccountRoleName] AS [ApplyAccountRoleName], 
+    [vw_AwdRecord_Rec].[Reason] AS [Reason], 
     [vw_AwdRecord_Rec].[FileUrl] AS [FileUrl], 
     [vw_AwdRecord_Rec].[State] AS [State]
     FROM [dbo].[vw_AwdRecord_Rec] AS [vw_AwdRecord_Rec]</DefiningQuery>
@@ -436,6 +442,7 @@
     [vw_HnrRecord].[ApplyAccountRoleID] AS [ApplyAccountRoleID], 
     [vw_HnrRecord].[ApplyAccountRoleName] AS [ApplyAccountRoleName], 
     [vw_HnrRecord].[ApplyTime] AS [ApplyTime], 
+    [vw_HnrRecord].[Reason] AS [Reason], 
     [vw_HnrRecord].[FileUrl] AS [FileUrl], 
     [vw_HnrRecord].[State] AS [State]
     FROM [dbo].[vw_HnrRecord] AS [vw_HnrRecord]</DefiningQuery>
@@ -535,6 +542,7 @@
           <Property Name="ApplyTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ExmID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="ExmTime" Type="DateTime" Precision="3" />
+          <Property Name="Reason" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
           <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="T_HnrRecord">
@@ -647,8 +655,9 @@
           <Property Name="AppltAccountRoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="AppltAccountRoleName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="ApplyTime" Type="DateTime" Precision="3" />
+          <Property Name="Reason" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
           <Property Name="FileUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="State" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vw_AwdRecord_Rec">
           <Key>
@@ -692,8 +701,9 @@
           <Property Name="ApplyAccountOrgName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="ApplyAccountRoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="ApplyAccountRoleName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Reason" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
           <Property Name="FileUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="State" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="vw_HnrRecord">
           <Key>
@@ -730,8 +740,9 @@
           <Property Name="ApplyAccountRoleID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="ApplyAccountRoleName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="ApplyTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Reason" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
           <Property Name="FileUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="State" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="vw_Role">
           <Key>
@@ -866,6 +877,7 @@
                 <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
                 <ScalarProperty Name="ExmID" ColumnName="ExmID" />
                 <ScalarProperty Name="ExmTime" ColumnName="ExmTime" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
                 <ScalarProperty Name="State" ColumnName="State" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -981,6 +993,7 @@
                 <ScalarProperty Name="AppltAccountRoleID" ColumnName="AppltAccountRoleID" />
                 <ScalarProperty Name="AppltAccountRoleName" ColumnName="AppltAccountRoleName" />
                 <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
                 <ScalarProperty Name="FileUrl" ColumnName="FileUrl" />
                 <ScalarProperty Name="State" ColumnName="State" />
               </MappingFragment>
@@ -1015,6 +1028,7 @@
                 <ScalarProperty Name="ApplyAccountOrgName" ColumnName="ApplyAccountOrgName" />
                 <ScalarProperty Name="ApplyAccountRoleID" ColumnName="ApplyAccountRoleID" />
                 <ScalarProperty Name="ApplyAccountRoleName" ColumnName="ApplyAccountRoleName" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
                 <ScalarProperty Name="FileUrl" ColumnName="FileUrl" />
                 <ScalarProperty Name="State" ColumnName="State" />
               </MappingFragment>
@@ -1040,6 +1054,7 @@
                 <ScalarProperty Name="ApplyAccountRoleID" ColumnName="ApplyAccountRoleID" />
                 <ScalarProperty Name="ApplyAccountRoleName" ColumnName="ApplyAccountRoleName" />
                 <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
                 <ScalarProperty Name="FileUrl" ColumnName="FileUrl" />
                 <ScalarProperty Name="State" ColumnName="State" />
               </MappingFragment>
@@ -1099,7 +1114,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="无" />

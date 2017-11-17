@@ -59,7 +59,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 if (userInfo == null)
                 {
                     //缓存中不存在此用户信息、说明令牌已过期，返回错误信息
-                    return Error("access_token已过期，请重新登录！");
+                    return Error();
                 }
 
                 #region 信息检查 主要面向学院账号和学生账号
@@ -624,7 +624,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 if (userInfo == null)
                 {
                     //缓存中不存在此用户信息、说明令牌已过期，返回错误信息
-                    return Error("令牌已过期，请重新登录！");
+                    return Error();
                 }
 
                 var _recordList = from vw_HnrRecord in db.vw_HnrRecord where (vw_HnrRecord.HnrRecID == model.HnrRecordID) select vw_HnrRecord;
@@ -642,7 +642,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                         }
                         else
                         {
-                            return Error("出现未知错误，请联系管理员");
+                            return SystemError();
                         }
                     }
                     else
@@ -837,7 +837,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                         }
                         else
                         {
-                            return Error("出现未知错误，请联系管理员");
+                            return SystemError();
                         }
                     }
                     else
@@ -1078,7 +1078,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                                 }
                                 else
                                 {
-                                    return Error("出现未知错误，请联系管理员");
+                                    return SystemError();
                                 }
                             }
                             else
@@ -1112,7 +1112,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                                 }
                                 else
                                 {
-                                    return Error("出现未知错误，请联系管理员");
+                                    return SystemError();
                                 }
                             }
                             else
@@ -1143,7 +1143,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                             }
                             else
                             {
-                                return Error("出现未知错误，请联系管理员");
+                                return SystemError();
                             }
                             #endregion
                         }
@@ -1154,7 +1154,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                     }
                     else
                     {
-                        return Error("令牌已过期，请重新登录");
+                        return Error();
                     }
                 }
                 else
@@ -1222,7 +1222,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                                 }
                                 else
                                 {
-                                    return Error("出现未知错误，请联系管理员");
+                                    return SystemError();
                                 }
                             }
                             else
@@ -1256,7 +1256,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                                 }
                                 else
                                 {
-                                    return Error("出现未知错误，请联系管理员");
+                                    return SystemError();
                                 }
                             }
                             else
@@ -1287,7 +1287,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                             }
                             else
                             {
-                                return Error("出现未知错误，请联系管理员");
+                                return SystemError();
                             }
                             #endregion
                         }
@@ -1298,7 +1298,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                     }
                     else
                     {
-                        return Error("令牌已过期，请重新登录");
+                        return Error();
                     }
                 }
                 else
@@ -1353,7 +1353,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                     }
                     else
                     {
-                        return Error("出现未知错误，请联系管理员");
+                        return SystemError();
                     }
                 }
                 else
@@ -1408,12 +1408,434 @@ namespace HnrMgmtAPI.Controllers.API.Record
                     }
                     else
                     {
-                        return Error("出现未知错误，请联系管理员");
+                        return SystemError();
                     }
                 }
                 else
                 {
                     return Error("此记录ID不存在！");
+                }
+                #endregion
+            }
+            return result;
+        }
+        #endregion
+
+        #region 审核功能
+        /// <summary>
+        /// 审核通过荣誉奖项记录
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="HnrRecordID">荣誉奖项记录ID</param>
+        /// <returns></returns>
+        [HttpGet, Route("auditpass")]
+        public ApiResult AuditPassHnrRecord(string access_token, string HnrRecordID)
+        {
+            result = AccessToken.Check(access_token, "api/record/auditpass");
+            if (result == null)
+            {
+                #region 参数验证
+                if (HnrRecordID == null || HnrRecordID == "")
+                {
+                    return Error("HnrRecordID参数不能为空");
+                }
+                #endregion
+
+                #region 逻辑操作
+                UserInfo userInfo = AccessToken.GetUserInfo(access_token);
+                if (userInfo != null)
+                {
+                    var recordList = from vw_HnrRecord in db.vw_HnrRecord where (vw_HnrRecord.HnrRecID == HnrRecordID) select vw_HnrRecord;
+                    if (recordList.Any())
+                    {
+                        vw_HnrRecord recordModel = recordList.ToList().First();
+                        if (userInfo.userRoleID == "4")
+                        {
+                            return Error("学生账号不能审核记录");
+                        }
+                        else if (userInfo.userRoleID == "3")
+                        {
+                            //只能审核本学院的申请记录 审核状态 0 -> 1
+                            if (recordModel.State == "0")
+                            {
+                                if (recordModel.AwardeeOrgID == userInfo.userOrgID)
+                                {
+                                    try
+                                    {
+                                        T_ExmRecord exmRecord = db.T_ExmRecord.Find(HnrRecordID);
+                                        exmRecord.State = "1";
+                                        exmRecord.ExmTime = DateTime.Now;
+                                        db.SaveChanges();
+                                        return Success("已通过");
+                                    }
+                                    catch
+                                    {
+                                        return SystemError();
+                                    }
+                                }
+                                else
+                                {
+                                    return Error("荣誉奖项记录只能由本学院账号");
+                                }
+                            }
+                            else
+                            {
+                                return Error("此记录已学院审核完成");
+                            }
+                        }
+                        else
+                        {
+                            //任何记录 审核状态 0,1 -> 2
+                            if (recordModel.State == "0" || recordModel.State == "1")
+                            {
+                                try
+                                {
+                                    T_ExmRecord exmRecord = db.T_ExmRecord.Find(HnrRecordID);
+                                    exmRecord.State = "2";
+                                    exmRecord.ExmID = userInfo.userID;
+                                    exmRecord.ExmTime = DateTime.Now;
+                                    db.SaveChanges();
+                                    return Success("已通过");
+                                }
+                                catch
+                                {
+                                    return SystemError();
+                                }
+                            }
+                            else
+                            {
+                                return Error("此记录校团委已审核");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return Error("此荣誉奖项ID不存在");
+                    }
+                }
+                else
+                {
+                    //令牌过期 返回
+                    return Error();
+                }
+                #endregion
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 审核通过竞赛奖项记录
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="AwdRecordID">竞赛奖项记录ID</param>
+        /// <returns></returns>
+        [HttpGet, Route("auditpass")]
+        public ApiResult AuditPassAwdRecord(string access_token, string AwdRecordID)
+        {
+            result = AccessToken.Check(access_token, "api/record/auditpass");
+            if (result == null)
+            {
+                #region 参数验证
+                if (AwdRecordID == null || AwdRecordID == "")
+                {
+                    return Error("HnrRecordID参数不能为空");
+                }
+                #endregion
+
+                #region 逻辑操作
+                UserInfo userInfo = AccessToken.GetUserInfo(access_token);
+                if (userInfo != null)
+                {
+                    var recordList = from vw_AwdRecord_Rec in db.vw_AwdRecord_Rec where (vw_AwdRecord_Rec.AwdRecID == AwdRecordID) select vw_AwdRecord_Rec;
+                    if (recordList.Any())
+                    {
+                        vw_AwdRecord_Rec recordModel = recordList.ToList().First();
+                        if (userInfo.userRoleID == "4")
+                        {
+                            return Error("学生账号不能审核记录");
+                        }
+                        else if (userInfo.userRoleID == "3")
+                        {
+                            //只能审核本学院的申请记录 审核状态 0 -> 1
+                            if (recordModel.State == "0")
+                            {
+                                if (recordModel.OrgID == userInfo.userOrgID)
+                                {
+                                    try
+                                    {
+                                        T_ExmRecord exmRecord = db.T_ExmRecord.Find(AwdRecordID);
+                                        exmRecord.State = "1";
+                                        exmRecord.ExmTime = DateTime.Now;
+                                        db.SaveChanges();
+                                        return Success("已通过");
+                                    }
+                                    catch
+                                    {
+                                        return SystemError();
+                                    }
+                                }
+                                else
+                                {
+                                    return Error("荣誉奖项记录只能由本学院账号");
+                                }
+                            }
+                            else
+                            {
+                                return Error("此记录已学院审核完成");
+                            }
+                        }
+                        else
+                        {
+                            //任何记录 审核状态 0,1 -> 2
+                            if (recordModel.State == "0" || recordModel.State == "1")
+                            {
+                                try
+                                {
+                                    T_ExmRecord exmRecord = db.T_ExmRecord.Find(AwdRecordID);
+                                    exmRecord.State = "2";
+                                    exmRecord.ExmID = userInfo.userID;
+                                    exmRecord.ExmTime = DateTime.Now;
+                                    db.SaveChanges();
+                                    return Success("已通过");
+                                }
+                                catch
+                                {
+                                    return SystemError();
+                                }
+                            }
+                            else
+                            {
+                                return Error("此记录校团委已审核");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return Error("此荣誉奖项ID不存在");
+                    }
+                }
+                else
+                {
+                    //令牌过期 返回
+                    return Error();
+                }
+                #endregion
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 驳回荣誉奖项记录
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="HnrRecordID">荣誉奖项记录ID</param>
+        /// <param name="RejectReason">驳回理由</param>
+        /// <returns></returns>
+        [HttpGet, Route("auditreject")]
+        public ApiResult AuditRejectHnrRecord(string access_token, string HnrRecordID, string RejectReason)
+        {
+            result = AccessToken.Check(access_token, "api/record/auditrejcet");
+            if (result == null)
+            {
+                #region 参数验证
+                if (HnrRecordID == null || HnrRecordID == "")
+                {
+                    return Error("HnrRecordID参数不能为空");
+                }
+                if (RejectReason == null || RejectReason == "")
+                {
+                    return Error("RejectReason参数不能为空");
+                }
+                #endregion
+
+                #region 逻辑操作
+                UserInfo userInfo = AccessToken.GetUserInfo(access_token);
+                if (userInfo != null)
+                {
+                    var recordList = from vw_HnrRecord in db.vw_HnrRecord where (vw_HnrRecord.HnrRecID == HnrRecordID) select vw_HnrRecord;
+                    if (recordList.Any())
+                    {
+                        vw_HnrRecord recordModel = recordList.ToList().First();
+                        if (userInfo.userRoleID == "4")
+                        {
+                            return Error("学生账号不能审核记录");
+                        }
+                        else if (userInfo.userRoleID == "3")
+                        {
+                            //只能审核本学院的申请记录 审核状态 0 -> 1
+                            if (recordModel.State == "0")
+                            {
+                                if (recordModel.AwardeeOrgID == userInfo.userOrgID)
+                                {
+                                    try
+                                    {
+                                        T_ExmRecord exmRecord = db.T_ExmRecord.Find(HnrRecordID);
+                                        exmRecord.State = "3";
+                                        exmRecord.ExmID = userInfo.userID;
+                                        exmRecord.Reason = RejectReason;
+                                        exmRecord.ExmTime = DateTime.Now;
+                                        db.SaveChanges();
+                                        return Success("已驳回");
+                                    }
+                                    catch
+                                    {
+                                        return SystemError();
+                                    }
+                                }
+                                else
+                                {
+                                    return Error("荣誉奖项记录只能由本学院账号");
+                                }
+                            }
+                            else
+                            {
+                                return Error("此记录已学院审核完成");
+                            }
+                        }
+                        else
+                        {
+                            //任何记录 审核状态 0,1 -> 2
+                            if (recordModel.State == "0" || recordModel.State == "1")
+                            {
+                                try
+                                {
+                                    T_ExmRecord exmRecord = db.T_ExmRecord.Find(HnrRecordID);
+                                    exmRecord.State = "3";
+                                    exmRecord.ExmID = userInfo.userID;
+                                    exmRecord.Reason = RejectReason;
+                                    exmRecord.ExmTime = DateTime.Now;
+                                    db.SaveChanges();
+                                    return Success("已驳回");
+                                }
+                                catch
+                                {
+                                    return SystemError();
+                                }
+                            }
+                            else
+                            {
+                                return Error("此记录校团委已审核");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return Error("此荣誉奖项ID不存在");
+                    }
+                }
+                else
+                {
+                    //令牌过期 返回
+                    return Error();
+                }
+                #endregion
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 驳回竞赛奖项记录
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <param name="AwdRecordID">竞赛奖项记录ID</param>
+        /// <param name="RejectReason">驳回理由</param>
+        /// <returns></returns>
+        [HttpGet, Route("auditreject")]
+        public ApiResult AuditRejectAwdRecord(string access_token, string AwdRecordID, string RejectReason)
+        {
+            result = AccessToken.Check(access_token, "api/record/auditpass");
+            if (result == null)
+            {
+                #region 参数验证
+                if (AwdRecordID == null || AwdRecordID == "")
+                {
+                    return Error("HnrRecordID参数不能为空");
+                }
+                if (RejectReason == null || RejectReason == "")
+                {
+                    return Error("RejectReason参数不能为空");
+                }
+                #endregion
+
+                #region 逻辑操作
+                UserInfo userInfo = AccessToken.GetUserInfo(access_token);
+                if (userInfo != null)
+                {
+                    var recordList = from vw_AwdRecord_Rec in db.vw_AwdRecord_Rec where (vw_AwdRecord_Rec.AwdRecID == AwdRecordID) select vw_AwdRecord_Rec;
+                    if (recordList.Any())
+                    {
+                        vw_AwdRecord_Rec recordModel = recordList.ToList().First();
+                        if (userInfo.userRoleID == "4")
+                        {
+                            return Error("学生账号不能审核记录");
+                        }
+                        else if (userInfo.userRoleID == "3")
+                        {
+                            //只能审核本学院的申请记录 审核状态 0 -> 1
+                            if (recordModel.State == "0")
+                            {
+                                if (recordModel.OrgID == userInfo.userOrgID)
+                                {
+                                    try
+                                    {
+                                        T_ExmRecord exmRecord = db.T_ExmRecord.Find(AwdRecordID);
+                                        exmRecord.State = "3";
+                                        exmRecord.ExmID = userInfo.userID;
+                                        exmRecord.Reason = RejectReason;
+                                        exmRecord.ExmTime = DateTime.Now;
+                                        db.SaveChanges();
+                                        return Success("已驳回");
+                                    }
+                                    catch
+                                    {
+                                        return SystemError();
+                                    }
+                                }
+                                else
+                                {
+                                    return Error("荣誉奖项记录只能由本学院账号");
+                                }
+                            }
+                            else
+                            {
+                                return Error("此记录已学院审核完成");
+                            }
+                        }
+                        else
+                        {
+                            //任何记录 审核状态 0,1 -> 2
+                            if (recordModel.State == "0" || recordModel.State == "1")
+                            {
+                                try
+                                {
+                                    T_ExmRecord exmRecord = db.T_ExmRecord.Find(AwdRecordID);
+                                    exmRecord.State = "3";
+                                    exmRecord.ExmID = userInfo.userID;
+                                    exmRecord.Reason = RejectReason;
+                                    exmRecord.ExmTime = DateTime.Now;
+                                    db.SaveChanges();
+                                    return Success("已驳回");
+                                }
+                                catch
+                                {
+                                    return SystemError();
+                                }
+                            }
+                            else
+                            {
+                                return Error("此记录校团委已审核");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return Error("此荣誉奖项ID不存在");
+                    }
+                }
+                else
+                {
+                    //令牌过期 返回
+                    return Error();
                 }
                 #endregion
             }
@@ -1429,7 +1851,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
 
             if (userInfo == null)
             {
-                return Error("令牌已过期，请重新登录");
+                return Error();
             }
 
             List<vw_HnrRecord> hnrRecordList = new List<vw_HnrRecord>();
@@ -1486,6 +1908,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 model.ApplyAccountOrg = item.ApplyAccountOrgName;
                 model.ApplyAccountRole = item.ApplyAccountRoleName;
                 model.ApplyTime = item.ApplyTime;
+                model.RejectReason = item.Reason;
                 model.FileUrl = item.FileUrl;
                 model.State = item.State;
 
@@ -1513,6 +1936,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 model.ApplyAccountOrg = item.ApplyAccountOrgName;
                 model.AppltAccountRole = item.ApplyAccountRoleName;
                 model.ApplyTime = item.ApplyTime;
+                model.RejectReason = item.Reason;
                 model.FileUrl = item.FileUrl;
                 model.State = item.State;
 

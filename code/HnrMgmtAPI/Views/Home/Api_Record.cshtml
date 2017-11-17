@@ -100,6 +100,22 @@
             //IsTeam  是否为团队 1代表团队获奖 0代表非团队获奖   Members 成员列表  AwdeeID 成员ID（一般为学号）
             //AwdeeName 成员姓名  OrgID  成员所属部门ID  Branch 所属团支部
             //FileUrl 上传文件名（若未上传文件，则赋值为-1）
+
+
+
+            $('#btnHnrRecordPass').click(function (e) {
+                AjaxRequestGet('api/record/auditpass?access_token=11&HnrRecordID=81e1565d-96dd-4ec7-ae6a-7d7f3e279bbf');
+            });
+            $('#btnAwdRecordPass').click(function (e) {
+                AjaxRequestGet('api/record/auditpass?access_token=11&AwdRecordID=7e12cbd4-0c6a-49a7-9d5e-ccaa05d75a73');
+            });
+            $('#btnHnrRecordReject').click(function (e) {
+                AjaxRequestGet('api/record/auditreject?access_token=11&HnrRecordID=cc44218b-a6d9-4d82-bc05-b8dfeab6c542&RejectReason=232323232323');
+            });
+            $('#btnAwdRecordReject').click(function (e) {
+                AjaxRequestGet('api/record/auditreject?access_token=11&AwdRecordID=978ed6ad-608e-4ea6-bee2-6f30707965c8&RejectReason=232323232323');
+            });
+
         });
 
     </script>
@@ -146,12 +162,31 @@
 
             <hr />
 
-            <h4>修改荣誉记录接口</h4>
+            <h4>修改荣誉奖项记录接口</h4>
             <input type="button" value="api/record/hnrmodify" id="btnHnrRecordModify" />
             <br />
             <br />
-            <h4>修改获奖记录接口</h4>
+            <h4>修改竞赛奖项记录接口</h4>
             <input type="button" value="api/record/awdmodify" id="btnAwdRecordModify" />
+            <br />
+            <br />
+
+            <hr />
+
+            <h4>审核通过荣誉奖项记录接口</h4>
+            <input type="button" value="api/record/auditpass" id="btnHnrRecordPass" />
+            <br />
+            <br />
+            <h4>审核通过竞赛奖项记录接口</h4>
+            <input type="button" value="api/record/auditpass" id="btnAwdRecordPass" />
+            <br />
+            <br />
+            <h4>驳回荣誉奖项记录接口</h4>
+            <input type="button" value="api/record/auditreject" id="btnHnrRecordReject" />
+            <br />
+            <br />
+            <h4>驳回竞赛奖项记录接口</h4>
+            <input type="button" value="api/record/auditreject" id="btnAwdRecordReject" />
             <br />
             <br />
         </div>

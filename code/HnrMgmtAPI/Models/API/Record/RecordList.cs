@@ -32,6 +32,7 @@ namespace HnrMgmtAPI.Models.API.Record
         public string ApplyAccountOrg { get; set; }
         public string ApplyAccountRole { get; set; }
         public System.DateTime ApplyTime { get; set; }
+        public string RejectReason { get; set; }
         public string FileUrl { get; set; }
         public string State { get; set; }
     }
@@ -56,6 +57,7 @@ namespace HnrMgmtAPI.Models.API.Record
         public string ApplyAccountOrg { get; set; }
         public string AppltAccountRole { get; set; }
         public Nullable<System.DateTime> ApplyTime { get; set; }
+        public string RejectReason { get; set; }
         public string FileUrl { get; set; }
         public string State { get; set; }
     }

@@ -19,6 +19,7 @@ namespace HnrMgmtAPI.Models
         public System.DateTime ApplyTime { get; set; }
         public string ExmID { get; set; }
         public Nullable<System.DateTime> ExmTime { get; set; }
+        public string Reason { get; set; }
         public string State { get; set; }
     }
 }

@@ -1,11 +1,10 @@
-﻿using System;
+﻿using HnrMgmtAPI.Models;
+using HnrMgmtAPI.Models.API;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Http;
-using HnrMgmtAPI.Models;
-using HnrMgmtAPI.Models.API;
 using System.Linq.Expressions;
+using System.Web.Http;
 
 namespace HnrMgmtAPI.Controllers.API
 {
@@ -35,6 +34,32 @@ namespace HnrMgmtAPI.Controllers.API
         public Entities db = new Entities();
 
         /// <summary>
+        /// 出现未知程序错误、联系管理员
+        /// </summary>
+        /// <returns></returns>
+        public static ApiResult SystemError()
+        {
+            ApiResult result = new ApiResult();
+            result.status = "error";
+            result.messages = "出现未知程序错误、请联系管理员！";
+            result.fieldErrors = null;
+            return result;
+        }
+
+        /// <summary>
+        /// 令牌过期是返回错误
+        /// </summary>
+        /// <returns></returns>
+        public static ApiResult Error()
+        {
+            ApiResult result = new ApiResult();
+            result.status = "error";
+            result.messages = "令牌已过期，请重新登录！";
+            result.fieldErrors = null;
+            return result;
+        }
+
+        /// <summary>
         ///  发生错误 返回错误信息
         /// </summary>
         /// <param name="message"></param>
@@ -61,7 +86,7 @@ namespace HnrMgmtAPI.Controllers.API
             result.fieldErrors = fieldErrors;
             return result;
         }
-
+        
         /// <summary>
         ///  操作成功 返回信息
         /// </summary>
@@ -138,6 +163,12 @@ namespace HnrMgmtAPI.Controllers.API
             }
         }
 
+        /// <summary>
+        /// 字段值转换
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="parm"></param>
+        /// <returns></returns>
         public static string Change(string type,string parm)
         {
             string value = "Error";

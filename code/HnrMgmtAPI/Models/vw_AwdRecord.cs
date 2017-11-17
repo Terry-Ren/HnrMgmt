@@ -40,6 +40,7 @@ namespace HnrMgmtAPI.Models
         public string AppltAccountRoleID { get; set; }
         public string AppltAccountRoleName { get; set; }
         public Nullable<System.DateTime> ApplyTime { get; set; }
+        public string Reason { get; set; }
         public string FileUrl { get; set; }
         public string State { get; set; }
     }
