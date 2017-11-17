@@ -156,6 +156,8 @@ import {reqGetRoleList,reqGetRoleControl} from '../../api/api'
 </script>
 
 <style scoped lang="scss">
-
+.warp{
+  width: 100%;
+}
  
 </style>

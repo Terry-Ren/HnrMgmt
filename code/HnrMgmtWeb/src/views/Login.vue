@@ -110,7 +110,7 @@ import {posLogin} from '../api/api'
   margin-top: 180px;
 
   .main-tittle{
-    padding-top: 40px;
+    font-family: "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei";
     font-size: 25px;
     text-align: right;
   }

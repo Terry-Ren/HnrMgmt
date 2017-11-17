@@ -11,6 +11,8 @@ import RecAward from '../components/RecordData/RecAward'
 import AddAward from '../components/RecordData/AddAward'
 import AddHonor from '../components/RecordData/AddHonor'
 
+import TEXT from '../views/Home1.vue'
+
 
 // import text from '../components/BasicData/text.vue'
 // import AccTchlist from '../components/SystemData/AccTchlist.vue'
@@ -43,6 +45,8 @@ const routes = [
     name: 'Error',
     component: NotFoundComponent
   },
+  // 测试页
+        {path:'/text',component:TEXT,name:'TEXT',menuShow:true},
   // 登录页
   {
     path: '/login',
@@ -60,7 +64,7 @@ const routes = [
     },
     redirect: '/index',
     children: [
-      {path: '/index', component: Hello, name: 'index', menuShow: true}
+      {path: '/index', component: Hello, name: 'index', menuShow: true},
     ]
   },
   // 记录填报
