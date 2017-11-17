@@ -40,6 +40,7 @@ namespace HnrMgmtAPI.Models
         public string ApplyAccountOrgName { get; set; }
         public string ApplyAccountRoleID { get; set; }
         public string ApplyAccountRoleName { get; set; }
+        public string Reason { get; set; }
         public string FileUrl { get; set; }
         public string State { get; set; }
     }
