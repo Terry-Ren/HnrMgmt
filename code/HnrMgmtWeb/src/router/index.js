@@ -12,6 +12,7 @@ import AddAward from '../components/RecordData/AddAward'
 import AddHonor from '../components/RecordData/AddHonor'
 
 import TEXT from '../views/Home1.vue'
+import Ctext from '../components/SystemData/Password.vue'
 
 
 // import text from '../components/BasicData/text.vue'
@@ -45,7 +46,7 @@ const routes = [
     name: 'Error',
     component: NotFoundComponent
   },
-  // 测试页
+  // 测试页面
         {path:'/text',component:TEXT,name:'TEXT',menuShow:true},
   // 登录页
   {
@@ -81,7 +82,7 @@ const routes = [
       { path: '/record/honor', component: RecHonor, name: 'RecHonor',meta:{keepAlive:true}, menuShow: true },
       { path: '/record/award', component: RecAward, name: 'RecAward', meta: { keepAlive: true }, menuShow: true },
       { path: '/record/addaward', component: AddAward, name: 'AddAward', menuShow: true },     
-      { path: '/record/addhonor', component: AddHonor, name:'AddHonor',menuShow:true}      
+      { path: '/record/addhonor', component: AddHonor, name:'AddHonor',menuShow:true}, 
     ]
   },
   // 基础数据
@@ -116,7 +117,8 @@ const routes = [
       {path: '/system/Acclist', component: ComAcclist, name: 'ComAcclist', menuShow: true},
       {path: '/system/Role', component: Rolelist, name: 'Rolelist', menuShow: true},
       {path: '/system/PassWord', component: ChangePass, name: 'ChangePass', menuShow: true},
-      { path: '/system/Menulist', component: Menulist, name: 'Menulist', menuShow: true }
+      { path: '/system/Menulist', component: Menulist, name: 'Menulist', menuShow: true },
+      {path:'/system/ctext',component:Ctext,name:'Ctext',menuShow:true}
     ]
 
   }

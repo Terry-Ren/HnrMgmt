@@ -207,7 +207,7 @@ import * as types from '../store/mutation-types'
         flex-grow: 1;
         display: flex;
         >aside{
-            flex-shrink: 0;
+            flex:none;
             background-color: #333744;
             &::-webkit-scrollbar {
             display: none;
