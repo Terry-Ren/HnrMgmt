@@ -224,7 +224,7 @@
     <Compile Include="Controllers\API\Sys\AccountController.cs" />
     <Compile Include="Controllers\API\Sys\PasswordController.cs" />
     <Compile Include="Controllers\API\Sys\RoleController.cs" />
-    <Compile Include="Controllers\API\TB\RecordController.cs" />
+    <Compile Include="Controllers\API\Record\RecordController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -243,6 +243,8 @@
     <Compile Include="Models\API\JC\OrganizationAdd.cs" />
     <Compile Include="Models\API\JC\OrganizationModify.cs" />
     <Compile Include="Models\API\ParameterCheck.cs" />
+    <Compile Include="Models\API\Record\ModifyAwdRecord.cs" />
+    <Compile Include="Models\API\Record\ModifyHnrRecord.cs" />
     <Compile Include="Models\API\Return_GetList.cs" />
     <Compile Include="Models\API\Sys\AdminAdd.cs" />
     <Compile Include="Models\API\Sys\AdminModify.cs" />
@@ -253,83 +255,83 @@
     <Compile Include="Models\API\Sys\RoleMenuSet.cs" />
     <Compile Include="Models\API\Sys\TeacherAdd.cs" />
     <Compile Include="Models\API\Sys\TeacherModify.cs" />
-    <Compile Include="Models\API\TB\RecordList.cs" />
-    <Compile Include="Models\API\TB\TB_AwdRecord.cs" />
-    <Compile Include="Models\API\TB\TB_HnrRecord.cs" />
-    <Compile Include="Models\API\TB\TeamInfo.cs" />
+    <Compile Include="Models\API\Record\RecordList.cs" />
+    <Compile Include="Models\API\Record\TB_AwdRecord.cs" />
+    <Compile Include="Models\API\Record\TB_HnrRecord.cs" />
+    <Compile Include="Models\API\Record\TeamInfo.cs" />
     <Compile Include="Models\API\UserInfo.cs" />
-    <Compile Include="Models\HnrMgmt.Context.cs">
+    <Compile Include="Models\hnrMgmt.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HnrMgmt.Context.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\HnrMgmt.cs">
+    <Compile Include="Models\hnrMgmt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\HnrMgmt.Designer.cs">
+    <Compile Include="Models\hnrMgmt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HnrMgmt.edmx</DependentUpon>
+      <DependentUpon>hnrMgmt.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\T_Account.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_Award.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_Awardee.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_AwdRecord.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_ExmRecord.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_HnrRecord.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_Honor.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_Organization.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_Right.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_Role.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_RoleRight.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\T_Team.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_Account.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_AwdRecord.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_AwdRecord_Rec.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_HnrRecord.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_Role.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_Team.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_TeamMembers.cs">
-      <DependentUpon>HnrMgmt.tt</DependentUpon>
+      <DependentUpon>hnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -342,15 +344,15 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\HnrMgmt.Context.tt">
+    <Content Include="Models\hnrMgmt.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HnrMgmt.edmx</DependentUpon>
-      <LastGenOutput>HnrMgmt.Context.cs</LastGenOutput>
+      <DependentUpon>hnrMgmt.edmx</DependentUpon>
+      <LastGenOutput>hnrMgmt.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\HnrMgmt.tt">
+    <Content Include="Models\hnrMgmt.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HnrMgmt.edmx</DependentUpon>
-      <LastGenOutput>HnrMgmt.cs</LastGenOutput>
+      <DependentUpon>hnrMgmt.edmx</DependentUpon>
+      <LastGenOutput>hnrMgmt.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
@@ -359,12 +361,12 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\HnrMgmt.edmx">
+    <EntityDeploy Include="Models\hnrMgmt.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HnrMgmt.Designer.cs</LastGenOutput>
+      <LastGenOutput>hnrMgmt.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\HnrMgmt.edmx.diagram">
-      <DependentUpon>HnrMgmt.edmx</DependentUpon>
+    <Content Include="Models\hnrMgmt.edmx.diagram">
+      <DependentUpon>hnrMgmt.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -395,7 +397,7 @@
     <Content Include="Views\Home\Api_Sys.cshtml" />
     <Content Include="Views\Home\Api_Auth.cshtml" />
     <Content Include="Views\Home\Api_TB.cshtml" />
-    <Content Include="Views\Home\Api_CX.cshtml" />
+    <Content Include="Views\Home\Api_Record.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
