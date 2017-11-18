@@ -114,13 +114,13 @@
         </aside>
         <section class="main-container">
             <!-- 需要长时间存活的 -->          
-            <transition name="fade" model="out-in" >
+            <transition >
             <keep-alive>
                 <router-view v-if="$route.meta.keepAlive"></router-view>
             </keep-alive>
-            </transition  name="fade" model="out-in"> 
+            </transition> 
             <!-- 不需要长时间保存的 -->
-            <transition>
+            <transition mode="out-in">
             <router-view v-if="!$route.meta.keepAlive"></router-view>          
             </transition>
         </section>
@@ -238,8 +238,9 @@ import * as types from '../store/mutation-types'
                }          
         }
         >.main-container{
-            flex:1;
+            flex-grow: 1;
             padding: 10px;
+            position: relative;
         }
     }
   }

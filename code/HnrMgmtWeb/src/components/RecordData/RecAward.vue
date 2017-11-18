@@ -1,51 +1,47 @@
 <template>
-<el-row class="warp">
-  <el-col :span="24" class="warp-breadcrum">
-    <!-- 面包屑导航 -->
-    <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
-        <el-breadcrumb-item>项目填报</el-breadcrumb-item>
-        <el-breadcrumb-item>奖项填报</el-breadcrumb-item>
-      </el-breadcrumb>
-  </el-col>
- <!-- 下方主内容 -->
-  <el-col :span="24" class="warp-main left-main">
-    <!-- 表格区 -->
-    <el-card>
-    <!-- 工具栏 -->
-    <el-col :span="24" class="toolBar" >    
-      <el-form :inline="true" style="margin-bottom:15px">
-        <el-button type="primary" @click="toAddFrom" >新增奖项</el-button>
-      </el-form>
-    </el-col>      
-    <el-col :span="24">
-      <el-table  :data="AwdData"  style="width:100%" v-loading="listLoading" > 
-        <el-table-column type="selection"></el-table-column>
-        <el-table-column type="index"  label="序号" style="text-aligin:center" align="center"></el-table-column>
-        <el-table-column prop="AwdName" label="奖项名称" sortable align="center" ></el-table-column>
-        <el-table-column prop="AwdYear" label="获得年度" sortable align="center" ></el-table-column>
-        <el-table-column prop="Grade" label="等次" sortable align="center" :formatter="transfGrande"></el-table-column>
-        <el-table-column prop="GradeName" label="级别" sortable align="center" :formatter="transfGrandeName"></el-table-column>        
-        <el-table-column prop="AwdProName" label="项目名称" sortable align="center" ></el-table-column>        
-        <el-table-column prop="AwdOrgName" label="所属学院" sortable align="center" ></el-table-column>
-        <el-table-column prop="AwardeeName" label="主要学生" sortable align="center" ></el-table-column>
-        <el-table-column prop="State" label="审核状态" sortable align="center" :formatter="transfRecordState" ></el-table-column>               
-        <el-table-column label="操作" width="280" align="center">
-          <template slot-scope="scope">
-            <el-button  size="small" @click="showDetialDialog(scope.$index,scope.row)" >详情</el-button>
-            <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重填</el-button>
-            <el-button type="danger" size="small"  @click="delectAccTch(scope.$index,scope.row)" >删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-col>
-    <!-- 下方工具条 -->
-    <el-col :span="24">
-      <el-pagination layout="total, prev, pager, next, sizes, jumper" @size-change="SizeChangeEvent" @current-change="CurrentChangeEvent" :page-size="size" :page-sizes="[10,15,20,25,30]":total="totalNum">
-      </el-pagination>
-    </el-col>
-    </el-card>
-  </el-col>
+  <div class="container">
+    <div class="warp-breadcrum">
+      <!-- 面包屑导航 -->
+      <el-breadcrumb separator="/">
+          <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
+          <el-breadcrumb-item>项目填报</el-breadcrumb-item>
+          <el-breadcrumb-item>奖项填报</el-breadcrumb-item>
+      </el-breadcrumb>      
+    </div>
+    <div class="warp-body">
+      <!-- 表格区 -->
+      <!-- 工具栏 -->
+      <div class="toolbal">
+        <el-form :inline="true" style="margin-bottom:15px">
+          <el-button type="primary" @click="toAddFrom" >新增奖项</el-button>
+        </el-form>
+      </div>
+        <div class="main-data">
+        <el-table class="table" :data="AwdData"   v-loading="listLoading" height="string"  > 
+          <el-table-column type="selection"></el-table-column>
+          <el-table-column type="index"  label="序号" style="text-aligin:center" align="center"></el-table-column>
+          <el-table-column prop="AwdName" label="奖项名称" sortable align="center" ></el-table-column>
+          <el-table-column prop="AwdYear" label="获得年度" sortable align="center" ></el-table-column>
+          <el-table-column prop="Grade" label="等次" sortable align="center" :formatter="transfGrande"></el-table-column>
+          <el-table-column prop="GradeName" label="级别" sortable align="center" :formatter="transfGrandeName"></el-table-column>        
+          <el-table-column prop="AwdProName" label="项目名称" sortable align="center" ></el-table-column>        
+          <el-table-column prop="AwdOrgName" label="所属学院" sortable align="center" ></el-table-column>
+          <el-table-column prop="AwardeeName" label="主要学生" sortable align="center" ></el-table-column>
+          <el-table-column prop="State" label="审核状态" sortable align="center" :formatter="transfRecordState" ></el-table-column>               
+          <el-table-column label="操作" width="280" align="center" >
+            <template slot-scope="scope">
+              <el-button  size="small" @click="showDetialDialog(scope.$index,scope.row)" >详情</el-button>
+              <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重填</el-button>
+              <el-button type="danger" size="small"  @click="delectAccTch(scope.$index,scope.row)" >删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        </div>
+      <!-- 下方工具条 -->
+
+        <el-pagination layout="total, prev, pager, next, sizes, jumper" @size-change="SizeChangeEvent" @current-change="CurrentChangeEvent" :page-size="size" :page-sizes="[10,15,20,25,30]":total="totalNum">
+        </el-pagination>
+    </div>
     <!-- 详情表单 -->
     <el-dialog title="荣誉记录查看" :visible.sync="detailFormVisible" v-loading="detailLoading" width="70%" >
       <el-form :model="detailFormBody" label-width="80px" ref="detailFrom" :rules="rules" >
@@ -57,9 +53,9 @@
         <el-button @click.native=" detailFormVisible = false">取消</el-button>
         <el-button type="primary" @click.native="detailSubmit" >提交</el-button>
       </div>     
-    </el-dialog>
-</el-row>
+    </el-dialog>      
 
+  </div>
 </template>
 
 <script type="text/ecmascript-6">

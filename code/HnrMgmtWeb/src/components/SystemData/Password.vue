@@ -1,14 +1,14 @@
 <template>
-<el-row class="change-password">
-  <el-col :span="24" class="warp-breadcrum">
-    <!-- 面包屑导航 -->
-    <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
-        <el-breadcrumb-item>系统管理</el-breadcrumb-item>
-        <el-breadcrumb-item>密码管理</el-breadcrumb-item>
-      </el-breadcrumb>
-  </el-col>
-  <el-col :span="24" class="main-body">
+  <div class="container">
+    <div class="warp-breadcrum">
+      <!-- 面包屑导航 -->
+      <el-breadcrumb separator="/">
+          <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
+          <el-breadcrumb-item>系统管理</el-breadcrumb-item>
+          <el-breadcrumb-item>密码管理</el-breadcrumb-item>
+      </el-breadcrumb>    
+    </div>
+    <div class="warp-body">
       <el-form :model="passwordData"  :rules="rules" ref="passFrom" class="main-from" label-width="100px" v-loading="submitLoading">
         <el-form-item label="原密码" prop="OldPwd">
           <el-input type="password" v-model="passwordData.OldPwd" placeholder="请输入原密码"  ></el-input>  
@@ -24,9 +24,8 @@
           <el-button @click="restFrom(passwordData)">重置</el-button>
         </el-form-item>
       </el-form>
-  </el-col>
-</el-row>
-
+    </div>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">

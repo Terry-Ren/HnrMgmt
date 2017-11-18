@@ -68,14 +68,35 @@ body {
   
   // 组件公共样式
   .container{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 15px;
+    margin: auto;
     display: flex;
-    width: 100%;
-    height: 100%;
     flex-direction: column;
+    // 面包屑
     >.warp-breadcrum{
-        flex: none;
+      width: 100%;
+      flex: none;
     }
+    // 主内容
     >.warp-body{
         flex:1;
+        display: flex;
+        flex-direction: column;
+        .toolbal{
+          flex:none;
+        }
+        .main-data{
+          width: 100%;
+          flex:1;
+          overflow: auto;
+          >.table{
+            width:100%; 
+            height:100%
+          }
+        }
     }
 }

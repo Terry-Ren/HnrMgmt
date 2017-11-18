@@ -1,49 +1,47 @@
 <template>
-<el-row class="warp">
-  <el-col :span="24" class="warp-breadcrum">
-    <!-- 面包屑导航 -->
-    <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
-        <el-breadcrumb-item>项目填报</el-breadcrumb-item>
-        <el-breadcrumb-item>荣誉填报</el-breadcrumb-item>
-      </el-breadcrumb>
-  </el-col>
- <!-- 下方主内容 -->
-  <el-col :span="24" class="warp-main left-main">
-    <!-- 表格区 -->
-    <el-card >  
-    <!-- 工具栏 -->
-    <el-col :span="24" class="toolBar" >    
-      <el-form :inline="true" style="margin-bottom:15px">
-        <el-button type="primary" @click="toAddFrom" >新增荣誉</el-button>
-      </el-form>
-    </el-col>  
-    <el-col :span="24">
-      <el-table  :data="HnrData"  style="width:100%" v-loading="listLoading"  max-height="535" > 
-        <el-table-column type="selection" ></el-table-column>
-        <el-table-column type="index"  label="序号" style="text-aligin:center" align="center"></el-table-column>
-        <el-table-column prop="HnrName" label="荣誉名称" sortable align="center" ></el-table-column>
-        <el-table-column prop="HnrAnnual" label="获得年度" sortable align="center" ></el-table-column>
-        <el-table-column prop="HnrGradeName" label="级别" sortable align="center" :formatter="transfGrandeName" ></el-table-column>
-        <el-table-column prop="AwardeeName" label="姓名" sortable align="center" ></el-table-column>
-        <el-table-column prop="AwardeeOrgName" label="单位学院" sortable align="center" ></el-table-column>
-        <el-table-column prop="State" label="审核状态" sortable align="center" :formatter="transfRecordState" ></el-table-column>        
-        <el-table-column label="操作" width="280" align="center">
-          <template slot-scope="scope" >
-            <el-button  size="small" @click="showDetialDialog(scope.$index,scope.row)" >详情</el-button>
-            <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重填</el-button>
-            <el-button type="danger" size="small"  @click="delectAccTch(scope.$index,scope.row)" >删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-col>
-    <!-- 下方工具条 -->
-    <el-col :span="24">
+  <div class="container">
+    <div class="warp-breadcrum">
+      <!-- 面包屑导航 -->
+      <el-breadcrumb separator="/">
+          <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
+          <el-breadcrumb-item>项目填报</el-breadcrumb-item>
+          <el-breadcrumb-item>荣誉填报</el-breadcrumb-item>
+        </el-breadcrumb>      
+    </div>
+    <!-- 下方主内容 -->
+    <div class="warp-body">
+      <!-- 工具栏 -->
+      <div class="toolbal">
+        <el-form :inline="true" style="margin-bottom:15px">
+          <el-button type="primary" @click="toAddFrom" >新增荣誉</el-button>
+        </el-form>        
+      </div>
+      <div class="main-data">
+        <!-- 表格区 -->
+        <div class="table">
+          <el-table  :data="HnrData"  style="width:100%" v-loading="listLoading"  max-height="535" > 
+            <el-table-column type="selection" ></el-table-column>
+            <el-table-column type="index"  label="序号" style="text-aligin:center" align="center"></el-table-column>
+            <el-table-column prop="HnrName" label="荣誉名称" sortable align="center" ></el-table-column>
+            <el-table-column prop="HnrAnnual" label="获得年度" sortable align="center" ></el-table-column>
+            <el-table-column prop="HnrGradeName" label="级别" sortable align="center" :formatter="transfGrandeName" ></el-table-column>
+            <el-table-column prop="AwardeeName" label="姓名" sortable align="center" ></el-table-column>
+            <el-table-column prop="AwardeeOrgName" label="单位学院" sortable align="center" ></el-table-column>
+            <el-table-column prop="State" label="审核状态" sortable align="center" :formatter="transfRecordState" ></el-table-column>        
+            <el-table-column label="操作" width="280" align="center">
+              <template slot-scope="scope" >
+                <el-button  size="small" @click="showDetialDialog(scope.$index,scope.row)" >详情</el-button>
+                <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重填</el-button>
+                <el-button type="danger" size="small"  @click="delectAccTch(scope.$index,scope.row)" >删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>          
+        </div>
+      </div>
+      <!-- 下方工具条 -->      
       <el-pagination layout="total, prev, pager, next, sizes, jumper" @size-change="SizeChangeEvent" @current-change="CurrentChangeEvent" :page-size="size" :page-sizes="[10,15,20,25,30]":total="totalNum">
-      </el-pagination>
-    </el-col>
-    </el-card>
-  </el-col>
+      </el-pagination>      
+    </div>
     <!-- 详情表单 -->
     <el-dialog title="荣誉记录查看" :visible.sync="detailFormVisible" v-loading="detailLoading" width="70%" >
       <el-form :inline="true" :model="detailFormBody" label-width="100px" ref="addForm" :rules="rules" auto class="hornor-add" style="padding-left: 5%;" >
@@ -54,9 +52,8 @@
           <el-input v-model="detailFormBody.HnrAnnual"  style="width:300px" ></el-input>
         </el-form-item>                                     
       </el-form>  
-    </el-dialog>
-</el-row>
-
+    </el-dialog>    
+  </div>
 </template>
 
 <script type="text/ecmascript-6">

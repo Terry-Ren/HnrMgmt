@@ -12,7 +12,7 @@ import AddAward from '../components/RecordData/AddAward'
 import AddHonor from '../components/RecordData/AddHonor'
 
 import TEXT from '../views/Home1.vue'
-import Ctext from '../components/SystemData/Password.vue'
+import Ctext from '../components/RecordData/RecHonor.vue'
 
 
 // import text from '../components/BasicData/text.vue'
