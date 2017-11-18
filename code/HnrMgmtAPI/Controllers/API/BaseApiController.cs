@@ -41,7 +41,7 @@ namespace HnrMgmtAPI.Controllers.API
         {
             ApiResult result = new ApiResult();
             result.status = "error";
-            result.messages = "出现未知程序错误、请联系管理员！";
+            result.messages = "操作失败、出现未知程序错误、请联系管理员！";
             result.fieldErrors = null;
             return result;
         }

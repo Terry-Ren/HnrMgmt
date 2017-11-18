@@ -61,6 +61,10 @@
             $('#btnGetuserinfofromcache').click(function (e) {
                 AjaxRequestGet('api/auth/getuserinfofromcache?access_token=11');
             });
+
+            $('#btnLogout').click(function (e) {
+                AjaxRequestGet('api/auth/logout?access_token=11');
+            });
         });
 
     </script>
@@ -75,6 +79,10 @@
             <br />
             <br />
             <input type="button" value="api/auth/getuserinfofromcache" id="btnGetuserinfofromcache" />
+            <br />
+            <br />
+            <h3>注销接口测试：</h3>
+            <input type="button" value="api/auth/logout" id="btnLogout" />
             <br />
             <br />
         </div>

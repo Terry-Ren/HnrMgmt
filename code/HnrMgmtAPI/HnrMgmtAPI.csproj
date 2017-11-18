@@ -251,6 +251,7 @@
     <Compile Include="Models\API\Sys\MenuAdd.cs" />
     <Compile Include="Models\API\Sys\MenuModify.cs" />
     <Compile Include="Models\API\Sys\PasswordModify.cs" />
+    <Compile Include="Models\API\Sys\PersonalInfoModify.cs" />
     <Compile Include="Models\API\Sys\RoleMenuModel.cs" />
     <Compile Include="Models\API\Sys\RoleMenuSet.cs" />
     <Compile Include="Models\API\Sys\TeacherAdd.cs" />

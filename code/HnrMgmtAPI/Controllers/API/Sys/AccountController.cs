@@ -1,10 +1,10 @@
 ﻿using HnrMgmtAPI.Common;
 using HnrMgmtAPI.Models;
 using HnrMgmtAPI.Models.API;
+using HnrMgmtAPI.Models.API.Auth;
 using HnrMgmtAPI.Models.API.Sys;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Http;
 
 namespace HnrMgmtAPI.Controllers.API.Sys
@@ -83,7 +83,6 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                 {
                     return result;
                 }
-
                 #endregion
 
                 #region 逻辑操作
@@ -582,6 +581,89 @@ namespace HnrMgmtAPI.Controllers.API.Sys
 
         #region 各二级单位使用 用于管理 学生账号   暂未开发
         //暂时先不开发
+        #endregion
+
+        #region 账号个人信息修改
+        /// <summary>
+        /// 获取帐户信息
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <returns></returns>
+        [HttpGet, Route("getinfo")]
+        public ApiResult GetUserInfo(string access_token)
+        {
+            result = AccessToken.Check(access_token, "api/account/getinfo");
+            if (result == null)
+            {
+                UserInfo userInfo = AccessToken.GetUserInfo(access_token);
+                if (userInfo != null)
+                {
+                    AccountInfo data = new AccountInfo();
+                    data.access_token = access_token;
+                    data.ID = userInfo.userID;
+                    data.Name = userInfo.userName;
+                    data.RoleID = userInfo.userRoleID;
+                    data.RoleName = userInfo.userRoleName;
+                    data.OrgName = userInfo.userOrgName;
+                    data.Tel = userInfo.Tel;
+                    data.State = "1";
+
+                    return Success("获取成功", data);
+                }
+                else
+                {
+                    return Error();
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 修改帐户信息
+        /// </summary>
+        /// <param name="model">参数参考 PersonalInfoModify</param>
+        /// <returns></returns>
+        [HttpPost, Route("changeinfo")]
+        public ApiResult ChangePersonalInfo([FromBody]PersonalInfoModify model)
+        {
+            result = AccessToken.Check(model.access_token, "api/account/changeinfo", model.ID);
+            if (result == null)
+            {
+                #region 参数检查
+                result = ParameterCheck.CheckParameters(model);
+                if (result != null)
+                {
+                    return result;
+                }
+                #endregion
+
+                #region 逻辑操作
+                T_Account accountModel = db.T_Account.Find(model.ID);
+                if (accountModel != null)
+                {
+                    try
+                    {
+                        accountModel.Name = model.Name;
+                        accountModel.Tel = model.Tel;
+
+                        db.SaveChanges();
+
+                        return Success("修改成功");
+                    }
+                    catch
+                    {
+                        return SystemError();
+                    }
+                }
+                else
+                {
+                    //若运行到此处 说明出现程序错误 返回SystemError
+                    return SystemError();
+                }
+                #endregion
+            }
+            return result;
+        }
         #endregion
     }
 }
