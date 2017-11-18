@@ -137,6 +137,15 @@
             $('#btnRoleGet').click(function (e) {
                 AjaxRequestGet('api/role/get?access_token=11');
             });
+
+            //个人信息修改
+            $('#btnAccountGetInfo').click(function (e) {
+                AjaxRequestGet('api/account/getinfo?access_token=11');
+            });
+            $('#btnAccountChangeInfo').click(function (e) {
+                var data = { 'access_token': '11', 'ID': '1214001', 'Name': '测试修改用户名1', 'Tel': '15307179930' }
+                AjaxRequestPost('api/account/changeinfo', data);
+            });
         });
 
     </script>
@@ -207,6 +216,15 @@
             <br />
             <h4>角色功能管理</h4>
             <input type="button" value="api/role/get" id="btnRoleGet" />
+            <br />
+            <br />
+            <h3>帐户信息修改接口：</h3>
+            <h4>获取帐户信息</h4>
+            <input type="button" value="api/account/getinfo" id="btnAccountGetInfo" />
+            <br />
+            <br />
+            <h4>修改个人信息</h4>
+            <input type="button" value="api/account/changeinfo" id="btnAccountChangeInfo" />
             <br />
             <br />
         </div>

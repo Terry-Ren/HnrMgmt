@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace HnrMgmtAPI.Models.API
 {
@@ -36,6 +33,11 @@ namespace HnrMgmtAPI.Models.API
         /// 用户所属组织名称
         /// </summary>
         public string userOrgName { get; set; }
+
+        /// <summary>
+        /// 用户Tel
+        /// </summary>
+        public string Tel { get; set; }
 
         /// <summary>
         /// 授权令牌

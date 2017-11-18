@@ -117,7 +117,7 @@ namespace HnrMgmtAPI.Common
             try
             {
                 UserInfo userInfo = (UserInfo)HttpRuntime.Cache.Get(access_token);
-                if (HttpRuntime.Cache.Get(access_token) != null)
+                if (userInfo != null)
                 {
                     List<string> permissionList = userInfo.permissionList;
                     if (permissionList.IndexOf(ApiPath) == -1)
@@ -153,6 +153,32 @@ namespace HnrMgmtAPI.Common
             #endregion
         }
 
+        /// <summary>
+        /// 注销AccessToken
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <returns></returns>
+        public static ApiResult Clear(string access_token)
+        {
+            ApiResult result = new ApiResult();
+            if (HttpRuntime.Cache.Remove(access_token) != null)
+            {
+                result.status = "success";
+                result.messages = "注销成功";
+            }
+            else
+            {
+                result.status = "error";
+                result.messages = "令牌无效";
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 获取令牌帐号信息
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <returns></returns>
         public static UserInfo GetUserInfo(string access_token)
         {
             #region 测试代码

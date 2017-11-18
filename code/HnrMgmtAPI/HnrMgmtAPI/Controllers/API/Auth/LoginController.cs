@@ -1,4 +1,5 @@
-﻿using HnrMgmtAPI.Models;
+﻿using HnrMgmtAPI.Common;
+using HnrMgmtAPI.Models;
 using HnrMgmtAPI.Models.API;
 using HnrMgmtAPI.Models.API.Auth;
 using System;
@@ -89,6 +90,9 @@ namespace HnrMgmtAPI.Controllers.API.Auth
                     model.userOrgName = accountModel.OrgName;
                     model.userRoleID = accountModel.RoleID;
                     model.userRoleName = accountModel.RoleName;
+                    model.Tel = accountModel.Tel;
+
+                    //此处用于测试、、完成代码开发后 此处数据来自数据库中的 角色功能视图
                     model.permissionList = null;
 
                     HttpRuntime.Cache.Insert(accessToken, model, null, DateTime.MaxValue, TimeSpan.FromMinutes(Convert.ToInt32(ConfigurationManager.AppSettings["CacheSpanTime"].ToString())));
@@ -103,7 +107,18 @@ namespace HnrMgmtAPI.Controllers.API.Auth
         }
 
         /// <summary>
-        /// 根据access_token从Cache中获取信息
+        /// 注销接口
+        /// </summary>
+        /// <param name="access_token">授权令牌</param>
+        /// <returns></returns>
+        [HttpGet, Route("logout")]
+        public ApiResult Logout(string access_token)
+        {
+            return AccessToken.Clear(access_token);
+        }
+
+        /// <summary>
+        /// 根据access_token从Cache中获取信息 用于测试使用
         /// </summary>
         /// <param name="access_token"></param>
         /// <returns></returns>
