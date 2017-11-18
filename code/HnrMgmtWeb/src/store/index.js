@@ -12,7 +12,8 @@ export default new Vuex.Store({
         Name:'',
         ID:'',
         uploadToken:'GfDe7p6rupDyEHYhvHfO-NhXvJ0KtxVOBSKxiKtU:8YY66l0VklPTy9JuIVUnX3bx3HM=:eyJzY29wZSI6Imhucm1nbXQiLCJkZWFkbGluZSI6MTAxNTA5OTY2OTY3fQ==',
-        uploadUrl:'http://oyzg731sy.bkt.clouddn.com/'
+        uploadUrl:'http://oyzg731sy.bkt.clouddn.com/',
+        singleHonor:[],
     },
     mutations:{
         // 登录时写入
@@ -47,6 +48,10 @@ export default new Vuex.Store({
         // 401时
         [types.DENY]:(state)=>{
             state.access_token=''
+        },
+        // 写入单一荣誉或奖项
+        [types.RECORD_HONOR]:(state,singleData)=>{
+            state.singleHonor=singleData
         }
     }
 })

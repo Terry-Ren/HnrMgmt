@@ -6,10 +6,13 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import NotFoundComponent from '../views/404'
 import Hello from '@/components/Hello123'
+
 import RecHonor from '../components/RecordData/RecHonor'
 import RecAward from '../components/RecordData/RecAward'
 import AddAward from '../components/RecordData/AddAward'
 import AddHonor from '../components/RecordData/AddHonor'
+import ModifyHonor from '../components/RecordData/modifyHonor'
+
 
 import TEXT from '../views/Home1.vue'
 import Ctext from '../components/RecordData/RecHonor.vue'
@@ -79,10 +82,11 @@ const routes = [
     },
     menuShow: true,
     children: [
-      { path: '/record/honor', component: RecHonor, name: 'RecHonor',meta:{keepAlive:true}, menuShow: true },
+      { path: '/record/honor', component: RecHonor, name: 'RecHonor',meta:{keepAlive:true}, menuShow: true ,},
       { path: '/record/award', component: RecAward, name: 'RecAward', meta: { keepAlive: true }, menuShow: true },
       { path: '/record/addaward', component: AddAward, name: 'AddAward', menuShow: true },     
       { path: '/record/addhonor', component: AddHonor, name:'AddHonor',menuShow:true}, 
+      { path: '/record/honor/modify',component: ModifyHonor, name: 'ModifyHonor',  menuShow: true},
     ]
   },
   // 基础数据

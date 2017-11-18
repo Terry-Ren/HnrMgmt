@@ -1,45 +1,40 @@
 <template>
-<el-row class="warp">
-  <el-col :span="24" class="warp-breadcrum">
-    <!-- 面包屑导航 -->
-    <el-breadcrumb separator="/">
+  <div class="container">
+    <!-- 面包屑导航 -->    
+    <div class="warp-breadcrum">
+     <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
         <el-breadcrumb-item>基础数据</el-breadcrumb-item>
         <el-breadcrumb-item>奖项管理</el-breadcrumb-item>
-      </el-breadcrumb>
-  </el-col>
-  <!-- 下方主内容 -->
-  <el-col :span="24" class="warp-main">
-    <!-- 工具栏 -->
-    <el-col :span="24" class="toolBar" >    
-      <el-form :inline="true" style="margin-bottom:15px">
-        <el-button type="primary" @click="addFormVisible = true">新增奖项</el-button>
-      </el-form>
-    </el-col>
-    <!-- 表格区 -->
-    <el-col :span="24">
-      <el-table :data="AwdData" border style="width:100%" v-loading="listLoading" :default-sort = "{prop: 'GradeName', order: 'descending'}" @selection-change="selRowChange" > 
-        <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column type="index" width="65" label="序号" align="center"></el-table-column>
-        <el-table-column prop="Name" label="奖项名称" align="center" sortable></el-table-column>
-        <el-table-column prop="GradeName" label="奖项级别"  align="center" :formatter="transfGrandeName" sortable></el-table-column>
-        <el-table-column prop="Grade" label="获奖等次" align="center" :formatter="transfGrande" sortable></el-table-column>
-        <el-table-column label="操作" width="150">
-          <template slot-scope="scope">
-            <el-button  size="small" @click="showModifyDialog(scope.$index, scope.row)">编辑</el-button>
-            <el-button type="danger" size="small" @click="delectAwd(scope.$index,scope.row)" >删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-col>
-    <!-- 下方工具条 -->
-    <el-col :span="24" >
-        <el-button type="danger" @click="delectSelAwd" :disabled="this.selection.length===0">批量删除</el-button>
+    </el-breadcrumb>         
+    </div>
+    <!-- 下方主内容 -->       
+    <div class="warp-body">  
+      <!-- 工具栏 -->         
+      <div class="toolbal">  
+        <el-form :inline="true" style="margin-bottom:15px">
+          <el-button type="primary" @click="addFormVisible = true">新增奖项</el-button>
+        </el-form>           
+      </div>
+      <!-- 工具栏 -->         
+      <div class="main-data">       
+          <el-table  class="table" :data="AwdData" style="width:100%" v-loading="listLoading" height="string" :default-sort = "{prop: 'GradeName', order: 'descending'}" @selection-change="selRowChange" > 
+            <el-table-column type="selection" width="55"></el-table-column>
+            <el-table-column type="index" width="65" label="序号" align="center"></el-table-column>
+            <el-table-column prop="Name" label="奖项名称" align="center" sortable></el-table-column>
+            <el-table-column prop="GradeName" label="奖项级别"  align="center" :formatter="transfGrandeName" sortable></el-table-column>
+            <el-table-column prop="Grade" label="获奖等次" align="center" :formatter="transfGrande" sortable></el-table-column>
+            <el-table-column label="操作" width="150">
+              <template slot-scope="scope">
+                <el-button  size="small" @click="showModifyDialog(scope.$index, scope.row)">编辑</el-button>
+                <el-button type="danger" size="small" @click="delectAwd(scope.$index,scope.row)" >删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>          
+      </div>
         <el-pagination layout="total, prev, pager, next, sizes, jumper" @size-change="SizeChangeEvent" @current-change="CurrentChangeEvent" :page-size="size" :page-sizes="[10,15,20,25,30]":total="totalNum" >
-        </el-pagination>
-    </el-col>
-  </el-col>
-
+        </el-pagination>      
+    </div>
       <!-- 新增表单 -->
     <el-dialog title="新增奖项" :visible.sync="addFormVisible" v-loading="submitLoading">
       <el-form :model="addFormBody" label-width="80px" ref="addForm" :rules="rules" auto>
@@ -84,8 +79,8 @@
         <el-button @click.native=" modifyFormVisible = false">取消</el-button>
         <el-button type="primary" @click.native="modifySubmit" >提交</el-button>
       </div>     
-    </el-dialog>
-</el-row>
+    </el-dialog>        
+  </div>
 </template>
 
 <script type="text/ecmascript-6">

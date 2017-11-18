@@ -1,6 +1,20 @@
 <template>
 <!-- 容器 -->
 <el-row class="all-containers">
+  <div class="container">
+    <!-- 面包屑导航 -->      
+    <div class="warp-breadcrum">    
+    </div>
+    <!-- 下方主内容 --> 
+    <div class="warp-body">
+      <!-- 工具栏 -->    
+      <div class="toolbal">      
+      </div>
+      <!-- 表格区 --> 
+      <div class="main-data">    
+      </div>
+    </div>
+  </div>
   <!-- 头部 -->
   <el-col :span="24" class="top-bar-warp">
     <!-- logo -->

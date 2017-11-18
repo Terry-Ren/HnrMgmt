@@ -6,3 +6,5 @@ export const LOGOUT = 'logout'
 export const REFREST = 'refresh'
 // 401时
 export const DENY= 'deny'
+//写入单一荣誉或者奖项时
+export const RECORD_HONOR = 'recordhnr'

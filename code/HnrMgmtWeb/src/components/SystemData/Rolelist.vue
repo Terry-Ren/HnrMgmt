@@ -1,14 +1,29 @@
 <template>
 <el-row class="warp">
+  <div class="container">
+    <div class="warp-breadcrum">
+    <!-- 面包屑导航 -->      
+    </div>
+    <div class="warp-body">
+    <!-- 下方主内容 -->     
+      <div class="toolbal">
+      <!-- 工具栏 -->        
+      </div>
+      <div class="main-data">
+        <!-- 表格区 -->        
+        <div class="table"></div>
+      </div>
+    </div>
+  </div>
   <el-col :span="24" class="warp-breadcrum">
-    <!-- 面包屑导航 -->
+
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{path:'/'}">首页</el-breadcrumb-item>
         <el-breadcrumb-item>系统管理</el-breadcrumb-item>
         <el-breadcrumb-item>角色管理</el-breadcrumb-item>
       </el-breadcrumb>
   </el-col>
-<!-- 下方主内容 -->
+
   <el-col :span="24" class="warp-main">
     <!-- 工具栏 -->
     <el-col :span="24" class="toolBar" >    

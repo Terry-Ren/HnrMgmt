@@ -1,42 +1,40 @@
 <template>
-<el-row class="warp">
-  <el-col :span="24" class="warp-breadcrum">
-    <!-- 面包屑导航 -->
-    <el-breadcrumb separator="/">
+  <div class="container">
+    <div class="warp-breadcrum">
+      <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
         <el-breadcrumb-item>系统管理</el-breadcrumb-item>
         <el-breadcrumb-item>接口管理</el-breadcrumb-item>
-      </el-breadcrumb>
-  </el-col>
- <!-- 下方主内容 -->
-  <el-col :span="24" class="warp-main">
-    <!-- 工具栏 -->
-    <el-col :span="24" class="toolBar" >    
-      <el-form :inline="true" style="margin-bottom:15px">
-        <el-button type="primary" @click="addFormVisible = true" >记录接口</el-button>
-      </el-form>
-    </el-col>
-    <!-- 表格区 -->
-    <el-col :span="24">
-      <el-table  :data="APIPwd" border style="width:100%" v-loading="listLoading" > 
-        <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column type="index" width="65" label="序号" style="text-aligin:center" align="center"></el-table-column>
-        <el-table-column prop="Name" label="接口名" sortable align="center" ></el-table-column>
-        <el-table-column prop="Url" label="Url" sortable align="center" ></el-table-column>
-        <el-table-column prop="Priority" label="优先级" sortable align="center" ></el-table-column>
-        <el-table-column label="操作" width="200" align="center">
-          <template slot-scope="scope">
-            <el-button  size="small"  >编辑</el-button>
-            <el-button type="danger" size="small"   >删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-col>
-    <!-- 下方工具条 -->
-    <el-col :span="24">
+      </el-breadcrumb>      
+    <!-- 面包屑导航 -->      
+    </div>
+    <div class="warp-body">
+    <!-- 下方主内容 -->     
+      <div class="toolbal">
+      <!-- 工具栏 --> 
+        <el-form :inline="true" style="margin-bottom:15px">
+          <el-button type="primary" @click="addFormVisible = true" >记录接口</el-button>
+        </el-form>             
+      </div>
+      <div class="main-data">
+        <!-- 表格区 -->        
+          <el-table class="table" :data="APIPwd" border style="width:100%" v-loading="listLoading" height="string" > 
+            <el-table-column type="selection" width="55"></el-table-column>
+            <el-table-column type="index" width="65" label="序号" style="text-aligin:center" align="center"></el-table-column>
+            <el-table-column prop="Name" label="接口名" sortable align="center" ></el-table-column>
+            <el-table-column prop="Url" label="Url" sortable align="center" ></el-table-column>
+            <el-table-column prop="Priority" label="优先级" sortable align="center" ></el-table-column>
+            <el-table-column label="操作" width="200" align="center">
+              <template slot-scope="scope">
+                <el-button  size="small"  >编辑</el-button>
+                <el-button type="danger" size="small"   >删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>          
+      </div>
       <el-pagination layout="total, prev, pager, next, sizes, jumper" @size-change="SizeChangeEvent" @current-change="CurrentChangeEvent" :page-size="size" :page-sizes="[10,15,20,25,30]":total="totalNum">
-      </el-pagination>
-    </el-col>
+      </el-pagination>      
+    </div>
 
     <!-- 新增表单 -->
     <el-dialog title="新增API信息" :visible.sync="addFormVisible" v-loading="submitLoading" >
@@ -68,9 +66,8 @@
         <el-button @click.native=" modifyFormVisible = false">取消</el-button>
         <el-button type="primary" @click.native="modifySubmit" >提交</el-button>
       </div>     
-    </el-dialog>
-  </el-col>
-</el-row>
+    </el-dialog>    
+  </div>
 </template>
 
 <script type="text/ecmascript-6">

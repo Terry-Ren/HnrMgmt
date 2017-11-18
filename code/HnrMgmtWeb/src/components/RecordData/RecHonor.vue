@@ -18,8 +18,7 @@
       </div>
       <div class="main-data">
         <!-- 表格区 -->
-        <div class="table">
-          <el-table  :data="HnrData"  style="width:100%" v-loading="listLoading"  max-height="535" > 
+          <el-table class="table" :data="HnrData"  style="width:100%" v-loading="listLoading" height="string" > 
             <el-table-column type="selection" ></el-table-column>
             <el-table-column type="index"  label="序号" style="text-aligin:center" align="center"></el-table-column>
             <el-table-column prop="HnrName" label="荣誉名称" sortable align="center" ></el-table-column>
@@ -30,35 +29,24 @@
             <el-table-column prop="State" label="审核状态" sortable align="center" :formatter="transfRecordState" ></el-table-column>        
             <el-table-column label="操作" width="280" align="center">
               <template slot-scope="scope" >
-                <el-button  size="small" @click="showDetialDialog(scope.$index,scope.row)" >详情</el-button>
+                <el-button  size="small" @click="switchDetial(scope.$index,scope.row)" >详情</el-button>
                 <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重填</el-button>
                 <el-button type="danger" size="small"  @click="delectAccTch(scope.$index,scope.row)" >删除</el-button>
               </template>
             </el-table-column>
           </el-table>          
-        </div>
       </div>
       <!-- 下方工具条 -->      
       <el-pagination layout="total, prev, pager, next, sizes, jumper" @size-change="SizeChangeEvent" @current-change="CurrentChangeEvent" :page-size="size" :page-sizes="[10,15,20,25,30]":total="totalNum">
       </el-pagination>      
     </div>
-    <!-- 详情表单 -->
-    <el-dialog title="荣誉记录查看" :visible.sync="detailFormVisible" v-loading="detailLoading" width="70%" >
-      <el-form :inline="true" :model="detailFormBody" label-width="100px" ref="addForm" :rules="rules" auto class="hornor-add" style="padding-left: 5%;" >
-        <el-form-item label="荣誉名称" prop="HnrName">
-          <el-input v-model="detailFormBody.HnrName"  style="width:300px" ></el-input>
-        </el-form-item>
-        <el-form-item label="获奖人学号" prop="HnrAnnual">
-          <el-input v-model="detailFormBody.HnrAnnual"  style="width:300px" ></el-input>
-        </el-form-item>                                     
-      </el-form>  
-    </el-dialog>    
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import {posRecordHonor,reqGetRecord} from '../../api/api'
 import PubMethod from '../../common/util'
+import * as types from '../../store/mutation-types'
 // import uptoken from '../../common/create_uptoken'
  export default {
    data() {
@@ -92,23 +80,6 @@ import PubMethod from '../../common/util'
        totalNum:0,
        page:1,
        size:10,
-      // 详情表单内容
-      detailLoading:false,
-      detailFormVisible:false,
-      detailFormBody:{
-        HnrName:'',
-        HnrAnnual:'',
-        HnrTime:'',
-        AwardeeName:'',
-        AwardeeOrgName:'',
-        AwardeeName:'',
-        GradeName:'',
-        FileUrl:'',
-        ApplyAccountName:'',
-        ApplyAccountOrg:'',
-        ApplyAccountRole:'',
-        ApplyTime:'',     
-      } 
      }    
    },
    //声明周期调用
@@ -149,11 +120,11 @@ import PubMethod from '../../common/util'
        return PubMethod.transfRecordState(row)
      },
      //  显示详情页面
-     showDetialDialog (index,row) {
-      // console.log(row)
-       this.detailFormVisible=true
-       this.detailFormBody= Object.assign({},row)
-       console.log(this.detailFormBody)
+     switchDetial (index,row) {
+      this.$store.commit(types.RECORD_HONOR,row)
+      this.$router.push({
+        path:'/record/honor/modify'
+      })
        },     
     //更换每页数量
     SizeChangeEvent(val){
