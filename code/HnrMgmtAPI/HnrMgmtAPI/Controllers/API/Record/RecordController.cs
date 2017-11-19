@@ -1897,9 +1897,9 @@ namespace HnrMgmtAPI.Controllers.API.Record
             {
                 returnHnrRecord model = new returnHnrRecord();
                 model.HnrRecordID = item.HnrRecID;
-                model.AwardeeName = item.AwardeeName;
-                model.AwardeeOrgName = item.AwardeeOrgName;
-                model.AwardeeBranch = item.AwardeeBranch;
+                model.AwdeeName = item.AwardeeName;
+                model.AwdeeOrgName = item.AwardeeOrgName;
+                model.AwdeeBranch = item.AwardeeBranch;
                 model.HnrName = item.HnrName;
                 model.GradeName = item.HnrGradeName;
                 model.HnrAnnual = item.HnrAnnual;
@@ -1919,9 +1919,9 @@ namespace HnrMgmtAPI.Controllers.API.Record
             {
                 returnAwdRecord model = new returnAwdRecord();
                 model.AwdRecordID = item.AwdRecID;
-                model.AwardeeName = item.TeamAwdeeName;
-                model.AwardeeOrgName = item.TeamAwdeeOrgName;
-                model.AwardeeBranch = item.TeamAwdeeBranch;
+                model.AwdeeName = item.TeamAwdeeName;
+                model.AwdeeOrgName = item.TeamAwdeeOrgName;
+                model.AwdeeBranch = item.TeamAwdeeBranch;
                 model.AwdName = item.AwdName;
                 model.AwdOrgName = item.OrgName;
                 model.AwdProName = item.ProName;
