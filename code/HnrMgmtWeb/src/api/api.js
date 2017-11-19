@@ -120,8 +120,12 @@ export const reqDeleteApi = params => { return axios.get(`${base}api/role/delmen
 
 // 申报荣誉记录
 export const posRecordHonor = params => { return axios.post(`${base}api/record/honor`, params) }
-// 获取荣誉记录
+// 获取荣誉或奖项记录
 export const reqGetRecord = params => { return axios.get(`${base}api/record/get`, { params: params }) }
+// 修改荣誉记录
+export const posModifyRecordHonor = params => { return axios.post(`${base}api/record/hnrmodify`, params) }
+// 删除荣誉记录
+export const reqDeleteRecord = params => { return axios.get(`${base}api/record/delete`, { params: params }) }
 
 // 申报奖项记录
 export const posRecordAward = params => { return axios.post(`${base}api/record/award`, params) }

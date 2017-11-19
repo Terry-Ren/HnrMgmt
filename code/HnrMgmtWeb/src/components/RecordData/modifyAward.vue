@@ -5,7 +5,7 @@
         <el-breadcrumb separator="/">
             <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
             <el-breadcrumb-item>记录管理</el-breadcrumb-item>
-            <el-breadcrumb-item :to="{ path: '/record/honor' }">荣誉管理</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/record/award' }">奖项管理</el-breadcrumb-item>
             <el-breadcrumb-item>详情</el-breadcrumb-item>
         </el-breadcrumb>        
     </div>
@@ -24,14 +24,14 @@
           <div class="modify-box">
             <!-- 编辑表单 -->
             <el-form :model="detailFormBody" label-width="100px" ref="modifyFrom" :rules="rules" auto>
-                <el-form-item v-if="!ismodify" label="荣誉项目" prop="HnrName" >
-                  <el-input v-model="detailFormBody.HnrName" :disabled="!ismodify" style="width:300px" ></el-input>                                    
+                <el-form-item v-if="!ismodify" label="奖项名称" prop="AwdName" >
+                    <el-input v-model="detailFormBody.AwdName" :disabled="!ismodify"  style="width:300px" ></el-input>                                   
                 </el-form-item>                
-                <el-form-item v-if="ismodify" label="荣誉项目" prop="HonorID">
-                  <el-select v-model="detailFormBody.HonorID" placeholder="请选择荣誉" style="width:300px">
-                    <el-option v-for="honor in HonorData" :key="honor.HonorID" :value="honor.HonorID" :label="honor.Name"></el-option>
-                  </el-select>          
-                </el-form-item> 
+                <el-form-item v-if="ismodify" label="奖项名称" prop="AwardID">
+                    <el-select  v-model="detailFormBody.AwardID" placeholder="请选择奖项" style="width:300px">
+                        <el-option v-for="award in AwardData" :key="award.AwdID" :value="award.AwdID" :label="award.Name+award.Grade"></el-option>
+                    </el-select>
+                </el-form-item>  
                 <el-form-item  label="获奖年度" prop="HnrAnnual" >
                   <el-select v-model="detailFormBody.HnrAnnual" :disabled="!ismodify"  placeholder="请选择年度" style="width:300px">
                     <el-option v-for="options in annualOptions" :key="options.value" :label="options.label" :value="options.value"></el-option>
@@ -100,7 +100,7 @@
 <script type="text/ecmascript-6">
 import PubMethod from "../../common/util";
 import {
-  reqGetHonorList,
+  reqGetAwdList,
   reqGetOrgList,
   posModifyRecordHonor
 } from "../../api/api";
@@ -125,8 +125,8 @@ export default {
       postData: {
         token: this.$store.state.uploadToken
       },
-      // 填充荣誉数据
-      HonorData: [],
+      // 填充奖项数据
+      AwardData: [],
       // 填充组织单位
       OrgData: [],
       // 用户令牌
@@ -165,36 +165,45 @@ export default {
     };
   },
   created() {
-    this.detailFormBody = this.$store.state.singleHonor;
+    this.detailFormBody = this.$store.state.singleAward;
     this.detailFormBody.State = PubMethod.transfRecordState(
       this.detailFormBody
     );
     if (this.$route.params.id == "modify") this.ismodify = true;
-
+    this.transfAwardName();
     console.log(this.detailFormBody);
   },
   methods: {
     // 跳转路由
     backToMain() {
       this.$router.push({
-        path: "/record/honor"
+        path: "/record/award"
       });
     },
-    // 填充荣誉数据
-    getHonor() {
-      this.submitLoading = true;
-      let param = {
-        access_token: "11"
-      };
-      reqGetHonorList(param)
-        .then(res => {
-          this.submitLoading = false;
-          this.HonorData = res.data.data.list;
-        })
-        .catch(res => {
-          console.log(res);
-        });
-    },
+     // 填充奖项数据
+     getAward(){
+       this.listLoading=true
+       let param={
+         access_token:"11"
+       }
+       reqGetAwdList(param).then((res)=>{
+         this.listLoading=false
+         this.AwardData=res.data.data.list
+              this.transfOptionGrande()
+       }).catch((res)=>{
+         console.log(res)
+         })       
+     },
+     // 转换新增选项中的获奖级别
+     transfOptionGrande(){
+         this.AwardData.forEach((award)=>{
+             award.Grade=PubMethod.transfGrande(award)
+         })
+     }, 
+     // 转换详情中比赛名称
+     transfAwardName(){
+         this.detailFormBody.AwdName=this.detailFormBody.AwdName+PubMethod.transfGrande(this.detailFormBody)
+     },    
     // 填充单位数据
     getOrg() {
       this.submitLoading = true;
@@ -212,13 +221,11 @@ export default {
     },
     // 点击编辑后初始化
     selectModify() {
-      if (
-        this.detailFormBody.State == "待审核" ||
-        this.detailFormBody.State == "已驳回"
-      ) {
+      if (this.detailFormBody.State == "待审核" ||this.detailFormBody.State == "已驳回") 
+      {
         this.ismodify = true;
         this.getOrg();
-        this.getHonor();
+        this.getAward();
       } else {
         this.$message({
           type: "error",
@@ -268,8 +275,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.toolbar{
-  form{
+.toolbar {
+  form {
     display: flex;
     justify-content: space-around;
   }

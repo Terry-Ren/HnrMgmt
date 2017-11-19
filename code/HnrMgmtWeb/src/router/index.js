@@ -12,6 +12,7 @@ import RecAward from '../components/RecordData/RecAward'
 import AddAward from '../components/RecordData/AddAward'
 import AddHonor from '../components/RecordData/AddHonor'
 import ModifyHonor from '../components/RecordData/modifyHonor'
+import ModifyAward from '../components/RecordData/modifyAward'
 
 
 import TEXT from '../views/Home1.vue'
@@ -71,7 +72,7 @@ const routes = [
       {path: '/index', component: Hello, name: 'index', menuShow: true},
     ]
   },
-  // 记录填报
+  // 记录管理
   {
     path: '/',
     component: Home,
@@ -86,7 +87,8 @@ const routes = [
       { path: '/record/award', component: RecAward, name: 'RecAward', meta: { keepAlive: true }, menuShow: true },
       { path: '/record/addaward', component: AddAward, name: 'AddAward', menuShow: true },     
       { path: '/record/addhonor', component: AddHonor, name:'AddHonor',menuShow:true}, 
-      { path: '/record/honor/modify',component: ModifyHonor, name: 'ModifyHonor',  menuShow: true},
+      { path: '/record/honor/:id',component: ModifyHonor, name: 'ModifyHonor',  menuShow: true},
+      { path: '/record/award/:id', component: ModifyAward, name: 'ModifyAward', menuShow: true },     
     ]
   },
   // 基础数据

@@ -8,3 +8,5 @@ export const REFREST = 'refresh'
 export const DENY= 'deny'
 //写入单一荣誉或者奖项时
 export const RECORD_HONOR = 'recordhnr'
+//写入单一奖项时
+export const RECORD_AWARD = 'recordawd'

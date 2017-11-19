@@ -17,7 +17,7 @@ export default {
      },
      // 审核状态转换
      transfRecordState(row){
-       return row.State=='0' ? '待审核' : row.State == '1' ? '院审通过' : row.State == '2' ? '校核通过' : '已驳回';
+       return row.State=='0' ? '待审核' : row.State == '1' ? '院审通过' : row.State == '2' ? '校审通过' : '已驳回';
      },
       //公共提示方法，传入当前的vue以及res.data。 返回状态判断并给出提示
       statusinfo(vue,data){

@@ -60,19 +60,13 @@
                 <el-submenu index="recordData">
                     <template slot="title">
                         <i class="el-icon-plus"></i> 
-                        <span>项目填报</span>
+                        <span>记录管理</span>
                     </template>
                         <el-menu-item index="/record/honor">
                             荣誉填报
                         </el-menu-item>
                         <el-menu-item index="/record/award">
                             奖项填报
-                        </el-menu-item>
-                        <el-menu-item index="">
-                            不知道是啥
-                        </el-menu-item>
-                        <el-menu-item index="">
-                            这个也不知道是啥
                         </el-menu-item>
                 </el-submenu>
                 <!-- 系统管理 -->

@@ -26,11 +26,11 @@
           <el-table-column prop="GradeName" label="级别" sortable align="center" :formatter="transfGrandeName"></el-table-column>        
           <el-table-column prop="AwdProName" label="项目名称" sortable align="center" ></el-table-column>        
           <el-table-column prop="AwdOrgName" label="所属学院" sortable align="center" ></el-table-column>
-          <el-table-column prop="AwardeeName" label="主要学生" sortable align="center" ></el-table-column>
+          <el-table-column prop="AwdeeName" label="主要学生" sortable align="center" ></el-table-column>
           <el-table-column prop="State" label="审核状态" sortable align="center" :formatter="transfRecordState" ></el-table-column>               
           <el-table-column label="操作" width="280" align="center" >
             <template slot-scope="scope">
-              <el-button  size="small" @click="showDetialDialog(scope.$index,scope.row)" >详情</el-button>
+              <el-button  size="small" @click="switchDetial(scope.$index,scope.row)" >详情</el-button>
               <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重填</el-button>
               <el-button type="danger" size="small"  @click="delectAccTch(scope.$index,scope.row)" >删除</el-button>
             </template>
@@ -38,29 +38,16 @@
         </el-table>
         </div>
       <!-- 下方工具条 -->
-
         <el-pagination layout="total, prev, pager, next, sizes, jumper" @size-change="SizeChangeEvent" @current-change="CurrentChangeEvent" :page-size="size" :page-sizes="[10,15,20,25,30]":total="totalNum">
         </el-pagination>
-    </div>
-    <!-- 详情表单 -->
-    <el-dialog title="荣誉记录查看" :visible.sync="detailFormVisible" v-loading="detailLoading" width="70%" >
-      <el-form :model="detailFormBody" label-width="80px" ref="detailFrom" :rules="rules" >
-        <el-form-item label="项目名称" prop="ProjectName"  >
-          <el-input v-model="detailFormBody.ProjectName" placeholder="请输入项目名称"  ></el-input>
-        </el-form-item>    
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click.native=" detailFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="detailSubmit" >提交</el-button>
-      </div>     
-    </el-dialog>      
-
+    </div>      
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import {reqGetAwdList,reqGetOrgList,posRecordAward,reqGetRecord} from '../../api/api'
 import PubMethod from '../../common/util'
+import * as types from "../../store/mutation-types";
 // import uptoken from '../../common/create_uptoken'
  export default {
    data() {
@@ -108,21 +95,6 @@ import PubMethod from '../../common/util'
         OrgID:{required:true , message:'请选择单位学院', trigger:'blur'},
         Branch:{required:true , message:'请输入所属团支部', trigger:'blur'}         
       },
-      // 详情表单内容
-      detailLoading:false,
-      detailFormVisible:false,
-      detailFormBody:{
-         AwardID:'',
-         Year:'',
-         Term:'',
-         AwdTime:'',
-         ProjectName:'',
-         IsTeam:'',
-         Teacher:[],
-         Members:[],
-         OrgID:'',
-         FileUrl:'-1'      
-      }
      }    
    },
 //    // 计算属性
@@ -209,18 +181,18 @@ import PubMethod from '../../common/util'
        reqGetRecord(param).then((res)=>{
           this.AwdData = res.data.data.awdList
           this.totalNum = res.data.data.awdListNum;
-          //console.log(this.AwdData)
+          console.log(this.AwdData)
           this.listLoading=false
        }).catch((res)=>{
          console.log(res)
        })
      },
      //  显示详情页面
-     showDetialDialog (index,row) {
-       this.detailFormVisible=true
-       this.detailFromBody= Object.assign({},row)
-       this.selectRowIndex=index
-       //console.log(this.selectRowIndex)
+     switchDetial (index,row) {
+      this.$store.commit(types.RECORD_AWARD, row);
+      this.$router.push({
+        path: "/record/award/detail"
+      });
        },
     //更换每页数量
     SizeChangeEvent(val){
