@@ -170,7 +170,6 @@ export default {
       this.detailFormBody
     );
     if (this.$route.params.id == "modify") this.ismodify = true;
-    this.transfAwardName();
     console.log(this.detailFormBody);
   },
   methods: {
@@ -199,11 +198,7 @@ export default {
          this.AwardData.forEach((award)=>{
              award.Grade=PubMethod.transfGrande(award)
          })
-     }, 
-     // 转换详情中比赛名称
-     transfAwardName(){
-         this.detailFormBody.AwdName=this.detailFormBody.AwdName+PubMethod.transfGrande(this.detailFormBody)
-     },    
+     },   
     // 填充单位数据
     getOrg() {
       this.submitLoading = true;

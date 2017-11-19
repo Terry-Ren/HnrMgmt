@@ -62,8 +62,6 @@ export default {
       }
     };
     return {
-      // 选择详情or重填
-      ismodify: "",
       // 七牛云令牌
       postData: {
         token: this.$store.state.uploadToken
@@ -83,6 +81,20 @@ export default {
       size: 10
     };
   },
+  // 计算属性
+  computed: {
+    recordModify: function() {
+      return this.$store.state.recordModify;
+    }
+  },
+  // 监听者
+  watch: {
+    recordModify: {
+      handler: function(params) {
+        this.getList();
+      }
+    }
+  },
   //声明周期调用
   mounted() {
     this.getList();
@@ -91,7 +103,7 @@ export default {
     // 跳转路由
     switchAdd() {
       this.$router.push({
-        path: "/record/honor/add"
+        path: "/record/addhonor"
       });
     },
     // 获取列表

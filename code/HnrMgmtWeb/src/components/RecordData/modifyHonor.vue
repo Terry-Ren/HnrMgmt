@@ -54,7 +54,7 @@
                     <el-option v-for="org in OrgData" :key="org.OrgID" :value="org.OrgID" :label="org.Name"></el-option>
                 </el-select>
                 </el-form-item> 
-                <el-form-item label="所属团支部" prop="Branch">
+                <el-form-item label="所属团支部" prop="AwdeeBranch">
                 <el-input v-model="detailFormBody.AwdeeBranch":disabled="!ismodify" placeholder="请输入团支部" style="width:300px" >
                     <template slot="append">团支部</template>
                 </el-input>
@@ -99,6 +99,7 @@
 
 <script type="text/ecmascript-6">
 import PubMethod from "../../common/util";
+import * as types from "../../store/mutation-types";
 import {
   reqGetHonorList,
   reqGetOrgList,
@@ -145,7 +146,7 @@ export default {
         ],
         AwdeeName: { required: true, message: "请输入获奖人姓名", trigger: "blur" },
         OrgID: { required: true, message: "请选择单位学院", trigger: "blur" },
-        Branch: { required: true, message: "请输入所属团支部", trigger: "blur" }
+        AwdeeBranch: { required: true, message: "请输入所属团支部", trigger: "blur" }
       },
       // 获奖年度选择
       annualOptions: [
@@ -233,14 +234,15 @@ export default {
           this.submitLoading = true;
           //复制字符串
           let para = Object.assign({}, this.detailFormBody);
-          para.Branch = para.Branch + "团支部";
-          para.access_token = "terry";
+          para.Branch = para.AwdeeBranch + "团支部";
+          para.access_token = "11";
           posModifyRecordHonor(para).then(res => {
             this.submitLoading = false;
             //公共提示方法，传入当前的vue以及res.data
             PubMethod.statusinfo(this, res.data);
             this.$refs["modifyFrom"].resetFields();
-            //this.backToMain();
+            this.$store.commit(types.RECORD_MODIFY)
+            this.backToMain();
           });
         }
       });

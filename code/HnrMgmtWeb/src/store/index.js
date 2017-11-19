@@ -14,7 +14,8 @@ export default new Vuex.Store({
         uploadToken:'GfDe7p6rupDyEHYhvHfO-NhXvJ0KtxVOBSKxiKtU:8YY66l0VklPTy9JuIVUnX3bx3HM=:eyJzY29wZSI6Imhucm1nbXQiLCJkZWFkbGluZSI6MTAxNTA5OTY2OTY3fQ==',
         uploadUrl:'http://oyzg731sy.bkt.clouddn.com/',
         singleHonor:[],
-        singleAward:[]
+        singleAward:[],
+        recordModify:false,
     },
     mutations:{
         // 登录时写入
@@ -57,7 +58,11 @@ export default new Vuex.Store({
         // 写入单一奖项
         [types.RECORD_AWARD]: (state, singleData) => {
             state.singleAward = singleData
-        }                
+        },
+        // 变更奖项
+        [types.RECORD_MODIFY]: (state, singleData) => {
+            state.recordModify = !state.recordModify
+        },        
     }
 })
 

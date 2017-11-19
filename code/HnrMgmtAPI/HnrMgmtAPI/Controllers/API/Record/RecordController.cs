@@ -43,12 +43,6 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 {
                     return Error("此部门ID不存在");
                 }
-
-                //暂未实现上传文件接口
-                if (model.FileUrl != "-1")
-                {
-                    return Error("暂不支持上传文件");
-                }
                 #endregion
 
                 #region 逻辑操作
@@ -90,9 +84,9 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 hnrRecord.Branch = model.Branch.ToString().Trim();
                 hnrRecord.FileUrl = "";
 
-                if (model.FileUrl != "-1")
+                if (model.FileUrl != "-1" && model.FileUrl != "")
                 {
-                    //此处暂存上传文件名字
+                    //此处存储 七牛云 url地址 到数据库中 文件不存在服务器上
                     hnrRecord.FileUrl = model.FileUrl;
                 }
                 db.T_HnrRecord.Add(hnrRecord);
@@ -213,12 +207,6 @@ namespace HnrMgmtAPI.Controllers.API.Record
                         }
                     }
                 }
-
-                //暂未实现上传文件接口
-                if (model.FileUrl != "-1")
-                {
-                    return Error("暂不支持上传文件");
-                }
                 #endregion
 
                 #region 逻辑操作
@@ -274,9 +262,9 @@ namespace HnrMgmtAPI.Controllers.API.Record
                         }
                     }
 
-                    if (model.FileUrl != "-1")
+                    if (model.FileUrl != "-1" && model.FileUrl != "")
                     {
-                        //此处暂存上传文件名字
+                        //此处存储 七牛云 url地址 到数据库中 文件不存在服务器上
                         awdRecord.FileUrl = model.FileUrl;
                     }
 
@@ -297,9 +285,9 @@ namespace HnrMgmtAPI.Controllers.API.Record
                         }
                     }
 
-                    if (model.FileUrl != "-1")
+                    if (model.FileUrl != "-1" && model.FileUrl != "")
                     {
-                        //此处暂存上传文件名字
+                        //此处存储 七牛云 url地址 到数据库中 文件不存在服务器上
                         awdRecord.FileUrl = model.FileUrl;
                     }
 
@@ -608,12 +596,6 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 {
                     return Error("此部门ID不存在");
                 }
-
-                //暂未实现上传文件接口
-                if (model.FileUrl != "-1")
-                {
-                    return Error("暂不支持上传文件");
-                }
                 #endregion
 
                 #region 逻辑操作
@@ -675,16 +657,16 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 #region 获奖记录
                 hnrRecord.HnrRecID = ID;
                 hnrRecord.HonorID = model.HonorID.ToString().Trim();
-                hnrRecord.Annual = model.Annual.ToString().Trim();
+                hnrRecord.Annual = model.HnrAnnual.ToString().Trim();
                 hnrRecord.Time = model.HnrTime.ToString().Trim();
                 hnrRecord.AwdeeID = model.AwdeeID.ToString().Trim();
                 hnrRecord.OrgID = model.OrgID.ToString().Trim();
                 hnrRecord.Branch = model.Branch.ToString().Trim();
                 hnrRecord.FileUrl = "";
 
-                if (model.FileUrl != "-1")
+                if (model.FileUrl != "-1" && model.FileUrl != "")
                 {
-                    //此处暂存上传文件名字
+                    //此处存储 七牛云 url地址 到数据库中 文件不存在服务器上
                     hnrRecord.FileUrl = model.FileUrl;
                 }
                 db.T_HnrRecord.Add(hnrRecord);
@@ -803,12 +785,6 @@ namespace HnrMgmtAPI.Controllers.API.Record
                         }
                     }
                 }
-
-                //暂未实现上传文件接口
-                if (model.FileUrl != "-1")
-                {
-                    return Error("暂不支持上传文件");
-                }
                 #endregion
 
                 #region 逻辑操作
@@ -892,9 +868,9 @@ namespace HnrMgmtAPI.Controllers.API.Record
                         }
                     }
 
-                    if (model.FileUrl != "-1")
+                    if (model.FileUrl != "-1" && model.FileUrl != "")
                     {
-                        //此处暂存上传文件名字
+                        //此处存储 七牛云 url地址 到数据库中 文件不存在服务器上
                         awdRecord.FileUrl = model.FileUrl;
                     }
 
@@ -915,9 +891,9 @@ namespace HnrMgmtAPI.Controllers.API.Record
                         }
                     }
 
-                    if (model.FileUrl != "-1")
+                    if (model.FileUrl != "-1" && model.FileUrl != "")
                     {
-                        //此处暂存上传文件名字
+                        //此处存储 七牛云 url地址 到数据库中 文件不存在服务器上
                         awdRecord.FileUrl = model.FileUrl;
                     }
 
