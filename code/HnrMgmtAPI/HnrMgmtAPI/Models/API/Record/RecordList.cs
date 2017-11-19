@@ -21,6 +21,7 @@ namespace HnrMgmtAPI.Models.API.Record
     public class returnHnrRecord
     {
         public string HnrRecordID { get; set; }
+        public string AwdeeID { get; set; }
         public string AwdeeName { get; set; }
         public string AwdeeOrgName { get; set; }
         public string AwdeeBranch { get; set; }
@@ -55,7 +56,7 @@ namespace HnrMgmtAPI.Models.API.Record
         public string Teacher { get; set; }
         public string ApplyAccountName { get; set; }
         public string ApplyAccountOrg { get; set; }
-        public string AppltAccountRole { get; set; }
+        public string ApplyAccountRole { get; set; }
         public Nullable<System.DateTime> ApplyTime { get; set; }
         public string RejectReason { get; set; }
         public string FileUrl { get; set; }

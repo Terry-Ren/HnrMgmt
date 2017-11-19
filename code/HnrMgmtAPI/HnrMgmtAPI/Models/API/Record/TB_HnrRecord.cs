@@ -9,7 +9,7 @@
         public string HonorID { get; set; }
 
         //获奖年份 格式：2016-2017
-        public string Annual { get; set; }
+        public string HnrAnnual { get; set; }
 
         //获奖时间 格式：2017-07
         public string HnrTime { get; set; }
