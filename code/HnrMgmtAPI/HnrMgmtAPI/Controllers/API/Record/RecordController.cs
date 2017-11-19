@@ -83,7 +83,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
 
                 hnrRecord.HnrRecID = ID;
                 hnrRecord.HonorID = model.HonorID.ToString().Trim();
-                hnrRecord.Annual = model.Annual.ToString().Trim();
+                hnrRecord.Annual = model.HnrAnnual.ToString().Trim();
                 hnrRecord.Time = model.HnrTime.ToString().Trim();
                 hnrRecord.AwdeeID = model.AwdeeID.ToString().Trim();
                 hnrRecord.OrgID = model.OrgID.ToString().Trim();
@@ -1897,6 +1897,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
             {
                 returnHnrRecord model = new returnHnrRecord();
                 model.HnrRecordID = item.HnrRecID;
+                model.AwdeeID = item.AwardeeID;
                 model.AwdeeName = item.AwardeeName;
                 model.AwdeeOrgName = item.AwardeeOrgName;
                 model.AwdeeBranch = item.AwardeeBranch;
@@ -1934,7 +1935,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 model.Teacher = item.Teacher;
                 model.ApplyAccountName = item.ApplyAccountName;
                 model.ApplyAccountOrg = item.ApplyAccountOrgName;
-                model.AppltAccountRole = item.ApplyAccountRoleName;
+                model.ApplyAccountRole = item.ApplyAccountRoleName;
                 model.ApplyTime = item.ApplyTime;
                 model.RejectReason = item.Reason;
                 model.FileUrl = item.FileUrl;

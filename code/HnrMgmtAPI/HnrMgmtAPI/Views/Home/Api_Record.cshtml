@@ -55,13 +55,20 @@
         $(document).ready(function () {
             $('#btnRecordGet').click(function (e) {
                 AjaxRequestGet('api/record/get?access_token=11&type=0');
+                AjaxRequestGet('api/record/get?access_token=11&type=1');
+                AjaxRequestGet('api/record/get?access_token=11&type=2');
             });
             $('#btnRecordGetPage').click(function (e) {
+                AjaxRequestGet('api/record/get?access_token=11&type=0&pages=1&limit=10');
                 AjaxRequestGet('api/record/get?access_token=11&type=1&pages=1&limit=10');
+                AjaxRequestGet('api/record/get?access_token=11&type=2&pages=1&limit=10');
             });
             $('#btnRecordGetPageSort').click(function (e) {
+                AjaxRequestGet('api/record/get?access_token=11&type=0&page=1&limit=10&sortDirection=ASC&sortField=ApplyTime');
+                AjaxRequestGet('api/record/get?access_token=11&type=1&page=1&limit=10&sortDirection=ASC&sortField=ApplyTime');
                 AjaxRequestGet('api/record/get?access_token=11&type=2&page=1&limit=10&sortDirection=ASC&sortField=ApplyTime');
             });
+
             $('#btnRecordGetTeamInfo').click(function (e) {
                 AjaxRequestGet('api/record/teaminfo?access_token=11&AwdRecordID=245543ed-6a6d-4678-8a55-296886fb4d7d');
             });
