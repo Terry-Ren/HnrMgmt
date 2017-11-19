@@ -21,9 +21,9 @@ namespace HnrMgmtAPI.Models.API.Record
     public class returnHnrRecord
     {
         public string HnrRecordID { get; set; }
-        public string AwardeeName { get; set; }
-        public string AwardeeOrgName { get; set; }
-        public string AwardeeBranch { get; set; }
+        public string AwdeeName { get; set; }
+        public string AwdeeOrgName { get; set; }
+        public string AwdeeBranch { get; set; }
         public string HnrName { get; set; }
         public string GradeName { get; set; }
         public string HnrAnnual { get; set; }
@@ -40,9 +40,9 @@ namespace HnrMgmtAPI.Models.API.Record
     public class returnAwdRecord
     {
         public string AwdRecordID { get; set; }
-        public string AwardeeName { get; set; }
-        public string AwardeeOrgName { get; set; }
-        public string AwardeeBranch { get; set; }
+        public string AwdeeName { get; set; }
+        public string AwdeeOrgName { get; set; }
+        public string AwdeeBranch { get; set; }
         public string AwdName { get; set; }
         public string AwdOrgName { get; set; }
         public string AwdProName { get; set; }
