@@ -20,6 +20,7 @@
       <!-- 表格区 --> 
       <div class="main-data"> 
         <div class="control-group">
+          <h1>个人信息</h1>
           <label class="control-label">
             账号
           </label>
@@ -109,7 +110,11 @@ export default {
         PubMethod.statusinfo(this, res.data);
         this.isModify = false;
         this.listLoading = false;
-        this.getList();
+        this.$notify({
+          title: '成功',
+          message: '修改成功，请重新登录查看',
+          type: 'success'
+        });
       });
     }
   }
@@ -123,16 +128,21 @@ export default {
   align-items: flex-start;
 }
 .control-group {
-  padding-left: 30px;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   width: 350px;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid #eaeaea;
   box-shadow: 0 0 25px #cac6c6;
   display: flex;
   flex-direction: column;
+  >h1{
+  padding-left: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #000;
+  }
   .control-label {
+    padding-left: 30px;
     font-weight: bold;
     font-size: 1.2em;
     line-height: 2;
@@ -140,6 +150,7 @@ export default {
     margin-bottom: 5px;
   }
   .contorl {
+    padding-left: 30px;
     color: #222;
     font-family: Helvetica, Arial, sans-serif;
     font-size: 14px;

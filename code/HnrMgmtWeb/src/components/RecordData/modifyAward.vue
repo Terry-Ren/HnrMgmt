@@ -325,11 +325,11 @@ export default {
         this.detailFormBody.State == "待审核" ||
         this.detailFormBody.State == "已驳回"
       ) {
-        this.ismodify = true;
         this.getOrg();
         this.getAward();
         this.getTeam();
-        console.log(this.detailFormBody.Members);
+        this.ismodify = true;        
+        //console.log(this.detailFormBody.Members);
       } else {
         this.$message({
           type: "error",
