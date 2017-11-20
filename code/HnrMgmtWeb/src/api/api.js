@@ -129,4 +129,5 @@ export const reqDeleteRecord = params => { return axios.get(`${base}api/record/d
 
 // 申报奖项记录
 export const posRecordAward = params => { return axios.post(`${base}api/record/award`, params) }
-
+// 团队信息获取
+export const reqGetTeam = params => { return axios.get(`${base}api/record/teaminfo`, { params: params }) }

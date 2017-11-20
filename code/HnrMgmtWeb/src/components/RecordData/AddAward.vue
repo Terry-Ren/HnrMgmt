@@ -21,9 +21,9 @@
           <el-form :model="addFormBody" label-width="110px" ref="addForm" :rules="rules" auto  >
             <el-form-item label="奖项名称" prop="AwardID">
               <el-select v-model="addFormBody.AwardID" placeholder="请选择奖项" style="width:300px">
-                <el-option v-for="honor in AwardData" :key="honor.AwdID" :value="honor.AwdID" :label="honor.Name+honor.Grade"></el-option>
+                <el-option v-for="award in AwardData" :key="award.AwdID" :value="award.AwdID" :label="'【'+award.GradeName+'】'+award.Name+award.Grade"></el-option>
               </el-select>
-            </el-form-item>  
+            </el-form-item>               
             <el-form-item label="获奖年度" prop="Year" >
               <el-date-picker v-model="addFormBody.Year"  type="year" placeholder="获得年度" style="width:300px" format="yyyy 年 " value-format="yyyy"></el-date-picker>
             </el-form-item>
@@ -184,15 +184,22 @@ import PubMethod from '../../common/util'
          this.listLoading=false
          this.AwardData=res.data.data.list
               this.transfOptionGrande()
+              this.transfOptionGrandeName()
        }).catch((res)=>{
          console.log(res)
          })       
      },
-     // 转换新增选项中的获奖级别
+     // 转换新增选项中的获奖等次
      transfOptionGrande(){
          this.AwardData.forEach((award)=>{
              award.Grade=PubMethod.transfGrande(award)
          })
+     },
+     // 转换新增选项中的获奖级别
+     transfOptionGrandeName(){
+       this.AwardData.forEach((award)=>{
+         award.GradeName=PubMethod.transfGrandeName(award)
+       })
      },
     // 填充单位数据
      getOrg(){
