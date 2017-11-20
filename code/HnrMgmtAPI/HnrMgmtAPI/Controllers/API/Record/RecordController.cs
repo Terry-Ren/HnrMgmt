@@ -155,7 +155,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 #region 参数验证
                 //可为空参数列表
                 List<string> nullPropertyList = new List<string>();
-                nullPropertyList.Add("Term");
+                nullPropertyList.Add("AwdTerm");
                 nullPropertyList.Add("OrgId");
                 nullPropertyList.Add("Teacher");
 
@@ -241,11 +241,11 @@ namespace HnrMgmtAPI.Controllers.API.Record
 
                 awdRecord.AwdRecID = RecordID;
                 awdRecord.AwdID = model.AwardID.ToString().Trim();
-                awdRecord.Year = model.Year.ToString().Trim();
+                awdRecord.Year = model.AwdYear.ToString().Trim();
                 awdRecord.Time = model.AwdTime.ToString().Trim();
-                awdRecord.Term = (model.Term == null) ? null : model.Term.ToString().Trim();
+                awdRecord.Term = (model.AwdTerm == null) ? null : model.AwdTerm.ToString().Trim();
                 awdRecord.IsTeam = model.IsTeam;
-                awdRecord.ProName = (model.ProjectName == null) ? null : model.ProjectName;
+                awdRecord.ProName = (model.AwdProName == null) ? null : model.AwdProName;
                 awdRecord.FileUrl = "";
                 if (model.IsTeam == "0")
                 {
@@ -259,6 +259,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                         {
                             awdRecord.Teacher += item;
                             awdRecord.Teacher += "#";
+                            awdRecord.Teacher = awdRecord.Teacher.Substring(0, awdRecord.Teacher.Length - 1);//去掉最后一个 # 
                         }
                     }
 
@@ -283,6 +284,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                             awdRecord.Teacher += item;
                             awdRecord.Teacher += "#";
                         }
+                        awdRecord.Teacher = awdRecord.Teacher.Substring(0, awdRecord.Teacher.Length - 1);//去掉最后一个 # 
                     }
 
                     if (model.FileUrl != "-1" && model.FileUrl != "")
@@ -733,7 +735,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 #region 参数验证
                 //可为空参数列表
                 List<string> nullPropertyList = new List<string>();
-                nullPropertyList.Add("Term");
+                nullPropertyList.Add("AwdTerm");
                 nullPropertyList.Add("OrgId");
                 nullPropertyList.Add("Teacher");
 
@@ -847,11 +849,11 @@ namespace HnrMgmtAPI.Controllers.API.Record
 
                 awdRecord.AwdRecID = RecordID;
                 awdRecord.AwdID = model.AwardID.ToString().Trim();
-                awdRecord.Year = model.Year.ToString().Trim();
+                awdRecord.Year = model.AwdYear.ToString().Trim();
                 awdRecord.Time = model.AwdTime.ToString().Trim();
-                awdRecord.Term = (model.Term == null) ? null : model.Term.ToString().Trim();
+                awdRecord.Term = (model.AwdTerm == null) ? null : model.AwdTerm.ToString().Trim();
                 awdRecord.IsTeam = model.IsTeam;
-                awdRecord.ProName = (model.ProjectName == null) ? null : model.ProjectName;
+                awdRecord.ProName = (model.AwdProName == null) ? null : model.AwdProName;
                 awdRecord.FileUrl = "";
                 if (model.IsTeam == "0")
                 {
@@ -866,6 +868,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                             awdRecord.Teacher += item;
                             awdRecord.Teacher += "#";
                         }
+                        awdRecord.Teacher = awdRecord.Teacher.Substring(0, awdRecord.Teacher.Length - 1);//去掉最后一个 # 
                     }
 
                     if (model.FileUrl != "-1" && model.FileUrl != "")
@@ -889,6 +892,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                             awdRecord.Teacher += item;
                             awdRecord.Teacher += "#";
                         }
+                        awdRecord.Teacher = awdRecord.Teacher.Substring(0, awdRecord.Teacher.Length - 1);//去掉最后一个 # 
                     }
 
                     if (model.FileUrl != "-1" && model.FileUrl != "")

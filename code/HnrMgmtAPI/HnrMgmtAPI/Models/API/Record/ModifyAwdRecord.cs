@@ -14,16 +14,16 @@ namespace HnrMgmtAPI.Models.API.Record
         public string AwardID { get; set; }
 
         //获奖年份 格式：2016
-        public string Year { get; set; }
+        public string AwdYear { get; set; }
 
         //获奖时间 格式：2017-07
         public string AwdTime { get; set; }
 
         //获奖届数 （可空）
-        public string Term { get; set; }
+        public string AwdTerm { get; set; }
 
         //获奖项目名称
-        public string ProjectName { get; set; }
+        public string AwdProName { get; set; }
 
         //项目所属部门 （可空）
         public string OrgID { get; set; }
