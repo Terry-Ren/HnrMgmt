@@ -170,9 +170,7 @@ export default {
     this.detailFormBody.State = PubMethod.transfRecordState(
       this.detailFormBody
     );
-    if (this.$route.params.id == "modify") this.ismodify = true;
-
-    console.log(this.detailFormBody);
+    if (this.$route.params.id == "modify") this.selectModify();
   },
   methods: {
     // 跳转路由

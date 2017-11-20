@@ -29,7 +29,7 @@
                     <el-input v-model="detailFormBody.AwdName" :disabled="!ismodify"  style="width:300px" ></el-input>                                   
                 </el-form-item>                
                 <el-form-item v-if="ismodify" label="奖项名称" prop="AwardID">
-                    <el-select  v-model="detailFormBody.AwardID" placeholder="请选择奖项" style="width:300px">
+                    <el-select  v-model="detailFormBody.AwardID" :placeholder="detailFormBody.AwdName" style="width:300px">
                         <el-option v-for="award in AwardData" :key="award.AwdID" :value="award.AwdID"  :label="'【'+award.GradeName+'】'+award.Name+award.Grade"></el-option>
                     </el-select>
                 </el-form-item> 
@@ -67,17 +67,31 @@
                     <el-button type="infor" @click="addTeacher" round  >新增教师</el-button>
                 </el-form-item> 
                 <!-- 新增学生信息 -->
-                <el-form-item v-for="(member,index) in teamMembers" :key="member.key" :label="'成员'+'【'+index+'】'">
-                  <el-input v-model="member.AwdeeID" placeholder="请输入学号" style="width:300px; margin:0 10px 10px 0"></el-input>          
-                  <el-input v-model="member.AwdeeName" placeholder="请输入姓名" style="width:300px; margin:0 300px 10px 0"></el-input>
-                  <el-select v-model="member.OrgID" placeholder="请选择学院" style="width:300px; margin:0 10px 10px 0">
-                    <el-option v-for="org in OrgData" :key="org.OrgID" :value="org.OrgID" :label="org.Name"></el-option>
-                  </el-select>
-                  <el-input v-model="member.Branch" placeholder="请输入团支部" style="width:300px" >
-                    <template slot="append">团支部</template>
-                  </el-input>
-                  <el-button type="danger" @click.prevent="removeMember(member)">删除成员</el-button>
-                </el-form-item>                                                                                        
+                <div v-if="ismodify"> 
+                  <div  v-for="(member,index) in detailFormBody.Members" :key="member.key">
+                    <el-form-item  :label="'成员'+'【'+index+'】'">
+                    </el-form-item>
+                    <el-form-item  label="学号">
+                      <el-input v-model="member.MemberID"  placeholder="请输入学号" style="width:300px; margin:0 10px 10px 0"></el-input>          
+                    </el-form-item>
+                    <el-form-item  label="姓名">             
+                      <el-input v-model="member.MemberName" placeholder="请输入姓名" style="width:300px; margin:0 300px 10px 0"></el-input>
+                    </el-form-item>
+                    <el-form-item  label="姓名">  
+                      <el-select v-model="member.OrgID" :placeholder="member.MemberOrgName" style="width:300px; margin:0 10px 10px 0">
+                        <el-option v-for="org in OrgData" :key="org.OrgID" :value="org.OrgID" :label="org.Name"></el-option>
+                      </el-select>
+                    </el-form-item>
+                    <el-form-item  label="姓名">  
+                      <el-input v-model="member.MemberBranch" placeholder="请输入团支部" style="width:300px" >
+                      </el-input>
+                    </el-form-item>
+                    <el-form-item  label="操作">  
+                      <el-button type="danger" @click.prevent="removeMember(member)">删除成员</el-button>
+                    </el-form-item>
+                </el-form-item> 
+                </div> 
+              </div>                                                                                      
                 <el-form-item v-if="!ismodify" label="负责人姓名" prop="AwdeeName">
                   <el-input v-model="detailFormBody.AwdeeName" :disabled="!ismodify" placeholder="请输入获奖人姓名" style="width:300px" ></el-input>
                 </el-form-item> 
@@ -129,7 +143,7 @@
     </div>
     <el-dialog title="查看团队成员" :visible.sync="teamFormVisible" v-loading="teamLoading">
       <div class="members">
-      <div class="member-infor" v-for="(member,index) in teamMembers" :key="index">
+      <div class="member-infor" v-for="(member,index) in detailFormBody.Members" :key="index">
         <label>成员【{{index}}】</label>
         <div class="single-infor">
           <div class="infor">
@@ -200,7 +214,7 @@ export default {
       // 团队成员表单信息
       teamFormVisible: false,
       teamLoading: false,
-      teamMembers:[],
+      teamMembers: [],
       // 表单验证规则
       rules: {
         HonorID: { required: true, message: "请选择荣誉项目", trigger: "blur" },
@@ -224,6 +238,7 @@ export default {
     this.detailFormBody.Grade = PubMethod.transfGrande(this.detailFormBody);
     if (this.$route.params.id == "modify") this.ismodify = true;
     this.Teachers = this.detailFormBody.Teacher.split("#");
+    //this.detailFormBody.Members=this.teamMembers
     console.log(this.detailFormBody);
     // console.log(this.Teachers);
   },
@@ -279,13 +294,14 @@ export default {
         });
     },
     // 显示团队信息
-    showTeam(){
+    showTeam() {
       this.teamFormVisible = true;
       this.teamLoading = true;
-      this.getTeam()
+      this.getTeam();
     },
     // 填充团队信息
     getTeam() {
+      this.teamMembers = [];
       let param = {
         AwdRecordID: this.detailFormBody.AwdRecordID
       };
@@ -293,10 +309,10 @@ export default {
       reqGetTeam(param)
         .then(res => {
           let teamMembers = res.data.data.Members;
-          console.log(teamMembers)
-          teamMembers.forEach((memberInfo)=>{
-            this.teamMembers.push(memberInfo)
-          })
+          teamMembers.forEach(memberInfo => {
+            this.teamMembers.push(memberInfo);
+          });
+          this.detailFormBody.Members = this.teamMembers;
           this.teamLoading = false;
         })
         .catch(res => {
@@ -312,7 +328,8 @@ export default {
         this.ismodify = true;
         this.getOrg();
         this.getAward();
-        this.getTeam()
+        this.getTeam();
+        console.log(this.detailFormBody.Members);
       } else {
         this.$message({
           type: "error",
@@ -320,36 +337,36 @@ export default {
         });
       }
     },
-      // 新增成员
-      addMember(){
-        this.addFormBody.Members.push({
-          key:Date.now() , 
-          AwdeeID:'',
-          AwdeeName:'',
-          OrgID:'',
-          Branch:''
-        })
-      },
-      // 删除成员
-      removeMember(member){
-        var index =this.addFormBody.Members.indexOf(member)
-        if(index!== -1){
-          this.addFormBody.Members.splice(index,1)
-        }
-      },
-      // 新增教师
-      addTeacher(){
-        this.addFormBody.Teacher.push({
-          TchName:''
-        })
-      },
-      // 删除教师
-      removeTeacher(teacher){
-        var index =this.addFormBody.Teacher.indexOf(teacher)
-        if(index !== -1){
-          this.addFormBody.Teacher.splice(index,1)
-        }
-      },    
+    // 新增成员
+    addMember() {
+      this.addFormBody.Members.push({
+        key: Date.now(),
+        AwdeeID: "",
+        AwdeeName: "",
+        OrgID: "",
+        Branch: ""
+      });
+    },
+    // 删除成员
+    removeMember(member) {
+      var index = this.addFormBody.Members.indexOf(member);
+      if (index !== -1) {
+        this.addFormBody.Members.splice(index, 1);
+      }
+    },
+    // 新增教师
+    addTeacher() {
+      this.addFormBody.Teacher.push({
+        TchName: ""
+      });
+    },
+    // 删除教师
+    removeTeacher(teacher) {
+      var index = this.addFormBody.Teacher.indexOf(teacher);
+      if (index !== -1) {
+        this.addFormBody.Teacher.splice(index, 1);
+      }
+    },
     // 提交编辑
     modifySubmit() {
       this.$refs["modifyFrom"].validate(valid => {
@@ -410,20 +427,20 @@ export default {
       width: 200px;
       height: 200px;
     }
-  } 
+  }
 }
-.members{
-  .member-infor{
+.members {
+  .member-infor {
     display: flex;
     flex-direction: column;
     align-items: center;
-    .single-infor{
+    .single-infor {
       width: 100%;
-      .infor{
+      .infor {
         display: flex;
         justify-content: center;
         position: relative;
-        span{
+        span {
           position: absolute;
           left: 10%;
         }
