@@ -26,7 +26,7 @@ namespace HnrMgmtAPI.Models.API.Record
         public string OrgID { get; set; }
 
         //项目指导老师 可为多人 （可空）
-        public List<string> Teacher { get; set; }
+        public List<TeacherInfo> Teacher { get; set; }
 
         //是否为团队 （值为 0 或 1）
         public string IsTeam { get; set; }
@@ -51,5 +51,11 @@ namespace HnrMgmtAPI.Models.API.Record
 
         //获奖人 所属团支部
         public string Branch { get; set; }
+    }
+
+    public class TeacherInfo
+    {
+        //教师姓名
+        public string TchName { get; set; }
     }
 }
