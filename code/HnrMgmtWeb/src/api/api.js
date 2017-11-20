@@ -131,3 +131,10 @@ export const reqDeleteRecord = params => { return axios.get(`${base}api/record/d
 export const posRecordAward = params => { return axios.post(`${base}api/record/award`, params) }
 // 团队信息获取
 export const reqGetTeam = params => { return axios.get(`${base}api/record/teaminfo`, { params: params }) }
+
+
+// 个人信息获取
+export const reqGetAccountInfo = params => { return axios.get(`${base}api/account/getinfo`, { params: params }) }
+// 个人信息修改
+export const posModifyAccountInfo = params => { return axios.post(`${base}api/account/changeinfo`, params) }
+

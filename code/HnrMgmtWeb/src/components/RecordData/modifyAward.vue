@@ -16,8 +16,8 @@
             <el-form :inline="true" style="margin-bottom:15px">
             <el-button v-if="!ismodify" type="primary" @click="selectModify" >编辑该项</el-button>
             <el-button v-if="ismodify" type="primary" @click="ismodify=false" >取消编辑</el-button>
-            <el-button v-if="!ismodify" type="infor" @click="showTeam" >查看团队</el-button>                        
-            <el-button type="infor" @click="backToMain" >返回</el-button>            
+            <el-button v-if="!ismodify" @click="showTeam" >查看团队</el-button>                        
+            <el-button  @click="backToMain" >返回</el-button>            
             </el-form>             
         </div>
         <!-- 主要表单 -->
@@ -63,8 +63,8 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="新增人员" v-if="ismodify" >
-                    <el-button type="infor" @click="addMember" round  >新增成员</el-button>
-                    <el-button type="infor" @click="addTeacher" round  >新增教师</el-button>
+                    <el-button type="info" @click="addMember" round  >新增成员</el-button>
+                    <el-button type="info" @click="addTeacher" round  >新增教师</el-button>
                 </el-form-item> 
                 <!-- 新增学生信息 -->
                 <div v-if="ismodify"> 
@@ -143,22 +143,22 @@
     </div>
     <el-dialog title="查看团队成员" :visible.sync="teamFormVisible" v-loading="teamLoading">
       <div class="members">
-      <div class="member-infor" v-for="(member,index) in detailFormBody.Members" :key="index">
+      <div class="member-info" v-for="(member,index) in detailFormBody.Members" :key="index">
         <label>成员【{{index}}】</label>
-        <div class="single-infor">
-          <div class="infor">
-            <span class="infor-laber">学号</span>
+        <div class="single-info">
+          <div class="info">
+            <span class="info-laber">学号</span>
             <el-input v-model="member.MemberID" :disabled="!ismodify" style="width:300px;"></el-input>  
           </div>
-          <div class="infor">
+          <div class="info">
             <span>姓名</span>
             <el-input v-model="member.MemberName" :disabled="!ismodify" style="width:300px;"></el-input>  
           </div> 
-          <div class="infor">
+          <div class="info">
             <span>学院</span>
             <el-input v-model="member.MemberOrgName" :disabled="!ismodify" style="width:300px;"></el-input>  
           </div>  
-          <div class="infor">
+          <div class="info">
             <span>团支部</span>
             <el-input v-model="member.MemberBranch" :disabled="!ismodify" style="width:300px;"></el-input>  
           </div>                                           
@@ -430,13 +430,13 @@ export default {
   }
 }
 .members {
-  .member-infor {
+  .member-info {
     display: flex;
     flex-direction: column;
     align-items: center;
-    .single-infor {
+    .single-info {
       width: 100%;
-      .infor {
+      .info {
         display: flex;
         justify-content: center;
         position: relative;

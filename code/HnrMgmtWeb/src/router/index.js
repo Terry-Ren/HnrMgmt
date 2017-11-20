@@ -30,8 +30,17 @@ const Orglist = () => import(/* webpackChunkName: "BasicData" */ '../components/
 // 系统管理组件打包异步
 const ComAcclist = () => import(/* webpackChunkName: "SystemData" */ '../components/SystemData/ComAcclist')
 const Rolelist = () => import(/* webpackChunkName: "SystemData" */ '../components/SystemData/Rolelist')
-const ChangePass = () => import(/* webpackChunkName: "SystemData" */ '../components/SystemData/Password')
 const Menulist = () => import(/* webpackChunkName: "SystemData" */ '../components/SystemData/Menulist')
+
+// 账户管理组件打包异步
+const ChangePass = () => import ( /* webpackChunkName: "AccountData" */ '../components/AccountData/Password')
+const AccountInfo = () => import ( /* webpackChunkName: "AccountData" */ '../components/AccountData/AccountInfo')
+
+
+
+
+
+
 
 Vue.use(Router)
 
@@ -122,12 +131,35 @@ const routes = [
     children: [
       {path: '/system/Acclist', component: ComAcclist, name: 'ComAcclist', menuShow: true},
       {path: '/system/Role', component: Rolelist, name: 'Rolelist', menuShow: true},
-      {path: '/system/PassWord', component: ChangePass, name: 'ChangePass', menuShow: true},
       { path: '/system/Menulist', component: Menulist, name: 'Menulist', menuShow: true },
       {path:'/system/ctext',component:Ctext,name:'Ctext',menuShow:true}
     ]
-
-  }
+  },
+  // 个人信息
+  {
+    path: '/',
+    component: Home,
+    name: 'AccountData',
+    meta: {
+      requireAuth: true,
+      keepAlive: false
+    },
+    menuShow: true,
+    // iconCls: 'iconfont icon-users', // 图标样式class
+    children: [{
+        path: '/account/info',
+        component: AccountInfo,
+        name: 'AccountInfo',
+        menuShow: true
+      },
+      {
+        path: '/account/PassWord',
+        component: ChangePass,
+        name: 'ChangePass',
+        menuShow: true
+      },
+    ]
+  },
 ]
 
 // 页面刷新时，重新赋值给state中相应的变量

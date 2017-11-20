@@ -25,10 +25,10 @@
                 </span>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>
-                        <router-link to="/hnrlist"><span style=" color: #000; font-size: 14px;">个人信息</span></router-link>
+                        <router-link to="/account/info"><span style=" color: #000; font-size: 14px;">个人信息</span></router-link>
                     </el-dropdown-item>
                     <el-dropdown-item>
-                        <router-link to="/system/PassWord"><span style=" color: #000; font-size: 14px;">修改密码</span></router-link>
+                        <router-link to="/account/PassWord"><span style=" color: #000; font-size: 14px;">修改密码</span></router-link>
                     </el-dropdown-item>
                     <el-dropdown-item divided>
                         <span style="font-size: 14px;" @click.prevent="logout">退出登录</span>
@@ -81,15 +81,12 @@
                         <el-menu-item index="/system/Role">
                             角色管理
                         </el-menu-item>
-                        <el-menu-item index="/system/PassWord">
-                            密码管理
-                        </el-menu-item>
                         <el-menu-item index="/system/Menulist">
                             权限管理
                         </el-menu-item>
                         </el-submenu>
-                        <!-- 基础数据 -->
-                        <el-submenu index="basicData">
+                <!-- 基础数据 -->
+                <el-submenu index="basicData">
                         <template slot="title">
                             <i class="el-icon-setting"></i>
                             <span slot="title">基础数据</span>
@@ -104,6 +101,19 @@
                             单位学院管理
                         </el-menu-item>
                 </el-submenu>
+                <!-- 个人信息 -->
+                <el-submenu index="accountData">
+                        <template slot="title">
+                            <i class="el-icon-star-off"></i>
+                            <span slot="title">个人管理</span>
+                        </template>
+                        <el-menu-item index="/account/info" >
+                            个人信息
+                        </el-menu-item>
+                        <el-menu-item index="/account/PassWord">
+                            修改密码
+                        </el-menu-item>
+                </el-submenu>                
             </el-menu>
         </aside>
         <section class="main-container">

@@ -4,7 +4,7 @@
       <!-- 面包屑导航 -->
       <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
-          <el-breadcrumb-item>系统管理</el-breadcrumb-item>
+          <el-breadcrumb-item>个人管理</el-breadcrumb-item>
           <el-breadcrumb-item>密码管理</el-breadcrumb-item>
       </el-breadcrumb>    
     </div>
