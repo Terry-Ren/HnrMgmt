@@ -255,9 +255,9 @@ namespace HnrMgmtAPI.Controllers.API.Record
                     awdRecord.Teacher = "";
                     if (model.Teacher != null && model.Teacher.Count > 0)
                     {
-                        foreach (string item in model.Teacher)
+                        foreach (TeacherInfo item in model.Teacher)
                         {
-                            awdRecord.Teacher += item;
+                            awdRecord.Teacher += item.TchName.ToString().Trim();
                             awdRecord.Teacher += "#";
                             awdRecord.Teacher = awdRecord.Teacher.Substring(0, awdRecord.Teacher.Length - 1);//去掉最后一个 # 
                         }
@@ -279,9 +279,9 @@ namespace HnrMgmtAPI.Controllers.API.Record
                     awdRecord.Teacher = "";
                     if (model.Teacher != null && model.Teacher.Count > 0)
                     {
-                        foreach (string item in model.Teacher)
+                        foreach (TeacherInfo item in model.Teacher)
                         {
-                            awdRecord.Teacher += item;
+                            awdRecord.Teacher += item.TchName.ToString().Trim();
                             awdRecord.Teacher += "#";
                         }
                         awdRecord.Teacher = awdRecord.Teacher.Substring(0, awdRecord.Teacher.Length - 1);//去掉最后一个 # 
@@ -1879,6 +1879,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 model.HnrRecordID = item.HnrRecID;
                 model.AwdeeID = item.AwardeeID;
                 model.AwdeeName = item.AwardeeName;
+                model.AwdeeOrgID = item.AwardeeOrgID;
                 model.AwdeeOrgName = item.AwardeeOrgName;
                 model.AwdeeBranch = item.AwardeeBranch;
                 model.HnrName = item.HnrName;
@@ -1901,9 +1902,11 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 returnAwdRecord model = new returnAwdRecord();
                 model.AwdRecordID = item.AwdRecID;
                 model.AwdeeName = item.TeamAwdeeName;
+                model.AwdeeOrgID = item.TeamAwdeeOrgID;
                 model.AwdeeOrgName = item.TeamAwdeeOrgName;
                 model.AwdeeBranch = item.TeamAwdeeBranch;
                 model.AwdName = item.AwdName;
+                model.AwdOrgID = item.OrgID;
                 model.AwdOrgName = item.OrgName;
                 model.AwdProName = item.ProName;
                 model.Grade = item.AwdGrade;
