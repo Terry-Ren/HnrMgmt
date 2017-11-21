@@ -14,11 +14,13 @@
       <div class="toolbal">
         <el-form :inline="true" style="margin-bottom:15px">
           <el-button type="primary" @click="switchAdd" >新增荣誉</el-button>
+          <el-button type="primary" @click="review" :disabled="selectDisable" >审核</el-button>  
+          <el-button type="primary" @click="rejectFormVisible=true;" :disabled="selectDisable" >驳回</el-button>            
         </el-form>        
       </div>
       <div class="main-data">
         <!-- 表格区 -->
-          <el-table class="table" :data="HnrData"  style="width:100%" v-loading="listLoading" height="string" > 
+          <el-table class="table" :data="HnrData"  style="width:100%" v-loading="listLoading" height="string"  @select="selectRow"  > 
             <el-table-column type="selection" ></el-table-column>
             <el-table-column type="index"  label="序号" style="text-aligin:center" align="center"></el-table-column>
             <el-table-column prop="HnrName" label="荣誉名称" sortable align="center" ></el-table-column>
@@ -40,11 +42,23 @@
       <el-pagination layout="total, prev, pager, next, sizes, jumper" @size-change="SizeChangeEvent" @current-change="CurrentChangeEvent" :page-size="size" :page-sizes="[10,15,20,25,30]":total="totalNum">
       </el-pagination>      
     </div>
+    <!-- 驳回请求表单      -->
+    <el-dialog title="驳回请求" :visible.sync="rejectFormVisible" v-loading="rejectLoading" style="width:70%;">
+      <el-form  label-width="80px" ref="rejectFrom"  >
+        <el-form-item label="驳回理由" prop="reson"  >
+          <el-input v-model="RejectReason"  type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入驳回理由" style="width:300px" ></el-input>
+        </el-form-item>  
+      </el-form> 
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native=" rejectFormVisible = false">取消</el-button>
+        <el-button type="primary" @click.native="rejectSubmit" >提交</el-button>
+      </div>            
+    </el-dialog>     
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-import { posRecordHonor, reqGetRecord, reqDeleteRecord } from "../../api/api";
+import { reqGetRecord, reqDeleteRecord,reqGetReviewRecord,reqGetRejectRecord } from "../../api/api";
 import PubMethod from "../../common/util";
 import * as types from "../../store/mutation-types";
 // import uptoken from '../../common/create_uptoken'
@@ -75,6 +89,12 @@ export default {
       // 表格数据
       HnrData: [],
       listLoading: false,
+      //选择表格区域与审核
+      selectRowData: [],
+      selectDisable: true,
+      rejectFormVisible: false,
+      rejectLoading: false,
+      RejectReason: '无',
       // 分页信息
       totalNum: 0,
       page: 1,
@@ -119,7 +139,7 @@ export default {
         .then(res => {
           this.HnrData = res.data.data.hnrList;
           this.totalNum = res.data.data.hnrListNum;
-          //console.log(this.HnrData)
+          console.log(this.HnrData)
           this.listLoading = false;
         })
         .catch(res => {
@@ -174,6 +194,63 @@ export default {
           });
         });
     },
+    // 审核通过
+    review() {
+      this.$confirm("是否审核通过该记录?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.listLoading = true;
+          let param = {
+            access_token: "11",
+            HnrRecordID: this.selectRowData[0]
+          };
+          reqGetReviewRecord(param).then(res => {
+            this.listLoading = false;
+            PubMethod.statusinfo(this, res.data);
+            this.getList();
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    // 选中单一行
+    selectRow(selection, row) {
+      this.selectDisable = false;
+      this.selectRowData = [];
+      selection.forEach(rowData => {
+        this.selectRowData.push(rowData.HnrRecordID);
+      });
+      console.log(this.selectRowData);
+    },
+    // 驳回
+    rejectSubmit() {
+      //this.$refs["rejectFrom"].validate(valid => {
+      // if (valid) {
+      this.rejectLoading = true;
+      //复制字符串
+      let param = {
+        access_token: "11",
+        HnrRecordID: this.selectRowData[0],
+        RejectReason: this.RejectReason
+      };
+      reqGetRejectRecord(param).then(res => {
+        this.rejectLoading = false;
+        //公共提示方法，传入当前的vue以及res.data
+        PubMethod.statusinfo(this, res.data);
+        this.$refs["rejectFrom"].resetFields();
+        this.rejectFormVisible = false;
+        this.getList();
+      });
+      //  }
+      // });
+    },
     //更换每页数量
     SizeChangeEvent(val) {
       this.loading = true;
@@ -193,10 +270,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.left-main {
-  border-radius: 5px;
-}
-.hornor-add {
-  margin-left: 120px;
+.el-dialog__wrapper{
+  right: 25vw;
+  position: absolute;
 }
 </style>

@@ -24,8 +24,8 @@
                 <el-option v-for="honor in HonorData" :key="honor.HonorID" :value="honor.HonorID" :label="honor.Name"></el-option>
               </el-select>
             </el-form-item>  
-            <el-form-item label="获奖年度" prop="Annual" >
-              <el-select v-model="addFormBody.Annual"  placeholder="请选择年度" style="width:300px">
+            <el-form-item label="获奖年度" prop="HnrAnnual" >
+              <el-select v-model="addFormBody.HnrAnnual"  placeholder="请选择年度" style="width:300px">
                 <el-option v-for="options in annualOptions" :key="options.value" :label="options.label" :value="options.value"></el-option>
               </el-select>
             </el-form-item>
@@ -74,6 +74,7 @@
 
 <script type="text/ecmascript-6">
 import {reqGetHonorList,reqGetOrgList,posRecordHonor} from '../../api/api'
+import * as types from "../../store/mutation-types";
 import PubMethod from '../../common/util'
  export default {
    data() {
@@ -104,7 +105,7 @@ import PubMethod from '../../common/util'
        submitLoading:false,       
        addFormBody:{
          HonorID:'',
-         Annual:'',
+         HnrAnnual:'',
          HnrTime:'',
          AwdeeName:'',
          AwdeeID:'',
@@ -115,7 +116,7 @@ import PubMethod from '../../common/util'
       // 表单验证规则
       rules:{
         HonorID:{required:true , message:'请选择荣誉项目', trigger:'blur'},
-        Annual:{required:true , message:'请选择获得年度', trigger:'blur'},
+        HnrAnnual:{required:true , message:'请选择获得年度', trigger:'blur'},
         HnrTime:{required:true , message:'请选择获得年月', trigger:'blur'},
         AwdeeID:[
           {required:true , message:'请输入学号', trigger:'blur'},
@@ -224,6 +225,7 @@ import PubMethod from '../../common/util'
             //公共提示方法，传入当前的vue以及res.data
             PubMethod.statusinfo(this,res.data)
               this.$refs['addForm'].resetFields();
+              this.$store.commit(types.RECORD_MODIFY)
               this.backToMain()
            })           
          }

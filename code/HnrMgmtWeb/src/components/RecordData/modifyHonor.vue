@@ -15,7 +15,9 @@
         <div class="toolbar">
             <el-form :inline="true" style="margin-bottom:15px">
             <el-button v-if="!ismodify" type="primary" @click="selectModify" >编辑该项</el-button>
-            <el-button v-if="ismodify" type="primary" @click="ismodify=false" >取消编辑</el-button>            
+            <el-button v-if="ismodify" type="primary" @click="ismodify=false" >取消编辑</el-button>  
+            <el-button v-if="!ismodify" type="primary" @click="review" >审核</el-button> 
+            <el-button  v-if="!ismodify" type="primary" @click="rejectFormVisible=true;">驳回</el-button>                         
             <el-button type="infor" @click="backToMain" >返回</el-button>            
             </el-form>             
         </div>
@@ -84,8 +86,8 @@
               <el-form-item v-if="!ismodify" label="填报时间" prop="HnrName" >
                 <el-input v-model="detailFormBody.ApplyTime" :disabled="!ismodify" style="width:300px" ></el-input>                                    
               </el-form-item> 
-              <el-form-item v-if="!ismodify" label="审核状态" prop="State" >
-                <el-input v-model="detailFormBody.State" :disabled="!ismodify" style="width:300px" ></el-input>                                    
+              <el-form-item v-if="!ismodify" label="审核状态" prop="StateInfo" >
+                <el-input v-model="detailFormBody.StateInfo" :disabled="!ismodify" style="width:300px" ></el-input>                                    
               </el-form-item>               
               <el-form-item  label="证明照片">
                 <img class="file" src="http://oyzg731sy.bkt.clouddn.com/FlL70dFa87VxKgNSYDJ3AQcfCUr_" alt="暂无证明材料">
@@ -94,6 +96,19 @@
           </div>                     
         </div>
     </div>
+
+    <!-- 驳回请求表单      -->
+    <el-dialog title="驳回请求" :visible.sync="rejectFormVisible" v-loading="rejectLoading" style="width:70%;">
+      <el-form  label-width="80px" ref="rejectFrom"  >
+        <el-form-item label="驳回理由" prop="reson"  >
+          <el-input v-model="RejectReason"  type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入驳回理由" style="width:300px" ></el-input>
+        </el-form-item>  
+      </el-form> 
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native=" rejectFormVisible = false">取消</el-button>
+        <el-button type="primary" @click.native="rejectSubmit" >提交</el-button>
+      </div>            
+    </el-dialog>       
 </div>
 </template>
 
@@ -103,7 +118,9 @@ import * as types from "../../store/mutation-types";
 import {
   reqGetHonorList,
   reqGetOrgList,
-  posModifyRecordHonor
+  posModifyRecordHonor,
+  reqGetReviewRecord,
+  reqGetRejectRecord  
 } from "../../api/api";
 
 export default {
@@ -135,6 +152,10 @@ export default {
       // 新增表单相关数据
       detailFormBody: [],
       submitLoading: false,
+      //拒绝原因填写
+      rejectFormVisible: false,
+      rejectLoading: false,
+      RejectReason: "",      
       // 表单验证规则
       rules: {
         HonorID: { required: true, message: "请选择荣誉项目", trigger: "blur" },
@@ -167,7 +188,7 @@ export default {
   },
   created() {
     this.detailFormBody = this.$store.state.singleHonor;
-    this.detailFormBody.State = PubMethod.transfRecordState(
+    this.detailFormBody.StateInfo = PubMethod.transfRecordState(
       this.detailFormBody
     );
     if (this.$route.params.id == "modify") this.selectModify();
@@ -212,8 +233,8 @@ export default {
     // 点击编辑后初始化
     selectModify() {
       if (
-        this.detailFormBody.State == "待审核" ||
-        this.detailFormBody.State == "已驳回"
+        this.detailFormBody.StateInfo == "待审核" ||
+        this.detailFormBody.StateInfo == "已驳回"
       ) {
         this.ismodify = true;
         this.getOrg();
@@ -262,7 +283,57 @@ export default {
     // 上传成功钩子
     successUpload(res, file, fileLis) {
       this.detailFormBody.FileUrl = this.$store.state.uploadUrl + res.key;
-    }
+    },
+    // 审核通过
+    review() {
+      this.$confirm("是否审核通过该记录?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.submitLoading = true;
+          let param = {
+            access_token: "11",
+            HnrRecordID: this.detailFormBody.HnrRecordID
+          };
+          reqGetReviewRecord(param).then(res => {
+            this.submitLoading = false;
+            PubMethod.statusinfo(this, res.data);
+            this.$store.commit(types.RECORD_MODIFY);
+            this.detailFormBody.StateInfo = '已审核';
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    // 驳回
+    rejectSubmit() {
+      //this.$refs["rejectFrom"].validate(valid => {
+      // if (valid) {
+      this.rejectLoading = true;
+      //复制字符串
+      let param = {
+        access_token: "11",
+        HnrRecordID: this.detailFormBody.HnrRecordID,
+        RejectReason: this.RejectReason
+      };
+      reqGetRejectRecord(param).then(res => {
+        this.rejectLoading = false;
+        //公共提示方法，传入当前的vue以及res.data
+        PubMethod.statusinfo(this, res.data);
+        this.$refs["rejectFrom"].resetFields();
+        this.rejectFormVisible = false;
+        this.$store.commit(types.RECORD_MODIFY);
+        this.detailFormBody.StateInfo = '已驳回';
+      });
+      //  }
+      // });
+    }    
   }
 };
 </script>

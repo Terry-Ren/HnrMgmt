@@ -110,11 +110,11 @@ export default {
         PubMethod.statusinfo(this, res.data);
         this.isModify = false;
         this.listLoading = false;
-        this.$notify({
-          title: '成功',
-          message: '修改成功，请重新登录查看',
-          type: 'success'
-        });
+        // this.$notify({
+        //   title: '成功',
+        //   message: '修改成功，请重新登录查看',
+        //   type: 'success'
+        // });
       });
     }
   }

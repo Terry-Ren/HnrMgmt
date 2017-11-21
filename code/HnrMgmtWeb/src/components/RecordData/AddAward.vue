@@ -36,8 +36,8 @@
             <el-form-item label="项目名称" prop="AwdProName">
               <el-input v-model="addFormBody.AwdProName" placeholder="请输入获奖项目名" style="width:300px" ></el-input>
             </el-form-item>
-            <el-form-item label="项目所属学院" prop="OrgID">
-              <el-select v-model="addFormBody.OrgID" placeholder="请选择所属学院" style="width:300px">
+            <el-form-item label="项目所属学院" prop="AwdOrgID">
+              <el-select v-model="addFormBody.AwdOrgID" placeholder="请选择所属学院" style="width:300px">
                 <el-option v-for="org in OrgData" :key="org.OrgID" :value="org.OrgID" :label="org.Name"></el-option>
               </el-select>
             </el-form-item> 
@@ -93,205 +93,210 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {reqGetAwdList,reqGetOrgList,posRecordAward} from '../../api/api'
-import PubMethod from '../../common/util'
- export default {
-   data() {
-     // 获奖人学号验证规则
-     var validateAwdeeID =(rule, value, callback) => {
-       const RULES =/^\d{5,13}$/
-       if (value == null) {
-         callback(new Error('学号不能为空'))
-         } else if(!RULES.test(value)){
-           callback(new Error('必须为5-13位数字'))
-           }
-           else{
-             callback()
-           }
+import { reqGetAwdList, reqGetOrgList, posRecordAward } from "../../api/api";
+import PubMethod from "../../common/util";
+import * as types from "../../store/mutation-types";
+export default {
+  data() {
+    // 获奖人学号验证规则
+    var validateAwdeeID = (rule, value, callback) => {
+      const RULES = /^\d{5,13}$/;
+      if (value == null) {
+        callback(new Error("学号不能为空"));
+      } else if (!RULES.test(value)) {
+        callback(new Error("必须为5-13位数字"));
+      } else {
+        callback();
       }
-     return {
-       // 七牛云令牌
-       postData:{
-         token:this.$store.state.uploadToken
-       },
-       // 填充奖项数据
-       AwardData:[],
-       // 填充组织单位
-       OrgData:[],
-       // 用户令牌
-       access_token:'',
+    };
+    return {
+      // 七牛云令牌
+      postData: {
+        token: this.$store.state.uploadToken
+      },
+      // 填充奖项数据
+      AwardData: [],
+      // 填充组织单位
+      OrgData: [],
+      // 用户令牌
+      access_token: "",
       // 新增表单相关数据
-       submitLoading:false,       
-       addFormVisible: true,
-       addFormBody:{
-         AwardID:'',
-         AwdYear:'',
-         Term:'',
-         AwdTime:'',
-         AwdProName:'',
-         IsTeam:'',
-         Teacher:[],
-         Members:[],
-         OrgID:'',
-         FileUrl:'-1'
-       },
+      submitLoading: false,
+      addFormVisible: true,
+      addFormBody: {
+        AwardID: "",
+        AwdYear: "",
+        Term: "",
+        AwdTime: "",
+        AwdProName: "",
+        IsTeam: "",
+        Teacher: [],
+        Members: [],
+        AwdOrgID: "",
+        FileUrl: "-1"
+      },
       // 表单验证规则
-      rules:{
-        AwardID:{required:true , message:'请选择荣誉项目', trigger:'blur'},
-        AwdYear:{required:true , message:'请选择获得年度', trigger:'blur'},
-        AwdTime:{required:true , message:'请选择获得年月', trigger:'blur'},
-        AwdeeID:[
-          {required:true , message:'请输入学号', trigger:'blur'},
-          {validator:validateAwdeeID, tigger:'blure'},          
+      rules: {
+        AwardID: { required: true, message: "请选择荣誉项目", trigger: "blur" },
+        AwdYear: { required: true, message: "请选择获得年度", trigger: "blur" },
+        AwdTime: { required: true, message: "请选择获得年月", trigger: "blur" },
+        AwdeeID: [
+          { required: true, message: "请输入学号", trigger: "blur" },
+          { validator: validateAwdeeID, tigger: "blure" }
         ],
-        AwdeeName:{required:true , message:'请输入获奖人姓名', trigger:'blur'},
-        OrgID:{required:true , message:'请选择单位学院', trigger:'blur'},
-        Branch:{required:true , message:'请输入所属团支部', trigger:'blur'}         
-      },
-     }    
-   },
-//    // 计算属性
-//    computed:{
-//        Branch(){
-//            return this.addFormBody.Branch
-//        }
-//    },
-//    // 观察着
-//    watch:{
-//        Branch(newVal){
-//            this.addFormBody.Branch=newVal+'团支部'
-//        }
-//    },
-   //声明周期调用
-   mounted(){ 
-     this.getAward();
-     this.getOrg();
-   },
-   methods:{
-     // 跳转路由
-     backToMain(){
-       this.$router.push({
-         path:'/record/award'
-       })
-     },
-     // 填充奖项数据
-     getAward(){
-       this.listLoading=true
-       let param={
-         access_token:"11"
-       }
-       reqGetAwdList(param).then((res)=>{
-         this.listLoading=false
-         this.AwardData=res.data.data.list
-              this.transfOptionGrande()
-              this.transfOptionGrandeName()
-       }).catch((res)=>{
-         console.log(res)
-         })       
-     },
-     // 转换新增选项中的获奖等次
-     transfOptionGrande(){
-         this.AwardData.forEach((award)=>{
-             award.Grade=PubMethod.transfGrande(award)
-         })
-     },
-     // 转换新增选项中的获奖级别
-     transfOptionGrandeName(){
-       this.AwardData.forEach((award)=>{
-         award.GradeName=PubMethod.transfGrandeName(award)
-       })
-     },
-    // 填充单位数据
-     getOrg(){
-       this.listLoading=true
-       let param={
-         access_token:"11"
-       }
-       reqGetOrgList(param).then((res)=>{
-         this.listLoading=false
-         this.OrgData=res.data.data.list
-       }).catch((res)=>{
-         console.log(res)
-         })       
-     },
-     // 转换获奖等次
-     transfGrande(row){
-       return PubMethod.transfGrande(row)
-     },   
-    //在图片提交前进行验证
-    beforePicUpload(file) {  
-      const isJPG = file.type === 'image/jpeg'
-      const isPNG = file.type === 'image/png'      
-      const isLt2M = file.size / 1024 / 1024 < 2
-      if (!isJPG&&!isPNG) {
-        this.$message.error('上传头像图片只能是 JPG/PNG 格式!')
-        return false
-      } else if (!isLt2M) {
-        this.$message.error('上传证明图片大小不能超过 2MB!')
-        return false
+        AwdeeName: { required: true, message: "请输入获奖人姓名", trigger: "blur" },
+        OrgID: { required: true, message: "请选择单位学院", trigger: "blur" },
+        Branch: { required: true, message: "请输入所属团支部", trigger: "blur" }
       }
-      return true
-      },
-      // 上传成功钩子
-      successUpload(res, file, fileLis){
-        this.addFormBody.FileUrl=this.$store.state.uploadUrl+res.key
-      },
-      // 新增成员
-      addMember(){
-        this.addFormBody.Members.push({
-          key:Date.now() , 
-          AwdeeID:'',
-          AwdeeName:'',
-          OrgID:'',
-          Branch:''
+    };
+  },
+  //    // 计算属性
+  //    computed:{
+  //        Branch(){
+  //            return this.addFormBody.Branch
+  //        }
+  //    },
+  //    // 观察着
+  //    watch:{
+  //        Branch(newVal){
+  //            this.addFormBody.Branch=newVal+'团支部'
+  //        }
+  //    },
+  //声明周期调用
+  mounted() {
+    this.getAward();
+    this.getOrg();
+  },
+  methods: {
+    // 跳转路由
+    backToMain() {
+      this.$router.push({
+        path: "/record/award"
+      });
+    },
+    // 填充奖项数据
+    getAward() {
+      this.listLoading = true;
+      let param = {
+        access_token: "11"
+      };
+      reqGetAwdList(param)
+        .then(res => {
+          this.listLoading = false;
+          this.AwardData = res.data.data.list;
+          this.transfOptionGrande();
+          this.transfOptionGrandeName();
         })
-      },
-      // 删除成员
-      removeMember(member){
-        var index =this.addFormBody.Members.indexOf(member)
-        if(index!== -1){
-          this.addFormBody.Members.splice(index,1)
-        }
-      },
-      // 新增教师
-      addTeacher(){
-        this.addFormBody.Teacher.push({
-          TchName:''
+        .catch(res => {
+          console.log(res);
+        });
+    },
+    // 转换新增选项中的获奖等次
+    transfOptionGrande() {
+      this.AwardData.forEach(award => {
+        award.Grade = PubMethod.transfGrande(award);
+      });
+    },
+    // 转换新增选项中的获奖级别
+    transfOptionGrandeName() {
+      this.AwardData.forEach(award => {
+        award.GradeName = PubMethod.transfGrandeName(award);
+      });
+    },
+    // 填充单位数据
+    getOrg() {
+      this.listLoading = true;
+      let param = {
+        access_token: "11"
+      };
+      reqGetOrgList(param)
+        .then(res => {
+          this.listLoading = false;
+          this.OrgData = res.data.data.list;
         })
-      },
-      // 删除教师
-      removeTeacher(teacher){
-        var index =this.addFormBody.Teacher.indexOf(teacher)
-        if(index !== -1){
-          this.addFormBody.Teacher.splice(index,1)
-        }
-      },
-     //新增获奖记录
-     addSubmit(){
-       //console.log(this.addFormBody)
-       this.$refs['addForm'].validate((valid)=>{
-         if(valid){
-           this.submitLoading=true
-           //复制字符串
-           let para = Object.assign({}, this.addFormBody);
-           para.access_token='11'
-           posRecordAward(para).then((res)=>{
-              this.submitLoading=false
+        .catch(res => {
+          console.log(res);
+        });
+    },
+    // 转换获奖等次
+    transfGrande(row) {
+      return PubMethod.transfGrande(row);
+    },
+    //在图片提交前进行验证
+    beforePicUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isPNG = file.type === "image/png";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isJPG && !isPNG) {
+        this.$message.error("上传头像图片只能是 JPG/PNG 格式!");
+        return false;
+      } else if (!isLt2M) {
+        this.$message.error("上传证明图片大小不能超过 2MB!");
+        return false;
+      }
+      return true;
+    },
+    // 上传成功钩子
+    successUpload(res, file, fileLis) {
+      this.addFormBody.FileUrl = this.$store.state.uploadUrl + res.key;
+    },
+    // 新增成员
+    addMember() {
+      this.addFormBody.Members.push({
+        key: Date.now(),
+        AwdeeID: "",
+        AwdeeName: "",
+        OrgID: "",
+        Branch: ""
+      });
+    },
+    // 删除成员
+    removeMember(member) {
+      var index = this.addFormBody.Members.indexOf(member);
+      if (index !== -1) {
+        this.addFormBody.Members.splice(index, 1);
+      }
+    },
+    // 新增教师
+    addTeacher() {
+      this.addFormBody.Teacher.push({
+        TchName: ""
+      });
+    },
+    // 删除教师
+    removeTeacher(teacher) {
+      var index = this.addFormBody.Teacher.indexOf(teacher);
+      if (index !== -1) {
+        this.addFormBody.Teacher.splice(index, 1);
+      }
+    },
+    //新增获奖记录
+    addSubmit() {
+      //console.log(this.addFormBody)
+      this.$refs["addForm"].validate(valid => {
+        if (valid) {
+          this.submitLoading = true;
+          //复制字符串
+          let para = Object.assign({}, this.addFormBody);
+          para.access_token = "11";
+          posRecordAward(para).then(res => {
+            this.submitLoading = false;
             //公共提示方法，传入当前的vue以及res.data
-            PubMethod.statusinfo(this,res.data)
-              this.$refs['addForm'].resetFields();
-              this.backToMain()
-           })           
-         }
-       })
-     },
-   }
- }
+            PubMethod.statusinfo(this, res.data);
+            this.$refs["addForm"].resetFields();
+            this.$store.commit(types.RECORD_MODIFY);
+            this.backToMain();
+          });
+        }
+      });
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">
-.toolbar{
-  form{
+.toolbar {
+  form {
     display: flex;
     justify-content: space-around;
   }

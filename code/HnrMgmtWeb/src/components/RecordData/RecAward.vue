@@ -34,7 +34,7 @@
             <template slot-scope="scope">
               <el-button  size="small" @click="switchDetial(scope.$index,scope.row)" >详情</el-button>             
               <el-button type="success" size="small"  @click="switchModify(scope.$index,scope.row)" >重填</el-button>
-              <el-button type="danger" size="small"  @click="delectAccTch(scope.$index,scope.row)" >删除</el-button>
+              <el-button type="danger" size="small"  @click="delectRecord(scope.$index,scope.row)" >删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -59,7 +59,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {reqGetRecord,reqGetReviewRecord,reqGetRejectRecord} from '../../api/api'
+import {reqGetRecord,reqDeleteRecord,reqGetReviewRecord,reqGetRejectRecord} from '../../api/api'
 import PubMethod from '../../common/util'
 import * as types from "../../store/mutation-types";
 // import uptoken from '../../common/create_uptoken'
@@ -89,6 +89,7 @@ import * as types from "../../store/mutation-types";
        rejectFormVisible:false,
        rejectLoading:false,
        RejectReason:'',
+       //翻页获取
        totalNum:0,
        page:1,
        size:10,
@@ -100,18 +101,20 @@ import * as types from "../../store/mutation-types";
        this.selectDisable=true
      }
    },
-//    // 计算属性
-//    computed:{
-//        Branch(){
-//            return this.addFormBody.Branch
-//        }
-//    },
-//    // 观察着
-//    watch:{
-//        Branch(newVal){
-//            this.addFormBody.Branch=newVal+'团支部'
-//        }
-//    },
+  // 计算属性
+  computed: {
+    recordModify: function() {
+      return this.$store.state.recordModify;
+    }
+  },
+  // 监听者
+  watch: {
+    recordModify: {
+      handler: function(params) {
+        this.getList();
+      }
+    }
+  },
    //声明周期调用
    mounted(){
      this.getList();     
@@ -167,7 +170,31 @@ import * as types from "../../store/mutation-types";
       this.$router.push({
         path: "/record/award/modify"
       });
-    },    
+    },  
+    //删除功能
+    delectRecord(index, row) {
+      this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          let para = { AwdRecordID: row.AwdRecordID };
+          para.access_token = "11";
+
+          reqDeleteRecord(para).then(res => {
+            //公共提示方法，传入当前的vue以及res.data
+            PubMethod.statusinfo(this, res.data);
+            this.getList();
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },      
     // 选中单一行
     selectRow(selection, row){
       this.selectDisable=false
