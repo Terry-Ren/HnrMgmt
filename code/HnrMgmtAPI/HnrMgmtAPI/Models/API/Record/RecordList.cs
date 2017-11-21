@@ -46,6 +46,7 @@ namespace HnrMgmtAPI.Models.API.Record
         public string AwdeeOrgID { get; set; }
         public string AwdeeOrgName { get; set; }
         public string AwdeeBranch { get; set; }
+        public string AwdID { get; set; }
         public string AwdName { get; set; }
         public string AwdOrgID{get;set;}
         public string AwdOrgName { get; set; }
