@@ -1906,6 +1906,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 model.AwdeeOrgID = item.TeamAwdeeOrgID;
                 model.AwdeeOrgName = item.TeamAwdeeOrgName;
                 model.AwdeeBranch = item.TeamAwdeeBranch;
+                model.AwdID = item.AwdID;
                 model.AwdName = item.AwdName;
                 model.AwdOrgID = item.OrgID;
                 model.AwdOrgName = item.OrgName;

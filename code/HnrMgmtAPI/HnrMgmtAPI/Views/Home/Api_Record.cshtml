@@ -98,7 +98,7 @@
 
 
             $('#btnAwdRecordModify').click(function (e) {
-                var data = { 'access_token': '11', 'AwdRecordID': '8f69266f-522e-41e4-b04b-56ec2efb706a', 'AwardID': '0316b87d-bdc2-4079-9b42-e8150add0ba7', 'AwdYear': '2017', 'AwdTime': '2017-07', 'AwdTerm': '', 'AwdProName': '略略略', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Teacher': ['王健铭', '任天宇'], 'IsTeam': '1', 'Members': [{ 'AwdeeID': '1', 'AwdeeName': '王健铭', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Branch': '信管1401团支部' }, { 'AwdeeID': '2', 'AwdeeName': '王健铭', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Branch': '信管1401团支部' }], 'FileUrl': '9999999' }
+                var data = { 'access_token': '11', 'AwdRecordID': '8f69266f-522e-41e4-b04b-56ec2efb706a', 'AwardID': '0316b87d-bdc2-4079-9b42-e8150add0ba7', 'AwdYear': '2017', 'AwdTime': '2017-07', 'AwdTerm': '', 'AwdProName': '略略略', 'AwdOrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Teacher': ['王健铭', '任天宇'], 'IsTeam': '1', 'Members': [{ 'AwdeeID': '1', 'AwdeeName': '王健铭', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Branch': '信管1401团支部' }, { 'AwdeeID': '2', 'AwdeeName': '王健铭', 'OrgID': '26c822fb-acb1-4e7a-a552-f514687f54ab', 'Branch': '信管1401团支部' }], 'FileUrl': '9999999' }
                 AjaxRequestPost('api/record/awdmodify', data);
             });
             //接口相关参数说明：
