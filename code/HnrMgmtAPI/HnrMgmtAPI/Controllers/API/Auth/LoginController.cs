@@ -16,22 +16,22 @@ namespace HnrMgmtAPI.Controllers.API.Auth
         /// <summary>
         /// 登录接口
         /// </summary>
-        /// <param name="loginIngo">参数类型参考 LoginModel</param>
+        /// <param name="loginInfo">参数类型参考 LoginModel</param>
         /// <returns></returns>
         [HttpPost, Route("login")]
-        public ApiResult Login([FromBody]LoginModel loginIngo)
+        public ApiResult Login([FromBody]LoginModel loginInfo)
         {
             #region 参数验证
-            result = ParameterCheck.CheckParameters(loginIngo);
+            result = ParameterCheck.CheckParameters(loginInfo);
             if (result != null)
             {
                 return result;
             }
             #endregion
 
-            string AccountID = loginIngo.ID.Trim();
-            string AccountPwd = loginIngo.Password.Trim();
-            string AccountRoleID = loginIngo.RoleID.Trim();
+            string AccountID = loginInfo.ID.Trim();
+            string AccountPwd = loginInfo.Password.Trim();
+            string AccountRoleID = loginInfo.RoleID.Trim();
 
             #region 超级管理员登录
             if (AccountRoleID == "0")

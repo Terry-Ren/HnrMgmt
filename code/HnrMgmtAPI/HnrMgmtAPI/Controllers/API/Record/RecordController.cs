@@ -174,13 +174,13 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 //验证团队所属部门ID是否正确
                 if (model.IsTeam == "1")
                 {
-                    if (model.OrgID == null || model.OrgID.ToString() == "")
+                    if (model.AwdOrgID == null || model.AwdOrgID.ToString() == "")
                     {
                         return Error("参数错误，团队获奖项目必须填写团队所属部门");
                     }
                     else
                     {
-                        if (db.T_Organization.Find(model.OrgID) == null)
+                        if (db.T_Organization.Find(model.AwdOrgID) == null)
                         {
                             return Error("团队所属部门ID不存在");
                         }
@@ -223,7 +223,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 #region 信息检查 主要面向学院账号和学生账号
                 if (userInfo.userRoleID == "3")
                 {
-                    if (model.OrgID != userInfo.userOrgID)
+                    if (model.AwdOrgID != userInfo.userOrgID)
                     {
                         return Error("竞赛获奖信息填报申请需由该项目所属单位账号、或项目负责人账号、或校级账号填写");
                     }
@@ -251,7 +251,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 {
                     //非团队获奖
                     awdRecord.AwdeeID = TeamID;
-                    awdRecord.OrgID = (model.OrgID == null) ? null : model.OrgID;
+                    awdRecord.OrgID = (model.AwdOrgID == null) ? null : model.AwdOrgID;
                     awdRecord.Teacher = "";
                     if (model.Teacher != null && model.Teacher.Count > 0)
                     {
@@ -275,7 +275,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 {
                     //团队获奖
                     awdRecord.AwdeeID = TeamID;
-                    awdRecord.OrgID = (model.OrgID == null) ? null : model.OrgID;
+                    awdRecord.OrgID = (model.AwdOrgID == null) ? null : model.AwdOrgID;
                     awdRecord.Teacher = "";
                     if (model.Teacher != null && model.Teacher.Count > 0)
                     {
@@ -542,10 +542,11 @@ namespace HnrMgmtAPI.Controllers.API.Record
                         {
                             Member model = new Member();
 
-                            model.MemberID = item.AwdeeID;
-                            model.MemberName = item.AwdeeName;
-                            model.MemberOrgName = item.AwdeeOrgName;
-                            model.MemberBranch = item.AwdeeBranch;
+                            model.AwdeeID = item.AwdeeID;
+                            model.AwdeeName = item.AwdeeName;
+                            model.OrgID = item.AwdeeOrgID;
+                            model.OrgName = item.AwdeeOrgName;
+                            model.Branch = item.AwdeeBranch;
                             model.Rank = item.AwdeeRank;
 
                             data.Members.Add(model);
@@ -754,13 +755,13 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 //验证团队所属部门ID是否正确
                 if (model.IsTeam == "1")
                 {
-                    if (model.OrgID == null || model.OrgID.ToString() == "")
+                    if (model.AwdOrgID == null || model.AwdOrgID.ToString() == "")
                     {
                         return Error("参数错误，团队获奖项目必须填写团队所属部门");
                     }
                     else
                     {
-                        if (db.T_Organization.Find(model.OrgID) == null)
+                        if (db.T_Organization.Find(model.AwdOrgID) == null)
                         {
                             return Error("团队所属部门ID不存在");
                         }
@@ -831,7 +832,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 #region 信息检查 主要面向学院账号和学生账号
                 if (userInfo.userRoleID == "3")
                 {
-                    if (model.OrgID != userInfo.userOrgID)
+                    if (model.AwdOrgID != userInfo.userOrgID)
                     {
                         return Error("竞赛获奖信息填报申请需由该项目所属单位账号、或项目负责人账号、或校级账号填写");
                     }
@@ -859,7 +860,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 {
                     //非团队获奖
                     awdRecord.AwdeeID = TeamID;
-                    awdRecord.OrgID = (model.OrgID == null) ? null : model.OrgID;
+                    awdRecord.OrgID = (model.AwdOrgID == null) ? null : model.AwdOrgID;
                     awdRecord.Teacher = "";
                     if (model.Teacher != null && model.Teacher.Count > 0)
                     {
@@ -883,7 +884,7 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 {
                     //团队获奖
                     awdRecord.AwdeeID = TeamID;
-                    awdRecord.OrgID = (model.OrgID == null) ? null : model.OrgID;
+                    awdRecord.OrgID = (model.AwdOrgID == null) ? null : model.AwdOrgID;
                     awdRecord.Teacher = "";
                     if (model.Teacher != null && model.Teacher.Count > 0)
                     {
