@@ -1,11 +1,19 @@
 <template>
-    <p class="page-container">404 page not found</p>
+<div class="container">
+
+</div>
 </template>
 
 <style lang="scss" scoped>
-    .page-container {
-        font-size: 20px;
-        text-align: center;
-        color: rgb(192, 204, 218);
-    }
+.container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;    
+  background: url(../assets/404.jpg);
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
 </style>

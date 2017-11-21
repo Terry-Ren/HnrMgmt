@@ -104,7 +104,8 @@ import {posLogin} from '../api/api'
   right: 0;
   background:  url(../assets/loginBg.jpg)   ;
   background-position:center;
-  background-size:100% 100%;
+  background-size:100% 100% ;
+  background-repeat: no-repeat;
   footer{
     position: absolute;
     bottom: 1vh;
