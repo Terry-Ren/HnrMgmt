@@ -113,7 +113,11 @@ export default {
       handler: function(params) {
         this.getList();
       }
-    }
+    },
+     selectRowData(newVal){
+       if(newVal.length==0)
+       this.selectDisable=true
+     }     
   },
   //声明周期调用
   mounted() {

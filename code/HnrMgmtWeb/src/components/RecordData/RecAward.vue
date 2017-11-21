@@ -113,7 +113,11 @@ import * as types from "../../store/mutation-types";
       handler: function(params) {
         this.getList();
       }
-    }
+    },
+     selectRowData(newVal){
+       if(newVal.length==0)
+       this.selectDisable=true
+     }    
   },
    //声明周期调用
    mounted(){
@@ -202,7 +206,7 @@ import * as types from "../../store/mutation-types";
       selection.forEach(rowData => {
         this.selectRowData.push(rowData.AwdRecordID) 
       });      
-      console.log(this.selectRowData)
+      //console.log(this.selectRowData)
     } ,    
     // 审核通过  
     review(){

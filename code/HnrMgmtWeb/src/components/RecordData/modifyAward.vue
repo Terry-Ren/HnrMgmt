@@ -397,7 +397,6 @@ export default {
           this.submitLoading = true;
           //复制字符串
           let para = Object.assign({}, this.detailFormBody);
-          para.Branch = para.Branch + "团支部";
           para.access_token = "11";
           posModifyRecordAward(para).then(res => {
             this.submitLoading = false;
