@@ -23,7 +23,7 @@
           <!--<el-button @click.native.prevent="handleReset2">重置</el-button>-->
          </el-form-item>
       </el-form>
-
+      <footer>© 2017 Terry,Wang. Some rights reserved.</footer>
   </div>
 </template>
 
@@ -104,7 +104,13 @@ import {posLogin} from '../api/api'
   right: 0;
   background:  url(../assets/loginBg.jpg)   ;
   background-position:center;
-  background-size:100% 100%;
+  background-size:100% 100% ;
+  background-repeat: no-repeat;
+  footer{
+    position: absolute;
+    bottom: 1vh;
+    text-align: center;
+  }
 }
 .main-container{
   margin-top: 180px;

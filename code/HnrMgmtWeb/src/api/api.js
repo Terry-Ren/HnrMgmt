@@ -138,3 +138,7 @@ export const reqGetAccountInfo = params => { return axios.get(`${base}api/accoun
 // 个人信息修改
 export const posModifyAccountInfo = params => { return axios.post(`${base}api/account/changeinfo`, params) }
 
+// 审核奖项
+export const reqGetReviewRecord = params => { return axios.get(`${base}api/record/auditpass`, { params: params }) }
+// 驳回奖项
+export const reqGetRejectRecord = params => { return axios.get(`${base}api/record/auditreject`, { params: params }) }

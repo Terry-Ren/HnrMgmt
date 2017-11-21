@@ -24,8 +24,8 @@
                 <el-option v-for="award in AwardData" :key="award.AwdID" :value="award.AwdID" :label="'【'+award.GradeName+'】'+award.Name+award.Grade"></el-option>
               </el-select>
             </el-form-item>               
-            <el-form-item label="获奖年度" prop="Year" >
-              <el-date-picker v-model="addFormBody.Year"  type="year" placeholder="获得年度" style="width:300px" format="yyyy 年 " value-format="yyyy"></el-date-picker>
+            <el-form-item label="获奖年度" prop="AwdYear" >
+              <el-date-picker v-model="addFormBody.AwdYear"  type="year" placeholder="获得年度" style="width:300px" format="yyyy 年 " value-format="yyyy"></el-date-picker>
             </el-form-item>
             <el-form-item label="获奖届数" prop="Term">
               <el-input v-model="addFormBody.Term" placeholder="请输入获奖届数（可空）" style="width:300px" ></el-input>
@@ -33,8 +33,8 @@
             <el-form-item label="获奖日期" prop="AwdTime">
               <el-date-picker v-model="addFormBody.AwdTime"  placeholder="获得年月" style="width:300px" format="yyyy 年 MM 月" value-format="yyyy-MM"></el-date-picker>
             </el-form-item>
-            <el-form-item label="项目名称" prop="ProjectName">
-              <el-input v-model="addFormBody.ProjectName" placeholder="请输入获奖项目名" style="width:300px" ></el-input>
+            <el-form-item label="项目名称" prop="AwdProName">
+              <el-input v-model="addFormBody.AwdProName" placeholder="请输入获奖项目名" style="width:300px" ></el-input>
             </el-form-item>
             <el-form-item label="项目所属学院" prop="OrgID">
               <el-select v-model="addFormBody.OrgID" placeholder="请选择所属学院" style="width:300px">
@@ -125,10 +125,10 @@ import PubMethod from '../../common/util'
        addFormVisible: true,
        addFormBody:{
          AwardID:'',
-         Year:'',
+         AwdYear:'',
          Term:'',
          AwdTime:'',
-         ProjectName:'',
+         AwdProName:'',
          IsTeam:'',
          Teacher:[],
          Members:[],
@@ -138,7 +138,7 @@ import PubMethod from '../../common/util'
       // 表单验证规则
       rules:{
         AwardID:{required:true , message:'请选择荣誉项目', trigger:'blur'},
-        Year:{required:true , message:'请选择获得年度', trigger:'blur'},
+        AwdYear:{required:true , message:'请选择获得年度', trigger:'blur'},
         AwdTime:{required:true , message:'请选择获得年月', trigger:'blur'},
         AwdeeID:[
           {required:true , message:'请输入学号', trigger:'blur'},

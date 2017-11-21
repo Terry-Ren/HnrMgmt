@@ -52,7 +52,7 @@
                   <el-input :value="detailFormBody.AwdOrgName" :disabled="!ismodify" style="width:300px" ></el-input>
                 </el-form-item>                  
                 <el-form-item  v-if="ismodify"  label="项目所属学院" prop="OrgID">
-                  <el-select v-model="detailFormBody.OrgID" placeholder="请选择所属学院" style="width:300px">
+                  <el-select v-model="detailFormBody.AwdOrgID" placeholder="请选择所属学院" style="width:300px">
                     <el-option v-for="org in OrgData" :key="org.OrgID" :value="org.OrgID" :label="org.Name"></el-option>
                   </el-select>
                 </el-form-item>
@@ -236,7 +236,7 @@ export default {
       this.detailFormBody
     );
     this.detailFormBody.Grade = PubMethod.transfGrande(this.detailFormBody);
-    if (this.$route.params.id == "modify") this.ismodify = true;
+    if (this.$route.params.id == "modify") this.selectModify();
     this.Teachers = this.detailFormBody.Teacher.split("#");
     //this.detailFormBody.Members=this.teamMembers
     console.log(this.detailFormBody);
@@ -325,11 +325,11 @@ export default {
         this.detailFormBody.State == "待审核" ||
         this.detailFormBody.State == "已驳回"
       ) {
-        this.ismodify = true;
         this.getOrg();
         this.getAward();
         this.getTeam();
-        console.log(this.detailFormBody.Members);
+        this.ismodify = true;        
+        //console.log(this.detailFormBody.Members);
       } else {
         this.$message({
           type: "error",

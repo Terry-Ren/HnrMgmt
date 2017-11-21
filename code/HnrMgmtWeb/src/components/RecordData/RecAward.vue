@@ -14,10 +14,12 @@
       <div class="toolbal">
         <el-form :inline="true" style="margin-bottom:15px">
           <el-button type="primary" @click="toAddFrom" >新增奖项</el-button>
+          <el-button type="primary" @click="review" :disabled="selectDisable" >审核</el-button>  
+          <el-button type="primary" @click="rejectFormVisible=true;" :disabled="selectDisable" >驳回</el-button>                      
         </el-form>
       </div>
         <div class="main-data">
-        <el-table class="table" :data="AwdData"   v-loading="listLoading" height="string"  > 
+        <el-table class="table" :data="AwdData"   v-loading="listLoading" height="string" @select="selectRow"  > 
           <el-table-column type="selection"></el-table-column>
           <el-table-column type="index"  label="序号" style="text-aligin:center" align="center"></el-table-column>
           <el-table-column prop="AwdName" label="奖项名称" sortable align="center" ></el-table-column>
@@ -30,8 +32,8 @@
           <el-table-column prop="State" label="审核状态" sortable align="center" :formatter="transfRecordState" ></el-table-column>               
           <el-table-column label="操作" width="280" align="center" >
             <template slot-scope="scope">
-              <el-button  size="small" @click="switchDetial(scope.$index,scope.row)" >详情</el-button>
-              <el-button type="success" size="small"  @click="resetAccTch(scope.$index,scope.row)" >重填</el-button>
+              <el-button  size="small" @click="switchDetial(scope.$index,scope.row)" >详情</el-button>             
+              <el-button type="success" size="small"  @click="switchModify(scope.$index,scope.row)" >重填</el-button>
               <el-button type="danger" size="small"  @click="delectAccTch(scope.$index,scope.row)" >删除</el-button>
             </template>
           </el-table-column>
@@ -40,12 +42,24 @@
       <!-- 下方工具条 -->
         <el-pagination layout="total, prev, pager, next, sizes, jumper" @size-change="SizeChangeEvent" @current-change="CurrentChangeEvent" :page-size="size" :page-sizes="[10,15,20,25,30]":total="totalNum">
         </el-pagination>
-    </div>      
+    </div> 
+    <!-- 驳回请求表单      -->
+    <el-dialog title="驳回请求" :visible.sync="rejectFormVisible" v-loading="rejectLoading" style="width:70%;">
+      <el-form  label-width="80px" ref="rejectFrom"  >
+        <el-form-item label="驳回理由" prop="reson"  >
+          <el-input v-model="RejectReason"  type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入驳回理由" style="width:300px" ></el-input>
+        </el-form-item>  
+      </el-form> 
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native=" rejectFormVisible = false">取消</el-button>
+        <el-button type="primary" @click.native="rejectSubmit" >提交</el-button>
+      </div>            
+    </el-dialog> 
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-import {reqGetAwdList,reqGetOrgList,posRecordAward,reqGetRecord} from '../../api/api'
+import {reqGetRecord,reqGetReviewRecord,reqGetRejectRecord} from '../../api/api'
 import PubMethod from '../../common/util'
 import * as types from "../../store/mutation-types";
 // import uptoken from '../../common/create_uptoken'
@@ -64,38 +78,27 @@ import * as types from "../../store/mutation-types";
            }
       }
      return {
-       // 七牛云令牌
-       postData:{
-         token:this.$store.state.uploadToken
-       },
-       // 填充荣明与数据
-       AwardData:[],
-       // 填充组织单位
-       OrgData:[],
        // 用户令牌
        access_token:'',
        // 表格数据
        AwdData: [],
        listLoading:false,
-
-       selectRowIndex:'',
+       //选择表格区域与审核
+       selectRowData:[],
+       selectDisable:true,
+       rejectFormVisible:false,
+       rejectLoading:false,
+       RejectReason:'',
        totalNum:0,
        page:1,
        size:10,
-      // 表单验证规则
-      rules:{
-        AwardID:{required:true , message:'请选择荣誉项目', trigger:'blur'},
-        Year:{required:true , message:'请选择获得年度', trigger:'blur'},
-        AwdTime:{required:true , message:'请选择获得年月', trigger:'blur'},
-        AwdeeID:[
-          {required:true , message:'请输入学号', trigger:'blur'},
-          {validator:validateAwdeeID, tigger:'blure'},          
-        ],
-        AwdeeName:{required:true , message:'请输入获奖人姓名', trigger:'blur'},
-        OrgID:{required:true , message:'请选择单位学院', trigger:'blur'},
-        Branch:{required:true , message:'请输入所属团支部', trigger:'blur'}         
-      },
      }    
+   },
+   watch:{
+     selectRowData(newVal){
+       if(newVal.length==0)
+       this.selectDisable=true
+     }
    },
 //    // 计算属性
 //    computed:{
@@ -112,8 +115,6 @@ import * as types from "../../store/mutation-types";
    //声明周期调用
    mounted(){
      this.getList();     
-     this.getHonor();
-     this.getOrg();
    },
    methods:{
      // 跳转路由
@@ -121,41 +122,6 @@ import * as types from "../../store/mutation-types";
        this.$router.push({
          path:'/record/addaward'
        })
-     },
-     // 填充荣誉数据
-     getHonor(){
-       this.listLoading=true
-       let param={
-         access_token:"11"
-       }
-       reqGetAwdList(param).then((res)=>{
-         this.listLoading=false
-         this.AwardData=res.data.data.list
-              this.transfOptionGrande()
-       }).catch((res)=>{
-         console.log(res)
-         })       
-     },
-     // 转换新增选项中的获奖级别
-     transfOptionGrande(){
-         this.AwardData.forEach((award)=>{
-           //console.log(award)
-             award.Grade=PubMethod.transfGrande(award)
-         })
-
-     },
-    // 填充单位数据
-     getOrg(){
-       this.listLoading=true
-       let param={
-         access_token:"11"
-       }
-       reqGetOrgList(param).then((res)=>{
-         this.listLoading=false
-         this.OrgData=res.data.data.list
-       }).catch((res)=>{
-         console.log(res)
-         })       
      },
      // 转换表格中获奖等次
      transfGrande(row){
@@ -194,6 +160,71 @@ import * as types from "../../store/mutation-types";
         path: "/record/award/detail"
       });
        },
+    //  显示编辑页面
+    switchModify(index, row) {
+      //  this.ismodify='detail'
+      this.$store.commit(types.RECORD_AWARD, row);
+      this.$router.push({
+        path: "/record/award/modify"
+      });
+    },    
+    // 选中单一行
+    selectRow(selection, row){
+      this.selectDisable=false
+      this.selectRowData=[]
+      selection.forEach(rowData => {
+        this.selectRowData.push(rowData.AwdRecordID) 
+      });      
+      console.log(this.selectRowData)
+    } ,    
+    // 审核通过  
+    review(){
+      this.$confirm("是否审核通过该记录?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {     
+          this.listLoading=true
+          let param={
+            access_token:'11',
+            AwdRecordID:this.selectRowData[0]
+          }
+          reqGetReviewRecord(param).then(res=>{
+            this.listLoading=false
+            PubMethod.statusinfo(this,res.data)
+            this.getList();
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    // 驳回
+    rejectSubmit(){
+      //this.$refs["rejectFrom"].validate(valid => {
+       // if (valid) {
+          this.rejectLoading = true;
+          //复制字符串
+          let param={
+            access_token:'11',
+            AwdRecordID:this.selectRowData[0],
+            RejectReason:this.RejectReason
+          }
+          reqGetRejectRecord(param).then(res => {
+            this.rejectLoading = false;
+            //公共提示方法，传入当前的vue以及res.data
+            PubMethod.statusinfo(this, res.data);
+            this.$refs["rejectFrom"].resetFields();
+            this.rejectFormVisible = false;
+            this.getList();
+          });
+      //  }
+     // });      
+    },
     //更换每页数量
     SizeChangeEvent(val){
         this.loading=true;
@@ -213,12 +244,8 @@ import * as types from "../../store/mutation-types";
 </script>
 
 <style scoped lang="scss">
-.left-main{
-  border-radius: 5px;
-  border: 2px;
+.el-dialog__wrapper{
+  right: 25vw;
+  position: absolute;
 }
-.hornor-add{
-  margin-left: 120px
-}
-
 </style>
