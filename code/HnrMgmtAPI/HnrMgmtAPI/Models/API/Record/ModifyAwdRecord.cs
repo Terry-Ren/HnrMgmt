@@ -26,7 +26,7 @@ namespace HnrMgmtAPI.Models.API.Record
         public string AwdProName { get; set; }
 
         //项目所属部门 （可空）
-        public string OrgID { get; set; }
+        public string AwdOrgID { get; set; }
 
         //项目指导老师 可为多人 （可空）
         public List<string> Teacher { get; set; }

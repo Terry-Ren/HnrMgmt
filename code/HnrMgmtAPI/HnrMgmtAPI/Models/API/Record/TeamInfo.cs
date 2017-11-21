@@ -11,10 +11,11 @@ namespace HnrMgmtAPI.Models.API.Record
 
     public class Member
     {
-        public string MemberID { get; set; }
-        public string MemberName { get; set; }
-        public string MemberOrgName { get; set; }
-        public string MemberBranch { get; set; }
+        public string AwdeeID { get; set; }
+        public string AwdeeName { get; set; }
+        public string OrgID { get; set; }
+        public string OrgName { get; set; }
+        public string Branch { get; set; }
         public string Rank { get; set; }
     }
 }

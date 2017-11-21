@@ -643,12 +643,18 @@ namespace HnrMgmtAPI.Controllers.API.Sys
                 {
                     try
                     {
+                        #region 修改服务器数据库数据
                         accountModel.Name = model.Name;
                         accountModel.Tel = model.Tel;
 
                         db.SaveChanges();
+                        #endregion
 
-                        return Success("修改成功");
+                        #region 清空服务器旧的缓存数据
+                        AccessToken.Clear(model.access_token);
+                        #endregion
+
+                        return Success("修改成功，请重新登陆！");
                     }
                     catch
                     {
