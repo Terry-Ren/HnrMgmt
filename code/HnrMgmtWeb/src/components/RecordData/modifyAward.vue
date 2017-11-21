@@ -31,7 +31,7 @@
                     <el-input v-model="detailFormBody.AwdName" :disabled="!ismodify"  style="width:300px" ></el-input>                                   
                 </el-form-item>                
                 <el-form-item v-if="ismodify" label="奖项名称" prop="AwardID">
-                    <el-select  v-model="detailFormBody.AwardID" :placeholder="detailFormBody.AwdName" style="width:300px">
+                    <el-select  v-model="detailFormBody.AwardID"   style="width:300px">
                         <el-option v-for="award in AwardData" :key="award.AwdID" :value="award.AwdID"  :label="'【'+award.GradeName+'】'+award.Name+award.Grade"></el-option>
                     </el-select>
                 </el-form-item> 
@@ -85,7 +85,7 @@
                       </el-select>
                     </el-form-item>
                     <el-form-item  label="团支部">  
-                      <el-input v-model="member.MemberBranch" placeholder="请输入团支部" style="width:300px" >
+                      <el-input v-model="member.Branch" placeholder="请输入团支部" style="width:300px" >
                       </el-input>
                     </el-form-item>
                     <el-form-item  label="操作">  
@@ -191,7 +191,8 @@ import {
   posRecordHonor,
   reqGetTeam,
   reqGetReviewRecord,
-  reqGetRejectRecord
+  reqGetRejectRecord,
+  posModifyRecordAward
 } from "../../api/api";
 import PubMethod from "../../common/util";
 import * as types from "../../store/mutation-types";
@@ -397,8 +398,8 @@ export default {
           //复制字符串
           let para = Object.assign({}, this.detailFormBody);
           para.Branch = para.Branch + "团支部";
-          para.access_token = "terry";
-          posModifyRecordHonor(para).then(res => {
+          para.access_token = "11";
+          posModifyRecordAward(para).then(res => {
             this.submitLoading = false;
             //公共提示方法，传入当前的vue以及res.data
             PubMethod.statusinfo(this, res.data);
