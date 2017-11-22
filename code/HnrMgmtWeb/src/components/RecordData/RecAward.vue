@@ -29,7 +29,11 @@
           <el-table-column prop="AwdProName" label="项目名称" sortable align="center" ></el-table-column>        
           <el-table-column prop="AwdOrgName" label="所属学院" sortable align="center" ></el-table-column>
           <el-table-column prop="AwdeeName" label="主要学生" sortable align="center" ></el-table-column>
-          <el-table-column prop="State" label="审核状态" sortable align="center" :formatter="transfRecordState" ></el-table-column>               
+          <el-table-column prop="State" label="审核状态"  align="center"  :filters="StateArray" :filter-method="filterState" >
+            <template slot-scope="scope">
+              <el-tag :type="stateTag(scope.$index,scope.row)">{{transfRecordState(scope.row)}}</el-tag>
+            </template>
+          </el-table-column>               
           <el-table-column label="操作" width="280" align="center" >
             <template slot-scope="scope">
               <el-button  size="small" @click="switchDetial(scope.$index,scope.row)" >详情</el-button>             
@@ -83,6 +87,13 @@ import * as types from "../../store/mutation-types";
        // 表格数据
        AwdData: [],
        listLoading:false,
+       //审核状态筛选
+       StateArray:[
+         {text:'待审核',value:'0'},
+         {text:'院审通过',value:'1'},         
+         {text:'校审通过',value:'2'},
+         {text:'已驳回',value:'3'}
+       ],
        //选择表格区域与审核
        selectRowData:[],
        selectDisable:true,
@@ -141,7 +152,16 @@ import * as types from "../../store/mutation-types";
      // 审核状态转换
      transfRecordState(row){
        return PubMethod.transfRecordState(row)
-     },     
+     },  
+     // 筛选审核状态
+     filterState(value,row){
+
+       return row.State==value
+     } ,  
+     // 审核值样式
+     stateTag(index,row){
+       return row.State=='0' ? 'info' : row.State=='1' ? ' ' : row.State=='2' ? 'success' : 'danger'
+     },
      // 获取列表
      getList(){
        this.listLoading=true

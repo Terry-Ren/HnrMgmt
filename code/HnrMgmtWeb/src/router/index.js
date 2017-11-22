@@ -14,6 +14,7 @@ import AddHonor from '../components/RecordData/AddHonor'
 import ModifyHonor from '../components/RecordData/modifyHonor'
 import ModifyAward from '../components/RecordData/modifyAward'
 
+import QueryData from '../components/ExploreData/queryData'
 
 import TEXT from '../views/Home1.vue'
 import Ctext from '../components/RecordData/RecHonor.vue'
@@ -81,6 +82,21 @@ const routes = [
       {path: '/index', component: Hello, name: 'index', menuShow: true},
     ]
   },
+  // 统计查询
+  {
+    path: '/',
+    component: Home,
+    name: 'ExploreData',
+    meta: {
+      requireAuth: true,
+      keepAlive: false
+    },
+    menuShow: true,
+    // iconCls: 'iconfont icon-users', // 图标样式class
+    children: [
+      {path: '/Explore/query', component: QueryData, name: 'QueryData', menuShow: true},
+    ]
+  },  
   // 记录管理
   {
     path: '/',

@@ -56,6 +56,19 @@
                     <i class="el-icon-menu "></i>
                     <span slot="title">首页</span>
                 </el-menu-item>
+                <!-- 统计查询 -->
+                <el-submenu index="ExploreData">
+                        <template slot="title">
+                            <i class="el-icon-search"></i>
+                            <span slot="title">统计查询</span>
+                        </template>
+                        <el-menu-item index="/Explore/query" >
+                            数据统计
+                        </el-menu-item>
+                        <el-menu-item index="/account/PassWord">
+                            数据查询
+                        </el-menu-item>
+                </el-submenu>                 
                 <!-- 项目管理 -->
                 <el-submenu index="recordData">
                     <template slot="title">

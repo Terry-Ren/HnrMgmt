@@ -28,7 +28,11 @@
             <el-table-column prop="HnrGradeName" label="级别" sortable align="center" :formatter="transfGrandeName" ></el-table-column>
             <el-table-column prop="AwdeeName" label="姓名" sortable align="center" ></el-table-column>
             <el-table-column prop="AwdeeOrgName" label="单位学院" sortable align="center" ></el-table-column>
-            <el-table-column prop="State" label="审核状态" sortable align="center" :formatter="transfRecordState" ></el-table-column>        
+            <el-table-column prop="State" label="审核状态"  align="center"  :filters="StateArray" :filter-method="filterState" >
+              <template slot-scope="scope">
+                <el-tag :type="stateTag(scope.$index,scope.row)">{{transfRecordState(scope.row)}}</el-tag>
+              </template>            
+            </el-table-column>        
             <el-table-column label="操作" width="280" align="center">
               <template slot-scope="scope" >
                 <el-button  size="small" @click="switchDetial(scope.$index,scope.row)" >详情</el-button>
@@ -58,7 +62,12 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { reqGetRecord, reqDeleteRecord,reqGetReviewRecord,reqGetRejectRecord } from "../../api/api";
+import {
+  reqGetRecord,
+  reqDeleteRecord,
+  reqGetReviewRecord,
+  reqGetRejectRecord
+} from "../../api/api";
 import PubMethod from "../../common/util";
 import * as types from "../../store/mutation-types";
 // import uptoken from '../../common/create_uptoken'
@@ -89,12 +98,19 @@ export default {
       // 表格数据
       HnrData: [],
       listLoading: false,
+      //审核状态筛选
+      StateArray: [
+        { text: "待审核", value: "0" },
+        { text: "院审通过", value: "1" },
+        { text: "校审通过", value: "2" },
+        { text: "已驳回", value: "3" }
+      ],
       //选择表格区域与审核
       selectRowData: [],
       selectDisable: true,
       rejectFormVisible: false,
       rejectLoading: false,
-      RejectReason: '无',
+      RejectReason: "无",
       // 分页信息
       totalNum: 0,
       page: 1,
@@ -114,10 +130,9 @@ export default {
         this.getList();
       }
     },
-     selectRowData(newVal){
-       if(newVal.length==0)
-       this.selectDisable=true
-     }     
+    selectRowData(newVal) {
+      if (newVal.length == 0) this.selectDisable = true;
+    }
   },
   //声明周期调用
   mounted() {
@@ -143,7 +158,7 @@ export default {
         .then(res => {
           this.HnrData = res.data.data.hnrList;
           this.totalNum = res.data.data.hnrListNum;
-          console.log(this.HnrData)
+          console.log(this.HnrData);
           this.listLoading = false;
         })
         .catch(res => {
@@ -157,6 +172,16 @@ export default {
     // 审核状态转换
     transfRecordState(row) {
       return PubMethod.transfRecordState(row);
+    },
+    // 筛选审核状态
+    filterState(value, row) {
+      return row.State == value;
+    },
+    // 审核值样式
+    stateTag(index, row) {
+      return row.State == "0"
+        ? "info"
+        : row.State == "1" ? " " : row.State == "2" ? "success" : "danger";
     },
     //  显示详情页面
     switchDetial(index, row) {
@@ -274,7 +299,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.el-dialog__wrapper{
+.el-dialog__wrapper {
   right: 25vw;
   position: absolute;
 }

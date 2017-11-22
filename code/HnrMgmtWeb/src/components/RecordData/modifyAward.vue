@@ -135,9 +135,12 @@
               </el-form-item> 
               <el-form-item v-if="!ismodify" label="审核状态" prop="StateInfo" >
                 <el-input v-model="detailFormBody.StateInfo" :disabled="!ismodify" style="width:300px" ></el-input>                                    
-              </el-form-item>               
+              </el-form-item>  
+              <el-form-item v-if="!ismodify&&!(detailFormBody.RejectReason==null)" label="驳回原因" prop="RejectReason" >
+                <el-input v-model="detailFormBody.RejectReason" :disabled="!ismodify" style="width:300px" ></el-input>                                    
+              </el-form-item>                               
               <el-form-item  label="证明照片">
-                <img class="file" src="http://oyzg731sy.bkt.clouddn.com/FlL70dFa87VxKgNSYDJ3AQcfCUr_" alt="暂无证明材料">
+                <img class="file" :src="detailFormBody.FileUrl" alt="暂无证明材料">
               </el-form-item>                                                           
            </el-form>
           </div>                     
@@ -345,19 +348,25 @@ export default {
     // 点击编辑后初始化
     selectModify() {
       if (
-        this.detailFormBody.StateInfo == "待审核" ||
-        this.detailFormBody.StateInfo == "已驳回"
+        this.detailFormBody.StateInfo == "待审核" 
       ) {
         this.getOrg();
         this.getAward();
         this.getTeam();
         this.ismodify = true;
         //console.log(this.detailFormBody.Members);
-      } else {
+      } else if (
+        this.detailFormBody.StateInfo == "校审通过" 
+      ){
         this.$message({
           type: "error",
           message: "已审核记录不可再次编辑"
         });
+      } else {
+        this.$message({
+          type: "error",
+          message: "已驳回记录不可再次编辑"
+        });        
       }
     },
     // 新增成员
@@ -428,7 +437,7 @@ export default {
       this.detailFormBody.FileUrl = this.$store.state.uploadUrl + res.key;
     },
     // 审核通过
-    review() {
+    review() {     
       this.$confirm("是否审核通过该记录?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -485,7 +494,7 @@ export default {
 .toolbar {
   form {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
   }
 }
 .main-data {

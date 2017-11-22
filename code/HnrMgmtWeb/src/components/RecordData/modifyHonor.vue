@@ -88,9 +88,12 @@
               </el-form-item> 
               <el-form-item v-if="!ismodify" label="审核状态" prop="StateInfo" >
                 <el-input v-model="detailFormBody.StateInfo" :disabled="!ismodify" style="width:300px" ></el-input>                                    
-              </el-form-item>               
+              </el-form-item>  
+              <el-form-item v-if="!ismodify&&!(detailFormBody.RejectReason==null)" label="驳回原因" prop="RejectReason" >
+                <el-input v-model="detailFormBody.RejectReason" :disabled="!ismodify" style="width:300px" ></el-input>                                    
+              </el-form-item>                            
               <el-form-item  label="证明照片">
-                <img class="file" src="http://oyzg731sy.bkt.clouddn.com/FlL70dFa87VxKgNSYDJ3AQcfCUr_" alt="暂无证明材料">
+                <img class="file" :src="detailFormBody.FileUrl" alt="暂无证明材料">
               </el-form-item>                                                           
            </el-form>
           </div>                     
