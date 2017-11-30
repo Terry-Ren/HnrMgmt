@@ -222,6 +222,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Common\AccessToken.cs" />
+    <Compile Include="Common\ConditionExpressions.cs" />
     <Compile Include="Common\ForceHttpStatusCodeResult.cs" />
     <Compile Include="Common\Public.cs" />
     <Compile Include="Common\ShortMessageClass.cs" />
@@ -250,6 +251,7 @@
     <Compile Include="Models\API\ParameterCheck.cs" />
     <Compile Include="Models\API\Record\ModifyAwdRecord.cs" />
     <Compile Include="Models\API\Record\ModifyHnrRecord.cs" />
+    <Compile Include="Models\API\Record\SelectCondition.cs" />
     <Compile Include="Models\API\Return_GetList.cs" />
     <Compile Include="Models\API\Sys\AdminAdd.cs" />
     <Compile Include="Models\API\Sys\AdminModify.cs" />

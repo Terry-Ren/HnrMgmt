@@ -123,6 +123,13 @@
                 AjaxRequestGet('api/record/auditreject?access_token=11&AwdRecordID=978ed6ad-608e-4ea6-bee2-6f30707965c8&RejectReason=232323232323');
             });
 
+
+
+            $('#btnMulticonditionquery').click(function (e) {
+                var data = {};
+                AjaxRequestPost('api/record/multiconditionquery', data);
+            });
+
         });
 
     </script>
@@ -194,6 +201,12 @@
             <br />
             <h4>驳回竞赛奖项记录接口</h4>
             <input type="button" value="api/record/auditreject" id="btnAwdRecordReject" />
+            <br />
+            <br />
+
+            <hr />
+            <h4>多条件查询接口</h4>
+            <input type="button" value="api/record/multiconditionquery" id="btnMulticonditionquery" />
             <br />
             <br />
         </div>

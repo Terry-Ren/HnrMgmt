@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web.Http;
 
 namespace HnrMgmtAPI.Controllers.API.Record
@@ -566,6 +567,55 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 #endregion
             }
             return null;
+        }
+
+        /// <summary>
+        /// 排序、分页、多条件查询
+        /// </summary>
+        /// <param name="model">参数参考 SelectCondition</param>
+        /// <returns></returns>
+        [HttpPost, Route("multiconditionquery")]
+        public ApiResult GetRecord([FromBody]SelectCondition model)
+        {
+            result = AccessToken.Check(model.access_token, "");
+            if (result == null)
+            {
+                #region 参数验证
+                //可为空参数列表
+                List<string> nullPropertyList = new List<string>();
+                nullPropertyList.Add("page");
+                nullPropertyList.Add("limit");
+                nullPropertyList.Add("sortDirection");
+                nullPropertyList.Add("sortField");
+
+                result = ParameterCheck.CheckIsNullParameters(model, nullPropertyList);
+                if (result != null)
+                {
+                    return result;
+                }
+
+                int _page = (model.page == 0) ? 0 : model.page;
+                int _limit = (model.limit == 0) ? 0 : model.limit;
+                string _sortDirection = (model.sortDirection == null) ? "" : model.sortDirection;
+                string _sortField = (model.sortField == null) ? "" : model.sortField;
+                #endregion
+
+                #region 逻辑操作
+                try
+                {
+                    var list = db.vw_HnrRecord.Where(ConditionExpressions.GetConditionExpression<vw_HnrRecord>(model.conditions));
+                    var _list = GetList(list, _page, _limit, _sortDirection, _sortField);
+
+                    return Success("获取数据成功", _list);
+                }
+                catch
+                {
+                    return Error("操作失败");
+                }
+
+                #endregion
+            }
+            return result;
         }
         #endregion
 
