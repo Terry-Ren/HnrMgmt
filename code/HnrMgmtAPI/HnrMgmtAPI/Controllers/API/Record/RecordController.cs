@@ -594,6 +594,32 @@ namespace HnrMgmtAPI.Controllers.API.Record
                     return result;
                 }
 
+                if (model.sortDirection != null && model.sortDirection != "ASC" && model.sortDirection != "DESC")
+                {
+                    return Error("sortDirection参数取值错误");
+                }
+
+                if (model.conditions != null && model.conditions.Count > 0)
+                {
+                    foreach (ConditionModel conditionItem in model.conditions)
+                    {
+                        if (conditionItem.fieldName == "State")
+                        {
+                            foreach (var item in conditionItem.fieldValues)
+                            {
+                                if (item.item.ToString().Trim() == "-1" || item.item.ToString().Trim() == "-2" || item.item.ToString().Trim() == "-3")
+                                {
+                                    return Error("不能搜索已删除记录");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                }
+
                 int _page = (model.page == 0) ? 0 : model.page;
                 int _limit = (model.limit == 0) ? 0 : model.limit;
                 string _sortDirection = (model.sortDirection == null) ? "" : model.sortDirection;
@@ -603,10 +629,10 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 #region 逻辑操作
                 try
                 {
-                    var list = db.vw_HnrRecord.Where(ConditionExpressions.GetConditionExpression<vw_HnrRecord>(model.conditions));
-                    var _list = GetList(list, _page, _limit, _sortDirection, _sortField);
+                    //var list = db.vw_HnrRecord.Where(ConditionExpressions.GetConditionExpression<vw_HnrRecord>(model.conditions));
+                    //var _list = GetList(list, _page, _limit, _sortDirection, _sortField);
 
-                    return Success("获取数据成功", _list);
+                    return GetData(model);
                 }
                 catch
                 {
@@ -1991,6 +2017,160 @@ namespace HnrMgmtAPI.Controllers.API.Record
             else
             {
                 //type == 0  不需要任何操作
+            }
+            #endregion
+
+            return Success("获取数据成功", data);
+        }
+
+        private ApiResult GetData(SelectCondition conditionModle)
+        {
+            #region 添加搜索记录状态条件
+            bool stateFlag = false;
+            foreach (ConditionModel conditionItem in conditionModle.conditions)
+            {
+                if (conditionItem.fieldName == "State")
+                {
+                    stateFlag = true;
+                }
+            }
+            if (!stateFlag)
+            {
+                ConditionModel _condition = new ConditionModel();
+                _condition.fieldValues = new List<FieldValue>();
+                _condition.fieldName = "State";
+                FieldValue item_01 = new FieldValue();
+                item_01.item = "0";
+                FieldValue item_02 = new FieldValue();
+                item_02.item = "1";
+                FieldValue item_03 = new FieldValue();
+                item_03.item = "2";
+                FieldValue item_04 = new FieldValue();
+                item_04.item = "3";
+                _condition.fieldValues.Add(item_01);
+                _condition.fieldValues.Add(item_02);
+                _condition.fieldValues.Add(item_03);
+                _condition.fieldValues.Add(item_04);
+
+                conditionModle.conditions.Add(_condition);
+            }
+            #endregion
+
+            #region
+            IQueryable<vw_HnrRecord> hnrRecordList = db.vw_HnrRecord;
+            IQueryable<vw_AwdRecord_Rec> awdRecordList = db.vw_AwdRecord_Rec;
+            foreach (var item in conditionModle.conditions)
+            {
+                hnrRecordList = hnrRecordList.Where(ConditionExpressions.GetConditionExpression<vw_HnrRecord>(item));
+                awdRecordList = awdRecordList.Where(ConditionExpressions.GetConditionExpression<vw_AwdRecord_Rec>(item));
+            }
+            #endregion
+
+            #region 角色权限控制（存在不能进行角色权限控制问题）
+            //if (userInfo.userRoleID == "4")
+            //{
+            //    //学生账号只能看到自己的账号记录
+            //    //此块学生模块暂时未做
+            //    return Error("对不起，当前系统不支持学生查询记录");
+            //}
+            //else if (userInfo.userRoleID == "3")
+            //{
+            //    //学院账号可以看到所属学院的账号记录账号记录
+            //    #region 添加搜索记录所属学院条件
+            //    foreach ()
+            //    {
+
+            //    }
+            //    #endregion
+            //}
+            //else if (userInfo.userRoleID == "2" || userInfo.userRoleID == "1")
+            //{
+            //    //校团委助理账号及校团委老师账号可以看到所有记录
+            //}
+            //else
+            //{
+            //    //没有角色ID信息
+            //    return Error("发生未知错误。请联系系统维护人员");
+            //}
+            #endregion
+
+            var _hnrRecordList = GetList(hnrRecordList, conditionModle.page, conditionModle.limit, conditionModle.sortDirection, conditionModle.sortField);
+            var _awdRecordList = GetList(awdRecordList, conditionModle.page, conditionModle.limit, conditionModle.sortDirection, conditionModle.sortField);
+
+            #region 数据处理
+            RecordList data = new RecordList();
+            data.hnrListNum = _hnrRecordList.Count();
+            data.awdListNum = _awdRecordList.Count();
+            data.hnrList = new List<returnHnrRecord>();
+            data.awdList = new List<returnAwdRecord>();
+
+            foreach (vw_HnrRecord item in hnrRecordList)
+            {
+                returnHnrRecord model = new returnHnrRecord();
+                model.HnrRecordID = item.HnrRecID;
+                model.AwdeeID = item.AwardeeID;
+                model.AwdeeName = item.AwardeeName;
+                model.AwdeeOrgID = item.AwardeeOrgID;
+                model.AwdeeOrgName = item.AwardeeOrgName;
+                model.AwdeeBranch = item.AwardeeBranch;
+                model.HnrName = item.HnrName;
+                model.GradeName = item.HnrGradeName;
+                model.HnrAnnual = item.HnrAnnual;
+                model.HnrTime = item.HnrTime;
+                model.ApplyAccountName = item.ApplyAccountName;
+                model.ApplyAccountOrg = item.ApplyAccountOrgName;
+                model.ApplyAccountRole = item.ApplyAccountRoleName;
+                model.ApplyTime = item.ApplyTime;
+                model.RejectReason = item.Reason;
+                model.FileUrl = item.FileUrl;
+                model.State = item.State;
+
+                data.hnrList.Add(model);
+            }
+
+            foreach (vw_AwdRecord_Rec item in awdRecordList)
+            {
+                returnAwdRecord model = new returnAwdRecord();
+                model.AwdRecordID = item.AwdRecID;
+                model.AwdeeName = item.TeamAwdeeName;
+                model.AwdeeOrgID = item.TeamAwdeeOrgID;
+                model.AwdeeOrgName = item.TeamAwdeeOrgName;
+                model.AwdeeBranch = item.TeamAwdeeBranch;
+                model.AwdID = item.AwdID;
+                model.AwdName = item.AwdName;
+                model.AwdOrgID = item.OrgID;
+                model.AwdOrgName = item.OrgName;
+                model.AwdProName = item.ProName;
+                model.Grade = item.AwdGrade;
+                model.GradeName = item.AwdGradeName;
+                model.AwdYear = item.Year;
+                model.AwdTerm = item.Term;
+                model.AwdTime = item.Time;
+                model.IsTeam = item.IsTeam;
+                model.Teacher = item.Teacher;
+                model.ApplyAccountName = item.ApplyAccountName;
+                model.ApplyAccountOrg = item.ApplyAccountOrgName;
+                model.ApplyAccountRole = item.ApplyAccountRoleName;
+                model.ApplyTime = item.ApplyTime;
+                model.RejectReason = item.Reason;
+                model.FileUrl = item.FileUrl;
+                model.State = item.State;
+
+                data.awdList.Add(model);
+            }
+            if (conditionModle.type == "1")
+            {
+                data.awdList = null;
+                data.awdListNum = 0;
+            }
+            else if (conditionModle.type == "2")
+            {
+                data.hnrList = null;
+                data.hnrListNum = 0;
+            }
+            else
+            {
+                //conditionModle.type == 0  不需要任何操作
             }
             #endregion
 

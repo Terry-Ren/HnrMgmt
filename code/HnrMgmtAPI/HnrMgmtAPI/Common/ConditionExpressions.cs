@@ -8,20 +8,17 @@ namespace HnrMgmtAPI.Common
     public static class ConditionExpressions
     {
         //构建表达式树
-        public static Expression<Func<T, bool>> GetConditionExpression<T>(List<ConditionModel> conditions)
+        public static Expression<Func<T, bool>> GetConditionExpression<T>(ConditionModel model)
         {
             ParameterExpression left = Expression.Parameter(typeof(T), "c");
             Expression expression = Expression.Constant(false);
-            foreach (ConditionModel conditionItem in conditions)
+            if (typeof(T).GetProperty(model.fieldName) != null)
             {
-                if (typeof(T).GetProperty(conditionItem.fieldName) != null)
+                string fieldName = model.fieldName;
+                foreach (var optionName in model.fieldValues)
                 {
-                    string fieldName = conditionItem.fieldName;
-                    foreach (var optionName in conditionItem.fieldValues)
-                    {
-                        Expression right = Expression.Call(Expression.Property(left, typeof(T).GetProperty(fieldName)), typeof(string).GetMethod("Contains", new Type[] { typeof(string) }), Expression.Constant(optionName));
-                        expression = Expression.Or(right, expression);
-                    }
+                    Expression right = Expression.Call(Expression.Property(left, typeof(T).GetProperty(fieldName)), typeof(string).GetMethod("Contains", new Type[] { typeof(string) }), Expression.Constant(optionName.item.ToString().Trim()));
+                    expression = Expression.Or(right, expression);
                 }
             }
             Expression<Func<T, bool>> finalExpression = Expression.Lambda<Func<T, bool>>(expression, new ParameterExpression[] { left });
