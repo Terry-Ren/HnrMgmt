@@ -205,7 +205,6 @@ import PubMethod from '../../common/util'
            this.submitLoading=true
            //复制字符串
            let para = Object.assign({}, this.addFormBody);
-                      console.log(para)
            para.access_token='terry'
            posAddAwd(para).then((res)=>{
               this.submitLoading=false
