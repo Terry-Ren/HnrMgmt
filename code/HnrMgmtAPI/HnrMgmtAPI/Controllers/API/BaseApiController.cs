@@ -1,4 +1,5 @@
 ﻿using HnrMgmtAPI.Models;
+using HnrMgmtAPI.Common;
 using HnrMgmtAPI.Models.API;
 using System;
 using System.Collections.Generic;
@@ -148,7 +149,6 @@ namespace HnrMgmtAPI.Controllers.API
                         MethodCallExpression resultExp = Expression.Call(typeof(Queryable), "OrderByDescending", new Type[] { typeof(T), property.PropertyType }, returnList.Expression, Expression.Quote(orderByExp));
                         returnList = (IOrderedQueryable<T>)returnList.Provider.CreateQuery<T>(resultExp);
                     }
-
                     #endregion
                 }
             }
@@ -162,7 +162,7 @@ namespace HnrMgmtAPI.Controllers.API
                 return returnList.ToList();
             }
         }
-
+        
         /// <summary>
         /// 字段值转换
         /// </summary>
