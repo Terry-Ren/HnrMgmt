@@ -17,7 +17,7 @@
                 <span class="dropdown-main">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#honor-account"></use>
-                        </svg>
+                    </svg>
                         <span>{{RoleName}}</span>
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#honor-moreunfold"></use>

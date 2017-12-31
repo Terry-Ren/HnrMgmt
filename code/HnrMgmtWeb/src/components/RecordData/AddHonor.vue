@@ -18,7 +18,7 @@
       <!-- 主要表单 -->
       <div class="main-data" v-loading="submitLoading">
         <div class="modify-box">
-          <el-form :model="addFormBody" label-width="100px" ref="addForm" :rules="rules" auto class="hornor-add" >
+          <el-form :model="addFormBody" label-width="100px" ref="addForm" :rules="rules" auto  >
             <el-form-item label="荣誉项目" prop="HonorID">
               <el-select v-model="addFormBody.HonorID" placeholder="请选择荣誉" style="width:300px">
                 <el-option v-for="honor in HonorData" :key="honor.HonorID" :value="honor.HonorID" :label="honor.Name"></el-option>
@@ -59,7 +59,7 @@
             </el-form-item>                   
           </el-form>           
         </div>
-        <!-- 预览     -->
+        <!-- 预览 -->
         <div class="check-box">
            <el-form :model="addFormBody" label-width="100px" ref="addForm" :rules="rules" auto >      
               <el-form-item  label="图片预览">
