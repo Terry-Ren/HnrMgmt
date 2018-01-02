@@ -26,7 +26,7 @@
             </el-form-item>  
             <el-form-item label="获奖年度" prop="HnrAnnual" >
               <el-select v-model="addFormBody.HnrAnnual"  placeholder="请选择年度" style="width:300px">
-                <el-option v-for="options in annualOptions" :key="options.value" :label="options.label" :value="options.value"></el-option>
+                <el-option v-for="options in annual" :key="options.value" :label="options.label" :value="options.value"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="获奖日期" prop="HnrTime">
@@ -74,6 +74,7 @@
 
 <script type="text/ecmascript-6">
 import {reqGetHonorList,reqGetOrgList,posRecordHonor} from '../../api/api'
+import { annual} from '../../assets/data/basic'
 import * as types from "../../store/mutation-types";
 import PubMethod from '../../common/util'
  export default {
@@ -126,21 +127,8 @@ import PubMethod from '../../common/util'
         OrgID:{required:true , message:'请选择单位学院', trigger:'blur'},
         Branch:{required:true , message:'请输入所属团支部', trigger:'blur'}         
       },
-      // 获奖年度选择
-      annualOptions:[
-        {
-          value:'2013-2014',
-          label:'2013-2014'
-        },
-        {
-          value:'2014-2015',
-          label:'2014-2015'
-        },
-        {
-          value:'2015-2016',
-          label:'2015-2016'
-        },                
-      ]
+      // 获奖年度选择(从外部导入)
+      annual
      }    
    },
 //    // 计算属性

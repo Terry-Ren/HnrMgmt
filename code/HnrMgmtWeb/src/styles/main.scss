@@ -1,102 +1,101 @@
 body {
-    padding: 0px;
-    margin: 0px auto;
-  }
-  
-  a {
-    text-decoration: none;
-  }
-  
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: left;
-    color: #2c3e50;
-  }
-  
-  //Home.vue
-  .el-menu-item, .el-submenu__title {
-    color: #fff;
-  }
-  
-  .el-menu .el-menu-item, .el-submenu .el-submenu__title {
-    height: 46px;
-    line-height: 46px;
-  }
-  
-  .el-menu-item:hover, .el-submenu .el-menu-item:hover, .el-submenu__title:hover {
-    background-color: #7ed2df;
-  }
-  
-  .el-submenu .el-menu-item {
-    background-color: #333744
-  }
-  
-  .el-submenu .el-menu-item:hover {
-    background-color: #4A5064
-  }
-  
-  .el-submenu .el-menu-item.is-active, .el-menu-item.is-active,
-  .el-submenu .el-menu-item.is-active:hover, .el-menu-item.is-active:hover {
-    background-color: #00C1DE;
-    color: #fff;
-  }
-  
-  .el-menu .iconfont {
-    vertical-align: baseline;
-    margin-right: 6px;
-  }
-  
-  .warp-breadcrum{
-    margin: 5px 10px 15px 0px;
-  }
+  padding: 0px;
+  margin: 0px auto;
+}
 
-  .main-from{
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    transition: .2s;
-    background-clip: padding-box;
-    margin: 100px auto;
-    padding: 35px 35px 15px 35px;
-    width: 400px;
-    border: 1px solid #eaeaea;
-    box-shadow: 0 0 25px #cac6c6;
+a {
+  text-decoration: none;
+}
 
-  }
-  
-  // 组件公共样式
-  .container{
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    right: 20px;
-    bottom: 15px;
-    margin: auto;
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: left;
+  color: #2c3e50;
+} //Home.vue
+.el-menu-item,
+.el-submenu__title {
+  color: #fff;
+}
+
+.el-menu .el-menu-item,
+.el-submenu .el-submenu__title {
+  height: 46px;
+  line-height: 46px;
+}
+
+.el-menu-item:hover,
+.el-submenu .el-menu-item:hover,
+.el-submenu__title:hover {
+  background-color: #7ed2df;
+}
+
+.el-submenu .el-menu-item {
+  background-color: #333744
+}
+
+.el-submenu .el-menu-item:hover {
+  background-color: #4A5064
+}
+
+.el-submenu .el-menu-item.is-active,
+.el-menu-item.is-active,
+.el-submenu .el-menu-item.is-active:hover,
+.el-menu-item.is-active:hover {
+  background-color: #00C1DE;
+  color: #fff;
+}
+
+.el-menu .iconfont {
+  vertical-align: baseline;
+  margin-right: 6px;
+}
+
+.warp-breadcrum {
+  margin: 5px 10px 15px 0px;
+}
+
+.main-from {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  transition: .2s;
+  background-clip: padding-box;
+  margin: 100px auto;
+  padding: 35px 35px 15px 35px;
+  width: 400px;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 0 25px #cac6c6;
+} // 组件公共样式
+.container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 15px;
+  margin: auto;
+  display: flex;
+  flex-direction: column; // 面包屑
+  >.warp-breadcrum {
+    width: 100%;
+    flex: none;
+  } // 主内容
+  >.warp-body {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    // 面包屑
-    >.warp-breadcrum{
-      width: 100%;
+    .toolbal {
       flex: none;
     }
-    // 主内容
-    >.warp-body{
-        flex:1;
-        display: flex;
-        flex-direction: column;
-        .toolbal{
-          flex:none;
-        }
-        .main-data{
-          width: 100%;
-          flex:1;
-          overflow: auto;
-          >.table{
-            width:100%; 
-            height:100%
-          }
-        }
+    .main-data {
+      width: 100%;
+      flex: 1;
+      overflow: auto;
+      >.table {
+        width: 100%;
+        height: 100%
+      }
     }
+  }
 }
