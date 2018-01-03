@@ -17,7 +17,7 @@
                 <span class="dropdown-main">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#honor-account"></use>
-                        </svg>
+                    </svg>
                         <span>{{RoleName}}</span>
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#honor-moreunfold"></use>
@@ -62,10 +62,10 @@
                             <i class="el-icon-search"></i>
                             <span slot="title">统计查询</span>
                         </template>
-                        <el-menu-item index="/Explore/query" >
-                            数据统计
+                        <el-menu-item index="/explore/analysis" >
+                            数据分析
                         </el-menu-item>
-                        <el-menu-item index="/account/PassWord">
+                        <el-menu-item index="/explore/query">
                             数据查询
                         </el-menu-item>
                 </el-submenu>                 

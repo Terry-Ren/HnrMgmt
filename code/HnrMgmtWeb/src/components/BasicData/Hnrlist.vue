@@ -80,6 +80,7 @@ import {
   reqDeleteHonor
 } from "../../api/api";
 import PubMethod from "../../common/util";
+import { GradeNames,Grades} from '../../assets/data/basic'
 export default {
   data() {
     return {
@@ -115,24 +116,7 @@ export default {
         Name: "",
         GradeName: ""
       },
-      GradeNames: [
-        {
-          value: "0",
-          label: "院级"
-        },
-        {
-          value: "1",
-          label: "校级"
-        },
-        {
-          value: "2",
-          label: "省级"
-        },
-        {
-          value: "3",
-          label: "国级"
-        }
-      ],
+      GradeNames,
 
       //编辑表单相关数据
       modifyFormVisible: false,

@@ -144,3 +144,6 @@ export const reqGetReviewRecord = params => { return axios.get(`${base}api/recor
 // 驳回记录
 export const reqGetRejectRecord = params => { return axios.get(`${base}api/record/auditreject`, { params: params }) }
 
+//查询记录接口
+export const queryDataInfo = params => { return axios.post(`${base}api/record/multiconditionquery`, params) }
+
