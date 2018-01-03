@@ -33,6 +33,8 @@ namespace HnrMgmtAPI.Models
         public string TeamAwdeeOrgID { get; set; }
         public string TeamAwdeeOrgName { get; set; }
         public string TeamAwdeeBranch { get; set; }
+        public string TeamMembers { get; set; }
+        public string TeamMembersOrgName { get; set; }
         public System.DateTime ApplyTime { get; set; }
         public string ApplyAccountID { get; set; }
         public string ApplyAccountName { get; set; }

@@ -220,6 +220,8 @@
           <Property Name="TeamAwdeeOrgID" Type="varchar" MaxLength="64" />
           <Property Name="TeamAwdeeOrgName" Type="varchar" MaxLength="64" />
           <Property Name="TeamAwdeeBranch" Type="varchar" MaxLength="64" />
+          <Property Name="TeamMembers" Type="nvarchar(max)" />
+          <Property Name="TeamMembersOrgName" Type="nvarchar(max)" />
           <Property Name="ApplyTime" Type="datetime" Nullable="false" />
           <Property Name="ApplyAccountID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="ApplyAccountName" Type="varchar" MaxLength="64" Nullable="false" />
@@ -287,6 +289,30 @@
           <Property Name="Priority" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
+警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.vw_SearchIndex”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="vw_SearchIndex">
+          <Key>
+            <PropertyRef Name="RecordID" />
+            <PropertyRef Name="IsHnrRec" />
+            <PropertyRef Name="Time" />
+            <PropertyRef Name="HnrAwdID" />
+            <PropertyRef Name="OrgID" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="ApplyTime" />
+          </Key>
+          <Property Name="RecordID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="IsHnrRec" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Time" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="HnrAwdID" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="OrgID" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Year" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Term" Type="varchar" MaxLength="64" />
+          <Property Name="ProName" Type="varchar" MaxLength="64" />
+          <Property Name="Teacher" Type="varchar" MaxLength="1024" />
+          <Property Name="Branch" Type="varchar" MaxLength="64" />
+          <Property Name="ApplyTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
 警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.vw_Team”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="vw_Team">
           <Key>
@@ -304,6 +330,18 @@
           <Property Name="OrgID" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="OrgName" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="Branch" Type="varchar" MaxLength="64" />
+          <Property Name="TeamMembers" Type="nvarchar(max)" />
+          <Property Name="TeamMembersOrgName" Type="nvarchar(max)" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.vw_TeamInfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="vw_TeamInfo">
+          <Key>
+            <PropertyRef Name="TeamID" />
+          </Key>
+          <Property Name="TeamID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="TeamMembers" Type="nvarchar(max)" />
+          <Property Name="TeamMembersOrgName" Type="nvarchar(max)" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“DB_whut_HnrMgmt.dbo.vw_TeamMembers”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -411,6 +449,8 @@
     [vw_AwdRecord_Rec].[TeamAwdeeOrgID] AS [TeamAwdeeOrgID], 
     [vw_AwdRecord_Rec].[TeamAwdeeOrgName] AS [TeamAwdeeOrgName], 
     [vw_AwdRecord_Rec].[TeamAwdeeBranch] AS [TeamAwdeeBranch], 
+    [vw_AwdRecord_Rec].[TeamMembers] AS [TeamMembers], 
+    [vw_AwdRecord_Rec].[TeamMembersOrgName] AS [TeamMembersOrgName], 
     [vw_AwdRecord_Rec].[ApplyTime] AS [ApplyTime], 
     [vw_AwdRecord_Rec].[ApplyAccountID] AS [ApplyAccountID], 
     [vw_AwdRecord_Rec].[ApplyAccountName] AS [ApplyAccountName], 
@@ -458,6 +498,21 @@
     [vw_Role].[Priority] AS [Priority]
     FROM [dbo].[vw_Role] AS [vw_Role]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_SearchIndex" EntityType="Self.vw_SearchIndex" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_SearchIndex].[RecordID] AS [RecordID], 
+    [vw_SearchIndex].[IsHnrRec] AS [IsHnrRec], 
+    [vw_SearchIndex].[Time] AS [Time], 
+    [vw_SearchIndex].[HnrAwdID] AS [HnrAwdID], 
+    [vw_SearchIndex].[OrgID] AS [OrgID], 
+    [vw_SearchIndex].[Year] AS [Year], 
+    [vw_SearchIndex].[Term] AS [Term], 
+    [vw_SearchIndex].[ProName] AS [ProName], 
+    [vw_SearchIndex].[Teacher] AS [Teacher], 
+    [vw_SearchIndex].[Branch] AS [Branch], 
+    [vw_SearchIndex].[ApplyTime] AS [ApplyTime]
+    FROM [dbo].[vw_SearchIndex] AS [vw_SearchIndex]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_Team" EntityType="Self.vw_Team" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_Team].[ID] AS [ID], 
@@ -466,8 +521,17 @@
     [vw_Team].[AwdeeName] AS [AwdeeName], 
     [vw_Team].[OrgID] AS [OrgID], 
     [vw_Team].[OrgName] AS [OrgName], 
-    [vw_Team].[Branch] AS [Branch]
+    [vw_Team].[Branch] AS [Branch], 
+    [vw_Team].[TeamMembers] AS [TeamMembers], 
+    [vw_Team].[TeamMembersOrgName] AS [TeamMembersOrgName]
     FROM [dbo].[vw_Team] AS [vw_Team]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_TeamInfo" EntityType="Self.vw_TeamInfo" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_TeamInfo].[TeamID] AS [TeamID], 
+    [vw_TeamInfo].[TeamMembers] AS [TeamMembers], 
+    [vw_TeamInfo].[TeamMembersOrgName] AS [TeamMembersOrgName]
+    FROM [dbo].[vw_TeamInfo] AS [vw_TeamInfo]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_TeamMembers" EntityType="Self.vw_TeamMembers" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -694,6 +758,8 @@
           <Property Name="TeamAwdeeOrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="TeamAwdeeOrgName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="TeamAwdeeBranch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="TeamMembers" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TeamMembersOrgName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ApplyTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ApplyAccountID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ApplyAccountName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
@@ -756,6 +822,28 @@
           <Property Name="Url" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="Priority" Type="Int32" />
         </EntityType>
+        <EntityType Name="vw_SearchIndex">
+          <Key>
+            <PropertyRef Name="RecordID" />
+            <PropertyRef Name="IsHnrRec" />
+            <PropertyRef Name="Time" />
+            <PropertyRef Name="HnrAwdID" />
+            <PropertyRef Name="OrgID" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="ApplyTime" />
+          </Key>
+          <Property Name="RecordID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsHnrRec" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Time" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HnrAwdID" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrgID" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Year" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Term" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ProName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Teacher" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="Branch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ApplyTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         <EntityType Name="vw_Team">
           <Key>
             <PropertyRef Name="ID" />
@@ -772,6 +860,16 @@
           <Property Name="OrgID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="OrgName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Branch" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="TeamMembers" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TeamMembersOrgName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vw_TeamInfo">
+          <Key>
+            <PropertyRef Name="TeamID" />
+          </Key>
+          <Property Name="TeamID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TeamMembers" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TeamMembersOrgName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vw_TeamMembers">
           <Key>
@@ -810,7 +908,9 @@
           <EntitySet Name="vw_AwdRecord_Rec" EntityType="Self.vw_AwdRecord_Rec" />
           <EntitySet Name="vw_HnrRecord" EntityType="Self.vw_HnrRecord" />
           <EntitySet Name="vw_Role" EntityType="Self.vw_Role" />
+          <EntitySet Name="vw_SearchIndex" EntityType="Self.vw_SearchIndex" />
           <EntitySet Name="vw_Team" EntityType="Self.vw_Team" />
+          <EntitySet Name="vw_TeamInfo" EntityType="Self.vw_TeamInfo" />
           <EntitySet Name="vw_TeamMembers" EntityType="Self.vw_TeamMembers" />
         </EntityContainer>
       </Schema>
@@ -1021,6 +1121,8 @@
                 <ScalarProperty Name="TeamAwdeeOrgID" ColumnName="TeamAwdeeOrgID" />
                 <ScalarProperty Name="TeamAwdeeOrgName" ColumnName="TeamAwdeeOrgName" />
                 <ScalarProperty Name="TeamAwdeeBranch" ColumnName="TeamAwdeeBranch" />
+                <ScalarProperty Name="TeamMembers" ColumnName="TeamMembers" />
+                <ScalarProperty Name="TeamMembersOrgName" ColumnName="TeamMembersOrgName" />
                 <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
                 <ScalarProperty Name="ApplyAccountID" ColumnName="ApplyAccountID" />
                 <ScalarProperty Name="ApplyAccountName" ColumnName="ApplyAccountName" />
@@ -1073,6 +1175,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vw_SearchIndex">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.vw_SearchIndex">
+              <MappingFragment StoreEntitySet="vw_SearchIndex">
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="IsHnrRec" ColumnName="IsHnrRec" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="HnrAwdID" ColumnName="HnrAwdID" />
+                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Term" ColumnName="Term" />
+                <ScalarProperty Name="ProName" ColumnName="ProName" />
+                <ScalarProperty Name="Teacher" ColumnName="Teacher" />
+                <ScalarProperty Name="Branch" ColumnName="Branch" />
+                <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vw_Team">
             <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.vw_Team">
               <MappingFragment StoreEntitySet="vw_Team">
@@ -1083,6 +1202,17 @@
                 <ScalarProperty Name="OrgID" ColumnName="OrgID" />
                 <ScalarProperty Name="OrgName" ColumnName="OrgName" />
                 <ScalarProperty Name="Branch" ColumnName="Branch" />
+                <ScalarProperty Name="TeamMembers" ColumnName="TeamMembers" />
+                <ScalarProperty Name="TeamMembersOrgName" ColumnName="TeamMembersOrgName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_TeamInfo">
+            <EntityTypeMapping TypeName="DB_whut_HnrMgmtModel.vw_TeamInfo">
+              <MappingFragment StoreEntitySet="vw_TeamInfo">
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="TeamMembers" ColumnName="TeamMembers" />
+                <ScalarProperty Name="TeamMembersOrgName" ColumnName="TeamMembersOrgName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

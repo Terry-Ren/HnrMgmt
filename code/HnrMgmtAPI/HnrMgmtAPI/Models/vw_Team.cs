@@ -21,5 +21,7 @@ namespace HnrMgmtAPI.Models
         public string OrgID { get; set; }
         public string OrgName { get; set; }
         public string Branch { get; set; }
+        public string TeamMembers { get; set; }
+        public string TeamMembersOrgName { get; set; }
     }
 }

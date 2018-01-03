@@ -31,6 +31,18 @@ namespace HnrMgmtAPI.Models.API.Record
     {
         public string fieldName { get; set; }
         public List<FieldValue> fieldValues { get; set; }
+
+        public ConditionModel()
+        {
+
+        }
+
+        public ConditionModel(string _fieldName, List<FieldValue> _fieldValues)
+        {
+            fieldName = _fieldName;
+            fieldValues = new List<FieldValue>();
+            fieldValues = _fieldValues;
+        }
     }
 
     //字段 查询条件值
