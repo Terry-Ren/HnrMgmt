@@ -44,7 +44,7 @@
         </el-table>
         </div>
       <!-- 下方工具条 -->
-        <el-pagination layout="total, prev, pager, next, sizes, jumper" @size-change="SizeChangeEvent" @current-change="CurrentChangeEvent" :page-size="size" :page-sizes="[10,15,20,25,30]":total="totalNum">
+        <el-pagination layout="total, prev, pager, next, sizes, jumper" @size-change="SizeChangeEvent" @current-change="CurrentChangeEvent" :page-size="size" :page-sizes="[10,15,20,25,30]" :total="totalNum">
         </el-pagination>
     </div> 
     <!-- 驳回请求表单      -->

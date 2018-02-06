@@ -91,7 +91,6 @@
                     <el-form-item  label="操作">  
                       <el-button type="danger" @click.prevent="removeMember(member)">删除成员</el-button>
                     </el-form-item>
-                </el-form-item> 
                 </div> 
               </div>                                                                                      
                 <el-form-item v-if="!ismodify" label="负责人姓名" prop="AwdeeName">

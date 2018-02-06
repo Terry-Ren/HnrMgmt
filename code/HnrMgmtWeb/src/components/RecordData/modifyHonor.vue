@@ -57,7 +57,7 @@
                 </el-select>
                 </el-form-item> 
                 <el-form-item label="所属团支部" prop="AwdeeBranch">
-                <el-input v-model="detailFormBody.AwdeeBranch":disabled="!ismodify" placeholder="请输入团支部" style="width:300px" >
+                <el-input v-model="detailFormBody.AwdeeBranch" :disabled="!ismodify" placeholder="请输入团支部" style="width:300px" >
                     <template slot="append">团支部</template>
                 </el-input>
                 </el-form-item>
