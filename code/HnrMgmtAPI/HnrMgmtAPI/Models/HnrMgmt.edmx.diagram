@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c120b0bb9bf84e1dbf820c4b811e6e0b" Name="Diagram1">
+      <Diagram DiagramId="9ca3f94701c6474e89022d45b0e395d6" Name="Diagram1">
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.T_Account" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.T_Award" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.T_Awardee" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
@@ -22,8 +22,10 @@
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_AwdRecord_Rec" Width="1.5" PointX="4.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_HnrRecord" Width="1.5" PointX="6.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_Role" Width="1.5" PointX="10.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_Team" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_TeamMembers" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_SearchIndex" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_Team" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_TeamInfo" Width="1.5" PointX="12.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_whut_HnrMgmtModel.vw_TeamMembers" Width="1.5" PointX="12.75" PointY="7.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

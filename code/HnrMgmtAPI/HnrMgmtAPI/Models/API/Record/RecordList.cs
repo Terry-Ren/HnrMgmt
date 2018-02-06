@@ -58,6 +58,8 @@ namespace HnrMgmtAPI.Models.API.Record
         public string AwdTime { get; set; }
         public string IsTeam { get; set; }
         public string Teacher { get; set; }
+        public string TeamMembersName { get; set; }
+        public string TeamMembersOrgName { get; set; }
         public string ApplyAccountName { get; set; }
         public string ApplyAccountOrg { get; set; }
         public string ApplyAccountRole { get; set; }

@@ -126,12 +126,11 @@
 
 
             $('#btnMulticonditionquery').click(function (e) {
-                var data = { 'access_token': '11', 'type': '0', 'page': '1', 'limit': '10', 'sortDirection': 'ASC', 'sortField': 'ApplyTime', 'conditions': [{ 'fieldName': 'AwardeeOrgName', 'fieldValues': [{ 'item': '艺设' }] }, { 'fieldName': 'AwardeeName', 'fieldValues': [{ 'item': '健铭' }, { 'item': '任天宇' }] }] };
+                var data = { 'access_token': '11', 'type': '0', 'page': '1', 'limit': '10', 'sortDirection': 'ASC', 'sortField': 'ApplyTime', 'conditions': [{ 'fieldName': 'AwdeeOrgName', 'fieldValues': [{ 'item': '管理' }] }, { 'fieldName': 'AwdeeName', 'fieldValues': [{ 'item': '健铭' }] }] };
                 console.log('输出查询参数格式：');
                 console.log(data);
                 AjaxRequestPost('api/record/multiconditionquery', data);
             });
-
         });
 
     </script>

@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Web.Http;
 
 namespace HnrMgmtAPI.Controllers.API.Record
@@ -571,13 +570,15 @@ namespace HnrMgmtAPI.Controllers.API.Record
 
         /// <summary>
         /// 排序、分页、多条件查询
+        /// 参数type值为0时，可搜索字段为：RecordID、Time、OrgID、OrgName、AwdeeName、AwdeeOrgName、State
+        /// 参数type值不为0时，可搜索字段为 视图中所有字段
         /// </summary>
         /// <param name="model">参数参考 SelectCondition</param>
         /// <returns></returns>
         [HttpPost, Route("multiconditionquery")]
         public ApiResult GetRecord([FromBody]SelectCondition model)
         {
-            result = AccessToken.Check(model.access_token, "");
+            result = AccessToken.Check(model.access_token, "api/record/multiconditionquery");
             if (result == null)
             {
                 #region 参数验证
@@ -2023,46 +2024,170 @@ namespace HnrMgmtAPI.Controllers.API.Record
             return Success("获取数据成功", data);
         }
 
-        private ApiResult GetData(SelectCondition conditionModle)
+        private ApiResult GetData(SelectCondition conditionModel)
         {
-            #region 添加搜索记录状态条件
-            bool stateFlag = false;
-            foreach (ConditionModel conditionItem in conditionModle.conditions)
+            List<ConditionModel> HnrRecordSearchConditions = new List<ConditionModel>();
+            List<ConditionModel> AwdRecordSearchConditions = new List<ConditionModel>();
+
+            #region 查询条件处理
+            if (conditionModel.type.ToString().Trim() == "0")
             {
-                if (conditionItem.fieldName == "State")
+                foreach (var item in conditionModel.conditions)
                 {
-                    stateFlag = true;
+                    if (item.fieldName == "RecordID")
+                    {
+                        HnrRecordSearchConditions.Add(new ConditionModel("HnrRecID", item.fieldValues));
+                        AwdRecordSearchConditions.Add(new ConditionModel("AwdRecID", item.fieldValues));
+                    }
+                    else if (item.fieldName == "Time")
+                    {
+                        HnrRecordSearchConditions.Add(new ConditionModel("HnrTime", item.fieldValues));
+                        AwdRecordSearchConditions.Add(new ConditionModel("Time", item.fieldValues));
+                    }
+                    else if (item.fieldName == "OrgID")
+                    {
+                        HnrRecordSearchConditions.Add(new ConditionModel("AwardeeOrgID", item.fieldValues));
+                        AwdRecordSearchConditions.Add(new ConditionModel("OrgID", item.fieldValues));
+                    }
+                    else if (item.fieldName == "OrgName")
+                    {
+                        HnrRecordSearchConditions.Add(new ConditionModel("AwardeeOrgName", item.fieldValues));
+                        AwdRecordSearchConditions.Add(new ConditionModel("OrgName", item.fieldValues));
+                    }
+                    else if (item.fieldName == "AwdeeName")
+                    {
+                        HnrRecordSearchConditions.Add(new ConditionModel("AwardeeName", item.fieldValues));
+                        AwdRecordSearchConditions.Add(new ConditionModel("TeamMembers", item.fieldValues));
+                    }
+                    else if (item.fieldName == "AwdeeOrgName")
+                    {
+                        HnrRecordSearchConditions.Add(new ConditionModel("AwardeeOrgName", item.fieldValues));
+                        AwdRecordSearchConditions.Add(new ConditionModel("TeamMembersOrgName", item.fieldValues));
+                    }
+                    else if (item.fieldName == "State")
+                    {
+                        HnrRecordSearchConditions.Add(new ConditionModel("State", item.fieldValues));
+                        AwdRecordSearchConditions.Add(new ConditionModel("State", item.fieldValues));
+                    }
+                    else
+                    {
+                        return Error("参数type值为0时，可搜索字段为：RecordID、Time、OrgID、OrgName、AwdeeName、AwdeeOrgName、State");
+                    }
+                }
+
+                bool _stateFlag = false;
+                foreach (ConditionModel conditionItem in HnrRecordSearchConditions)
+                {
+                    if (conditionItem.fieldName == "State")
+                    {
+                        _stateFlag = true;
+                    }
+                }
+                if (!_stateFlag)
+                {
+                    ConditionModel _condition = new ConditionModel();
+                    _condition.fieldValues = new List<FieldValue>();
+                    _condition.fieldName = "State";
+                    FieldValue item_01 = new FieldValue();
+                    item_01.item = "0";
+                    FieldValue item_02 = new FieldValue();
+                    item_02.item = "1";
+                    FieldValue item_03 = new FieldValue();
+                    item_03.item = "2";
+                    FieldValue item_04 = new FieldValue();
+                    item_04.item = "3";
+                    _condition.fieldValues.Add(item_01);
+                    _condition.fieldValues.Add(item_02);
+                    _condition.fieldValues.Add(item_03);
+                    _condition.fieldValues.Add(item_04);
+
+                    HnrRecordSearchConditions.Add(_condition);
+                    _stateFlag = false;
+                }
+                foreach (ConditionModel conditionItem in AwdRecordSearchConditions)
+                {
+                    if (conditionItem.fieldName == "State")
+                    {
+                        _stateFlag = true;
+                    }
+                }
+                if (!_stateFlag)
+                {
+                    ConditionModel _condition = new ConditionModel();
+                    _condition.fieldValues = new List<FieldValue>();
+                    _condition.fieldName = "State";
+                    FieldValue item_01 = new FieldValue();
+                    item_01.item = "0";
+                    FieldValue item_02 = new FieldValue();
+                    item_02.item = "1";
+                    FieldValue item_03 = new FieldValue();
+                    item_03.item = "2";
+                    FieldValue item_04 = new FieldValue();
+                    item_04.item = "3";
+                    _condition.fieldValues.Add(item_01);
+                    _condition.fieldValues.Add(item_02);
+                    _condition.fieldValues.Add(item_03);
+                    _condition.fieldValues.Add(item_04);
+
+                    AwdRecordSearchConditions.Add(_condition);
+                    _stateFlag = false;
                 }
             }
-            if (!stateFlag)
+            else
             {
-                ConditionModel _condition = new ConditionModel();
-                _condition.fieldValues = new List<FieldValue>();
-                _condition.fieldName = "State";
-                FieldValue item_01 = new FieldValue();
-                item_01.item = "0";
-                FieldValue item_02 = new FieldValue();
-                item_02.item = "1";
-                FieldValue item_03 = new FieldValue();
-                item_03.item = "2";
-                FieldValue item_04 = new FieldValue();
-                item_04.item = "3";
-                _condition.fieldValues.Add(item_01);
-                _condition.fieldValues.Add(item_02);
-                _condition.fieldValues.Add(item_03);
-                _condition.fieldValues.Add(item_04);
+                bool stateFlag = false;
+                foreach (ConditionModel conditionItem in conditionModel.conditions)
+                {
+                    if (conditionItem.fieldName == "State")
+                    {
+                        stateFlag = true;
+                    }
+                }
+                if (!stateFlag)
+                {
+                    ConditionModel _condition = new ConditionModel();
+                    _condition.fieldValues = new List<FieldValue>();
+                    _condition.fieldName = "State";
+                    FieldValue item_01 = new FieldValue();
+                    item_01.item = "0";
+                    FieldValue item_02 = new FieldValue();
+                    item_02.item = "1";
+                    FieldValue item_03 = new FieldValue();
+                    item_03.item = "2";
+                    FieldValue item_04 = new FieldValue();
+                    item_04.item = "3";
+                    _condition.fieldValues.Add(item_01);
+                    _condition.fieldValues.Add(item_02);
+                    _condition.fieldValues.Add(item_03);
+                    _condition.fieldValues.Add(item_04);
 
-                conditionModle.conditions.Add(_condition);
+                    conditionModel.conditions.Add(_condition);
+                }
             }
             #endregion
 
-            #region
+            #region 执行查询条件
             IQueryable<vw_HnrRecord> hnrRecordList = db.vw_HnrRecord;
             IQueryable<vw_AwdRecord_Rec> awdRecordList = db.vw_AwdRecord_Rec;
-            foreach (var item in conditionModle.conditions)
+            if (conditionModel.type.ToString().Trim() == "0")
             {
-                hnrRecordList = hnrRecordList.Where(ConditionExpressions.GetConditionExpression<vw_HnrRecord>(item));
-                awdRecordList = awdRecordList.Where(ConditionExpressions.GetConditionExpression<vw_AwdRecord_Rec>(item));
+                foreach (var item in HnrRecordSearchConditions)
+                {
+                    hnrRecordList = hnrRecordList.Where(ConditionExpressions.GetConditionExpression<vw_HnrRecord>(item));
+
+                }
+                foreach (var item in AwdRecordSearchConditions)
+                {
+                    awdRecordList = awdRecordList.Where(ConditionExpressions.GetConditionExpression<vw_AwdRecord_Rec>(item));
+                }
+            }
+            else
+            {
+                foreach (var item in conditionModel.conditions)
+                {
+                    hnrRecordList = hnrRecordList.Where(ConditionExpressions.GetConditionExpression<vw_HnrRecord>(item));
+                    awdRecordList = awdRecordList.Where(ConditionExpressions.GetConditionExpression<vw_AwdRecord_Rec>(item));
+                }
             }
             #endregion
 
@@ -2094,8 +2219,8 @@ namespace HnrMgmtAPI.Controllers.API.Record
             //}
             #endregion
 
-            var _hnrRecordList = GetList(hnrRecordList, conditionModle.page, conditionModle.limit, conditionModle.sortDirection, conditionModle.sortField);
-            var _awdRecordList = GetList(awdRecordList, conditionModle.page, conditionModle.limit, conditionModle.sortDirection, conditionModle.sortField);
+            var _hnrRecordList = GetList(hnrRecordList, conditionModel.page, conditionModel.limit, conditionModel.sortDirection, conditionModel.sortField);
+            var _awdRecordList = GetList(awdRecordList, conditionModel.page, conditionModel.limit, conditionModel.sortDirection, conditionModel.sortField);
 
             #region 数据处理
             RecordList data = new RecordList();
@@ -2148,6 +2273,8 @@ namespace HnrMgmtAPI.Controllers.API.Record
                 model.AwdTime = item.Time;
                 model.IsTeam = item.IsTeam;
                 model.Teacher = item.Teacher;
+                model.TeamMembersName = item.TeamMembers;
+                model.TeamMembersOrgName = item.TeamMembersOrgName;
                 model.ApplyAccountName = item.ApplyAccountName;
                 model.ApplyAccountOrg = item.ApplyAccountOrgName;
                 model.ApplyAccountRole = item.ApplyAccountRoleName;
@@ -2158,12 +2285,12 @@ namespace HnrMgmtAPI.Controllers.API.Record
 
                 data.awdList.Add(model);
             }
-            if (conditionModle.type == "1")
+            if (conditionModel.type == "1")
             {
                 data.awdList = null;
                 data.awdListNum = 0;
             }
-            else if (conditionModle.type == "2")
+            else if (conditionModel.type == "2")
             {
                 data.hnrList = null;
                 data.hnrListNum = 0;

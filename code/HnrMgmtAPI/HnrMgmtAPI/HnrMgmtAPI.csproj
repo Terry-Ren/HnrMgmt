@@ -334,7 +334,13 @@
     <Compile Include="Models\vw_Role.cs">
       <DependentUpon>HnrMgmt.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_SearchIndex.cs">
+      <DependentUpon>HnrMgmt.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_Team.cs">
+      <DependentUpon>HnrMgmt.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_TeamInfo.cs">
       <DependentUpon>HnrMgmt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_TeamMembers.cs">
